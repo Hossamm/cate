@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang='en' dir="rtl">
+  <head>
+    <meta charset='UTF-8'/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CATE</title>
+    <link href='./style.css' rel='stylesheet'/>
+  </head>
+
+  <body> 
+
+    <div class='header'>
+      
+      <div class='menu'>
+
+            <div class="dropdown">
+              <button class="dropbtn">الشركات
+                <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-content">
+                <a href="#" onclick = "changeContent('addCom')" >اضافة</a>
+                <a href="#" onclick = "changeContent('updCom')" >تعديل</a>
+                <a href="#" onclick = "changeContent('delCom')" >الغاء</a>
+                <a href="#" onclick = "changeContent('تحت الانشاء')">..........؟</a>
+              </div>
+            </div> 
+            <div class="dropdown">
+              <button class="dropbtn">البحث 
+                <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-content">
+                <a href="#" onclick = "changeContent('searchCom')" >عن شركة</a>
+                <a href="#" onclick = "changeContent('searchDoc')" >عن مستند</a>
+                <a href="#" onclick = "changeContent('تحت الانشاء')" >..........؟</a>
+              </div>
+            </div> 	
+            <div class="dropdown">
+              <button class="dropbtn">التقارير
+                <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-content">
+                <a href="#" onclick = "changeContent('تحت الانشاء')" > لم يحدد</a>
+                <a href="#" onclick = "changeContent('تحت الانشاء')" >لم يحدد</a>
+                <a href="#" onclick = "changeContent('تحت الانشاء')" >..........؟</a>
+              </div>
+            </div> 
+            <div class="dropdown">
+              <button class="dropbtn">اخرى
+                <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-content">
+                <a href="#" onclick = "changeContent('تحت الانشاء')" >..........؟</a>
+                <a href="#" onclick = "changeContent('تحت الانشاء')" >..........؟</a>
+                <a href="#" onclick = "changeContent('تحت الانشاء')" >..........؟</a>
+              </div>
+            </div> 
+
+      </div> <!--  End menu <div class='menu'>  -->
+
+      <div class='logo'>
+            <div style="width: 10%; float: left;" ></div>
+            <img src='./logo.png' class="photo" 
+                            style="width: 130px;height: 130px; float: left;"/>
+	    </div>
+
+    </div> <!--End header <div class='header'> -->
+
+    <div style="height: 175px;">
+        <!-- The <div> has been added to insert spaces -->>
+    </div>
+
+    <!-- Content section of website layout -->
+    <main id="main">
+        <div class="container" 
+             >
+
+            <div id="content" style="
+            width: 100%;" >
+                <img src='./logo.png' 
+                style="width:100%; margin: 0 auto;"/>
+            </div>
+
+        </div>
+    </main> <!-- End Content section of website layout -->
+
+<br><br><br>
+     <!-- footer Section -->
+     <div class="footer">
+        <a href="#">About</a><br>
+        <a href="#">Career</a><br>
+        <a href="#">Contact Us</a>
+        </div>
+
+  </body>
+
+
+  <script>
+
+    const arrOfInputId =["ComName","ComType","ComPurp","ComAddr","ComNote"]
+    var setFoucs = false;
+    function validateForm() 
+    {
+        arrOfInputId.forEach( (element, index) => {
+          var input = document.getElementById(element);
+          validateForm_01(input)
+        })
+        if (setFoucs === true)
+                {
+                  setFoucs = false;
+                  return false;
+                } 
+          else{ 
+              /*
+              {
+                fetch("/searchCom", 
+                      {
+                          method: "POST",
+                        //  body: formDataJsonString,
+                        }, 
+                        {
+                          headers: { 
+                          //'Content-Type': 'multipart/form-data', 
+                          'Content-Type': 'text/html' 
+                                    },
+                        }).then(x => x.text()).then(function(data) {
+                                var mainDiv = document.getElementById('main');				
+                                mainDiv.innerHTML = data;
+                          });
+                      };  */          
+            return true}
+        
+    }
+       // var input = document.getElementById("ComName");
+        
+        function validateForm_01(input) {
+          var value = input.value;
+          if(value.length>0){
+            //Valid
+            console.log("valid")
+          //  input.value="";
+          //  input.placeholder="Got it";
+          //  clearOtherClasses(input);
+          //  input.classList.add("green");
+          
+          }else{
+            //Invalid
+            console.log("Invalid")
+            input.value="";
+            clearOtherClasses(input);
+            input.classList.add("red");
+            if (setFoucs === false)
+                {
+                input.focus();
+                setFoucs = true;
+                } 
+          }
+        
+        }
+        function clearOtherClasses(element)
+        {
+            element.className="";
+          }
+  
+          function onLoadBody() 
+          {
+             // alert("I am an alert box!");
+              document.getElementById('Comtest').readOnly = true;
+              }
+          
+          function  changeReadonly() 
+          {
+              document.getElementById('Comtest').readOnly = false;
+          }
+      
+   /*==========================================================================*/
+        // Add Event Listener to the button element
+    /* 
+        When our form’s upload button is clicked, 
+        the Event Listener will trigger the "uploadFiles" function, 
+        which is responsible for handling the file upload process, 
+        including preparing the files for upload and sending them to the server. 
+    */
+    // The following statment create variable to work with upload form event.
+    
+    const uploadButton = document.getElementById("uploadButton"); 
+    uploadButton.addEventListener("click", uploadFiles);
+
+    // End of Event Listener of the button element with id attribute id="uploadButton"
+
+    function uploadFiles(event) 
+        {   alert("Hello");
+            event.preventDefault();
+            // First, we get the files that were selected
+            const form = document.querySelector('#uploadForm');
+            const fileInput = document.getElementById("fileInput");
+            const outputBox = form.querySelector('.result')
+
+            const selectedFiles = fileInput.files; // put selected file in Array 
+            // Second Check if any files are selected with some error-handling logic 
+            // to cover the case of no files being selected.
+                if (selectedFiles.length === 0) // check if there is files selected 
+                    {
+                    alert("Please select at least one file to upload.");
+                    return;
+                    } 
+
+                else{  
+            
+
+        // Working with outputBox variabil which represent the result HTML element...
+        outputBox.querySelector('.file-name').textContent = selectedFiles[0].name;
+        outputBox.querySelector('.file-size').textContent = `${(selectedFiles[0].size / 1024).toFixed(2)} KB`;
+        outputBox.querySelector('.upload-result').innerHTML = ` <i class="ph ph-circle-notch"></i> `;
+        outputBox.style.display = 'flex';
+
+            // Third Create a FormData object to store the form data
+            const formData = new FormData(form);
+            // Append each selected file to the FormData object
+             //   for (let i = 0; i < selectedFiles.length; i++) 
+              //      {
+                 //   formData.append("files[]", selectedFiles[i]);
+              //      }
+
+            // Fourth Send the AJAX request using XMLHttpRequest
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST",form.action);
+            xhr.upload.onprogress = (event) => {
+                const progress = (event.loaded / event.total) * 100;
+                outputBox.querySelector('.progress').style.width = `${progress}%`;
+            }
+
+            xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                // Handle successful response from the server
+                console.log('Files uploaded successfully!');
+              //  alert("Files uploaded successfully!");
+              outputBox.querySelector('.upload-result').innerHTML = `
+              <span>${xhr.responseText}</span>
+              <i class="ph ph-check-circle"></i>
+            `
+                } else {
+                // Handle error response from the server
+                console.error('Failed to upload files.');
+              //  alert("Error occurred during file upload. Please try again.");
+              outputBox.querySelector('.upload-result').innerHTML = `
+              <span>${xhr.responseText}</span>
+              <i class="ph ph-x-circle"></i>
+            `
+
+                }
+            }
+            };
+            xhr.send(formData);
+
+                    } // End else
+
+        }
+
+    function renderFileList () {
+      /*=======define variables to work dynamiclly with the form <div> with id "file-list-display"
+               and display the name of selected files ======*/
+      var fileListDisplay = document.getElementById('file-list-display');
+      const fileInput = document.getElementById("fileInput");
+      const imgPreview = document.getElementById("img-preview");
+      
+       // put selected file in Array 
+            // Second Check if any files are selected with some error-handling logic 
+            // to cover the case of no files being selected.
+  
+      fileListDisplay.style.display = 'flex';
+      fileListDisplay.innerHTML = '';
+      for (var i = 0; i < fileInput.files.length; i++) {
+      var fileDisplayEl = document.createElement('p');
+        fileDisplayEl.innerHTML = (i + 1) + ': ' + fileInput.files[i].name;
+        fileListDisplay.appendChild(fileDisplayEl);
+/*===================getImgData()====================*/
+        
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(fileInput.files[i]);
+        fileReader.addEventListener("load", function () {
+          var imgDisplayEl = document.createElement('img');
+          imgPreview.style.display = "flex";
+          imgPreview.innerHTML += '<img src="' + this.result 
+                                + '" style="width: 150px; hight:150px;' 
+                                + ' margin: 20px; border-radius: 5px; border: 1px solid #ccc;"/>';
+          fileListDisplay.appendChild(imgDisplayEl);
+        });
+
+      };
+      
+    
+    }  
+    
+
+
+
+
+    /*============================ Dropdown list function ======================================*/
+    function changeContent(page) {
+	var mainDiv = document.getElementById('main');
+
+	switch (page) {
+		case 'addCom':
+		fetch("/addCom").then(x => x.text()).then(function(data) {
+					
+                    mainDiv.innerHTML = data;				
+				  });
+			break;
+		case 'updCom':
+		fetch("/updCom").then(x => x.text()).then(function(data) {
+				
+                    mainDiv.innerHTML = data;
+				  });
+			break;
+		case 'delCom':
+			fetch("/delCom").then(x => x.text()).then(function(data) {
+				
+                    mainDiv.innerHTML = data;
+				  });
+			break;
+      case 'searchCom':
+			fetch("/searchCom").then(x => x.text()).then(function(data) {
+				
+                    mainDiv.innerHTML = data;
+				  });
+			break;
+      case 'searchDoc':
+			fetch("/searchDoc").then(x => x.text()).then(function(data) {
+				
+                    mainDiv.innerHTML = data;
+				  });
+			break;
+
+		default:
+			contentDiv.innerHTML = '<h2>Page not found!</h2>';
+	}
+}
+
+   /*==============================================================*/
+    
+
+
+
+  </script>
+  
+</html>

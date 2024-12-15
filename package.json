@@ -1,0 +1,14 @@
+{
+  "name": "cate-arch",
+  "version": "1.0.0",
+  "description": "The archive system of CATE office",
+  "main": "Server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "HossamMaghrabi",
+  "license": "ISC",
+  "dependencies": {
+    "pg": "^8.13.1"
+  }
+}
