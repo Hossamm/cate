@@ -1,9 +1,10 @@
 
-const DB = require('./DBClass.js');
+ const DB = require('./DBClass.js');
 
-const DBcreation = new DB()
 
-const TablesCreation = new DB('catedb');
+ const DBcreation = new DB()
+
+ const TablesCreation = new DB('catedb');
 
 // الحمد لله 
 async function setupAppDB() {
@@ -16,7 +17,7 @@ async function setupAppDB() {
  await TablesCreation.closeconn()
 
 }
-
-setupAppDB()
+module.exports = { setupAppDB }
+//setupAppDB()
 
 // الحمد لله  

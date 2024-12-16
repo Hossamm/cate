@@ -70,21 +70,21 @@ async createtable ()
 {
     // Create DB tables using sql script file call dbTables.sql  
 
-    const TableQuery = fs.readFileSync('dbTables.sql', 'utf-8');
+    const TableQuery = fs.readFileSync('./BackEnd/createDB/dbTables.sql', 'utf-8');
     return await this.conn.query(TableQuery)
             .then(() => 
                 {
-                    console.error(`The DataBase Tables have been created : `); 
+                    console.error('The DataBase Tables have been created : '); 
             
                 }
                ) 
             .catch((err) => 
                 {
                     if (err.code === '42P07')
-                    {console.error(`The table already exists`)}
+                    {console.error('The table already exists')}
                     else{
                         
-                    console.error(`Error in creating DataBase Tables : `, err);
+                    console.error('Error in creating DataBase Tables : ', err);
                         }
                 //    this.closeconn();
                 });

@@ -102,7 +102,7 @@ var fs = require('fs');
 			}); 
 			// End read file code  
 		    break;   
-        case '/script.js':
+        	case '/script.js': // replace 'BackEnd/createDB/DBObject.js' by ''
 			// read file code ..
 			fs.readFile(process.cwd() + path,'utf8',function(error, data) {  
 				if (error) {  
@@ -138,6 +138,27 @@ var fs = require('fs');
 					res.end(); 
 				}  
 				}); 
+				// End read file code
+			break;
+			case '/createDB': // replace 'BackEnd/createDB/DBObject.js' by ''
+			// read file code ..
+			try{
+			 const DB = require('./BackEnd/createDB/DBObject.js');
+			 DB.setupAppDB();
+
+				res.writeHead(200, {  
+				'Content-Type': 'text/javascript'  // or 'Content-Type':'application/json'
+				});  
+				res.write('Data Base has been created '+ res.statusCode);  
+				res.end(); 
+				}
+			catch(error)
+			 	{  
+				res.writeHead(404); 
+				res.write('Data Base not created '+ res.statusCode +'\n'+ error); 
+				res.end();  
+				} 
+				
 				// End read file code
 			break;  
 			case '/addCom':

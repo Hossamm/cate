@@ -51,7 +51,7 @@
               <div class="dropdown-content">
                 <a href="#" onclick = "changeContent('تحت الانشاء')" >..........؟</a>
                 <a href="#" onclick = "changeContent('تحت الانشاء')" >..........؟</a>
-                <a href="#" onclick = "changeContent('تحت الانشاء')" >..........؟</a>
+                <a href="#" onclick = "changeContent('createDB')" >Create Database</a>
               </div>
             </div> 
 
@@ -292,10 +292,6 @@
     
     }  
     
-
-
-
-
     /*============================ Dropdown list function ======================================*/
     function changeContent(page) {
 	var mainDiv = document.getElementById('main');
@@ -331,6 +327,12 @@
                     mainDiv.innerHTML = data;
 				  });
 			break;
+      case 'createDB':
+      fetch("/createDB").then(x => x.text()).then(function(data) {
+				
+        mainDiv.innerHTML = data;
+          });
+      break;
 
 		default:
 			contentDiv.innerHTML = '<h2>Page not found!</h2>';
