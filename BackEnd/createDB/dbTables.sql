@@ -1,4 +1,4 @@
-CREATE TABLE company (
+CREATE TABLE IF NOT EXISTS company (
     id SERIAL PRIMARY KEY,
     com_name varchar UNIQUE NOT NULL,
     com_type varchar NOT NULL,
