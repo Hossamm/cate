@@ -13,3 +13,5 @@ CREATE TABLE IF NOT EXISTS images (
     image        BYTEA       NOT NULL,
     name         VARCHAR(64) NOT NULL
 );
+
+

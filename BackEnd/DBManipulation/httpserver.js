@@ -85,14 +85,14 @@ console.log('Company Fields value : ' + companyValues)
 var photoValues = []
 for (let i = 0; i < allFiles.length; i++) {
    console.log((allFiles[i].length))
-    photoValues.push([filenames[i],allFiles[i]])   
+    photoValues.push([allFiles[i],filenames[i]])   
 }
 
 // console.log('Company photo name and files :' , photoValues )
                     
                    insertCompData(companyValues, photoValues).
                    then((processResult) =>{
-                        console.log(' response.write :  ',processResult)
+                        console.log(' response.write :  ', processResult)
                          response.write(processResult)
                          response.end()
                    })

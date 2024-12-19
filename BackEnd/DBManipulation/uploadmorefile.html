@@ -7,210 +7,613 @@
     <meta name="viewport" content="width=device-width,minimum-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <title>Upload Files</title>
     <style>
         * {
-            box-sizing: border-box;
-            font-family: "Montserrat", sans-serif;
-            font-optical-sizing: auto;
-            font-style: normal;
-        }
-        @-webkit-keyframes rotate {
-            from {
-                -webkit-transform: rotate(0deg);
-                -o-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-            to {
-                -webkit-transform: rotate(360deg);
-                -o-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-        }
-        @keyframes rotate {
-            from {
-                -ms-transform: rotate(0deg);
-                -moz-transform: rotate(0deg);
-                -webkit-transform: rotate(0deg);
-                -o-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-            to {
-                -ms-transform: rotate(360deg);
-                -moz-transform: rotate(360deg);
-                -webkit-transform: rotate(360deg);
-                -o-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-        }
-        body {
-            margin: 0;
-            padding: 1rem;
-            background-color: #0679e4;
-        }
-        .upload-form {
-            display: flex;
-            max-width: 50vw;
-            padding: 100px;
-            flex-flow: column;
-            margin: 100px auto 1rem auto;
-            background-color: #fff;
-            box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
-        }
-        .upload-form h1 {
-            margin: 0;
-            padding: 1rem 0px 0.5rem;
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #434850;
-            text-align: left;
-        }
-        .upload-form label {
-            display: flex;
-            flex-flow: column;
-            justify-content: center;
-            align-items: center;
-            border: 1px dashed #ece6e9;
-            color: #000000;
-            padding: 0.5rem 0.75rem;
-            font-weight: 500;
-            font-size: 0.875rem;
-            margin: 0.5rem 0;
-            border-radius: 0.25rem;
-            cursor: pointer;
-        }
-        .upload-form label i {
-            padding: 0.25rem 0;
-            color: #0c7ce5;
-        }
-        .upload-form label span {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 8px;
-            word-break: break-all;
-        }
-        .upload-form label:hover {
-            background-color: #f7f8f9;
-            border: 1px dashed #e3e5ea;
-        }
-        .upload-form input[type="file"] {
-            appearance: none;
-            visibility: hidden;
-            height: 0;
-            width: 0;
-            padding: 0;
-            margin: 0;
-        }
-        .upload-form .result {
-            display: flex;
-            background: #ecf6ff;
-            border-radius: 0.25rem;
-            gap: 0.5rem;
-            padding: 0.5rem
-        }
-        .upload-form .result * {
-            font-size: 0.5rem;
-        }
-        .upload-form .result .ph-file {
-            font-size: 1.5rem;
-        }
-        .upload-form .result span {
-            display: block;
-        }
-        .upload-form .result .file-details {
-            display: flex;
-            flex-flow: column;
-            justify-content: center;
-            align-items: flex-start;
-            gap: 0.25rem;
-            flex: 1
-        }
-        .upload-form .result .file-details span.file-name {
-            color: #000000;
-            font-weight: 600;
-        }
-        .upload-form .result .file-details span.file-size {
-            color: #a0aeba;
-        }
-        .upload-form .result .progress-bar {
-            width: 100%;
-            height: 0.25rem;
-            background-color: #e3e5ea;
-            border-radius: 0.25rem;
-            overflow: hidden;
-        }
-        .upload-form .result .progress-bar .progress {
-            height: 100%;
-            background-color: #0c7ce5;
-        }
-        .upload-form .result .upload-result {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            gap: 0.25rem;
-        }
-        .upload-form .result .upload-result .ph-circle-notch {
-            -webkit-animation: rotate 2s linear infinite;
-            -moz-animation: rotate 2s linear infinite;
-            -ms-animation: rotate 2s linear infinite;
-            -o-animation: rotate 2s linear infinite;
-            animation: rotate 2s linear infinite;
-            font-size: 1rem;
-        }
-        .upload-form .result .upload-result .ph-check-circle {
-            color: #23c925;
-            font-size: 1rem;
-        }
-        .upload-form .result .upload-result .ph-x-circle {
-            color: #c94647;
-            font-size: 1rem;
-        }
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+/*-----------------------------*/
+
+  
+  .navbar {
+    overflow: hidden;
+    background-color: #333;
+  }
+  
+  .dropdown .dropbtn {
+    font-size: 20px; 
+    font-weight: bold; 
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+  }
+
+  .navbar a {
+    float: right;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  .dropdown {
+    float: right;
+    overflow: hidden; 
+  }
+  
+
+  
+  .navbar a:hover, .dropdown:hover .dropbtn {
+    text-decoration: underline;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 80px;
+    border-radius: 5px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: right;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #ddd;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+
+
+
+/*--------------- Hossam ---------------*/
+.mainPhoto{
+  background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+  width: 100%;
+}
+/*================================*/
+body {
+height: 1000px;
+font-size: 18px;
+font-family: Baskerville;
+/* Following is the font-family
+font-family: Baskerville, 
+"Baskerville Old Face", 
+"Hoefler Text", Garamond, 
+"Times New Roman", serif;
+*/
+color: black;
+}
+
+
+
+.header {
+position: fixed;
+display: flex;
+justify-content: space-between;
+width: 100%;
+padding: 10px;
+background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e); 
+}
+
+
+.menu {
+margin-top: 90px;
+}
+
+.menu > li {
+display: inline;
+margin-right: 20px;
+
+}
+.menu > li:last-of-type {   /* The last element of type li in menu container */
+margin-right: 20px;
+
+}
+
+
+a:link,
+a:visited {
+
+text-decoration: none;
+}
+a:hover {
+text-decoration: underline;
+}
+
+
+
+/* CSS property for content section */
+
+
+
+/* Style for footer section */
+.footer {
+background-color: white;
+padding: 15px;
+text-align: center;
+}
+
+
+/*===========================Data Entry============================*/
+* {
+box-sizing:border-box;
+
+}
+
+.button 
+{
+display: flex;
+
+justify-content:space-between
+
+}
+
+.fbottom{
+background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e); 
+}
+
+body{
+
+background: white
+}
+
+input[type=text], select, textarea,input[type=search] {
+width: 100%;
+padding: 12px;
+border: 1px solid #ccc;
+border-radius: 4px;
+resize: vertical;
+}
+
+label {
+padding: 12px 12px 12px 0;
+display: inline-block;
+}
+
+input[type=submit] {
+background-color: #04AA6D;
+color: white;
+padding: 12px 20px;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+float: right;
+}
+
+input[type=submit]:hover {
+background-color: #45a049;
+}
+
+.container {
+width: 70%;
+margin: 0 auto;
+border-radius: 5px;
+background-color: #f2f2f2;
+padding: 20px;
+}
+
+.col-25 {
+float: right;
+width: 20%;
+margin-top: 6px;
+}
+
+.col-75,.col-75_2 {
+float: right;
+width: 78%;
+margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row::after {
+content: "";
+display: table;
+clear: both;
+
+
+}
+.row{overflow:auto;}
+
+/* Change placeholder color for validation input element*/
+.green::placeholder{
+color:green;
+}
+.red::placeholder{
+color:red;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+
+.container {
+    width: 95%;
+}
+
+.col-25, .col-75, input[type=submit] {
+width: 100%;
+margin-top: 0;
+}
+
+.button 
+{
+display:contents;   
+justify-content:center;
+
+}
+
+
+.photo{
+width: 100;
+}
+
+.menu {
+display: grid;  
+margin-top: 0px;
+}
+
+.dropdown .dropbtn {
+    font-weight:initial; 
+    padding: 0px 0px;
+  }
+.dropdown-content {
+
+min-width: 80px;
+
+}
+
+
+}
+/*==================================================================*/
+/*==================================================================*/
+
+.upload-form {
+    display: flex;
+    width: 50%;
+    padding: 0px;
+    flex-flow: column;
+   /* margin: 10px auto 10px auto;*/
+    background-color: #fff;
+    box-shadow: black;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+
+.upload-form label {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px dashed #e3e5ea;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: Baskerville;
+    color: #000000;
+    padding: 0.5rem 0.75rem;
+    margin: 0.5rem 0;
+    border-radius: 0.25rem;
+    cursor: pointer;
+
+}
+
+
+
+.upload-form label:hover {
+    background-color: #f7f8f9;
+    border: 1px dashed  #413d5f;
+    
+}
+
+.upload-form input[type="file"] {
+    appearance: none;
+    visibility: hidden;
+    height: 0;
+    width: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.upload-form .result {
+    display: flex;
+    background: #ecf6ff;
+    border-radius: 0.25rem;
+    gap: 0.5rem;
+    padding: 0.5rem
+}
+
+.upload-form .result * {
+    font-size: 0.5rem;
+}
+
+.upload-form .result .ph-file {
+    font-size: 1.5rem;
+}
+
+.upload-form .result {
+    display: block;
+}
+
+.upload-form .result .file-details {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.25rem;
+    flex: 1
+}
+
+.upload-form .result .file-details span.file-name {
+    color: #000000;
+    font-weight: 600;
+}
+
+.upload-form .result .file-details span.file-size {
+    color: #a0aeba;
+}
+
+.upload-form .result .progress-bar {
+    width: 100%;
+    height: 0.25rem;
+    background-color: #e3e5ea;
+    border-radius: 0.25rem;
+    overflow: hidden;
+}
+
+.upload-form .result .progress-bar .progress {
+    height: 100%;
+    background-color: #0c7ce5;
+}
+
+.upload-form .result .upload-result {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.upload-form .result .upload-result .ph-circle-notch {
+    -webkit-animation: rotate 2s linear infinite;
+    -moz-animation: rotate 2s linear infinite;
+    -ms-animation: rotate 2s linear infinite;
+    -o-animation: rotate 2s linear infinite;
+    animation: rotate 2s linear infinite;
+    font-size: 1rem;
+}
+
+.upload-form .result .upload-result .ph-check-circle {
+    color: #23c925;
+    font-size: 1rem;
+}
+
+.upload-form .result .upload-result .ph-x-circle {
+    color: #c94647;
+    font-size: 1rem;
+}
+
+
+/*=========================================================*/
+
+
     </style>
 </head>
 
 <body>
     
     <form id="uploadForm" action="http://localhost:3000/" enctype="multipart/form-data">
-        <label> اسم الشريكة </label>
-        <input type="text" name="fName" placeholder=" ادخل اسم الشريكة" />
-        <br>
-        <label> الملاحظات </label>
-        <input type="text" name="lName" placeholder=" ادخل الملاحظات" />
-        <br><br>
-        <label for="file">
-            <i class="ph ph-upload"></i>
-            <span> Drag & drop or <span style="color: #030303; display: inline-block; margin: 0px 2px;">browse</span>
-                your files </span>
-        </label>
-        <input type="file" id="fileInput" name="files[]" multiple accept="image/*,.pdf"/>
-        <br><br>
-        <div class="result" style="display: none;">
-            <i class="ph ph-file"></i>
-            <div class="file-details">
-                <span class="file-name"></span>
-                <span class="file-size"></span>
+
+        <div class="row">
+            <div class="col-25">
+              <label for="comName">اسم الشركة التجاري</label>
             </div>
-            <div class="upload-result"></div>
-        </div>
-        <br><br>
-        <button type="button" id="uploadButton">Upload Files</button>
+            <div class="col-75">
+              <input type="text" id="ComName" name="Companyname" placeholder="ادخل اسم الشركه">
+            </div>
+          </div>
+     
+          <div class="row">
+            <div class="col-25">
+              <label for="ComType">نوع الشركة</label>
+            </div>
+            <div class="col-75">
+              <select id="ComType" name="CompnyType" placeholder="ادخل اسم الشركه">
+                <!-- شركات الأشخاص  -->
+                <option value=""> </option>
+                <option value="التضامن وشركة">شركة التضامن</option>
+                <option value="التوصية البسيطة">التوصية البسيطة</option>
+                <option value="شركة المحاصة">شركة المحاصة</option>
+                <!--  شركات الأموال  -->
+                <option value="شركة المساهمة">شركة المساهمة</option>
+                <!--الشركات ذات الطبيعة المزدوجة-->>
+                <option value="الشركات ذات المسئولية المحددة">الشركات ذات المسئولية المحددة</option>
+                <option value="شركات التوصية بالأسهم">شركات التوصية بالأسهم</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="ComPurp">الغرض من إنشاء الشركة</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="ComPurp" name="CompanyPurpose" placeholder="ادخل الغرض من انشاء الشركة">
+            </div>
+          </div>
+    
+          <div class="row">
+            <div class="col-25">
+              <label for="ComAddr">العنوان</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="ComAddr" name="ComAddress" placeholder="ادخل عنوان للمقر الرئيسي للشركة">
+            </div>
+          </div>
+    
+          <div class="row">
+            <div class="col-25">
+              <label for="ComNote">بيانات اخرى</label>
+            </div>
+            <div class="col-75">
+              <textarea id="ComNote" name="ComNotes" placeholder="ادخل أي بيانات اخرى عن الشركه" style="height:100px"></textarea>
+            </div>
+          </div>
+      
+          <div style="margin-top: 10px;">
+
+            <div class="col-25">
+
+            </div>
+
+                <div class="upload-form">
+                  <div>
+                    <div>
+                        <label for="fileInput">
+                          اضافة الملفات          
+                        </label>
+                        <input id="fileInput" type="file" multiple name="file" 
+                                    onchange = "renderFileList ();" 
+                                    style="display: none;"
+                                    accept=".jpg, .jpeg, .png">
+
+                    </div>
+                  </div> 
+                    <div class="result" style="display: none;">
+                        <i class="ph ph-file"></i>
+                        <div class="file-details">
+                            <span class="file-name"></span>
+                            <span class="file-size"></span>
+                        </div>
+                        <div class="upload-result"></div>
+                    </div>
+                    
+                </div>
+          </div>
+
+          <div id="file-list-display" style="flex-direction: column;">
+          </div>
+
+          <img src="#" alt="صور المستندات التى تم تحميلها" id="img-preview" 
+          style="display: none;">
+
+
+          <br>
+          <div class="button">
+            <div>
+                <input type="button" id="uploadButton" value="أضف الشركة" class="fbottom"> 
+            </div>
+          </div>
+        
     </form>
    
   <script type="text/javascript">
 
-    // Add Event Listener to the button element
+const arrOfInputId =["ComName","ComType","ComPurp","ComAddr","ComNote"]
+    var setFoucs = false;
+    function validateForm() 
+    {
+        arrOfInputId.forEach( (element, index) => {
+          var input = document.getElementById(element);
+          validateForm_01(input)
+        })
+        if (setFoucs === true)
+                {
+                  setFoucs = false;
+                  return false;
+                } 
+          else{ 
+              /*
+              {
+                fetch("/searchCom", 
+                      {
+                          method: "POST",
+                        //  body: formDataJsonString,
+                        }, 
+                        {
+                          headers: { 
+                          //'Content-Type': 'multipart/form-data', 
+                          'Content-Type': 'text/html' 
+                                    },
+                        }).then(x => x.text()).then(function(data) {
+                                var mainDiv = document.getElementById('main');				
+                                mainDiv.innerHTML = data;
+                          });
+                      };  */          
+            return true}
+        
+    }
+       // var input = document.getElementById("ComName");
+        
+        function validateForm_01(input) {
+          var value = input.value;
+          if(value.length>0){
+            //Valid
+            console.log("valid")
+          //  input.value="";
+          //  input.placeholder="Got it";
+          //  clearOtherClasses(input);
+          //  input.classList.add("green");
+          
+          }else{
+            //Invalid
+            console.log("Invalid")
+            input.value="";
+            clearOtherClasses(input);
+            input.classList.add("red");
+            if (setFoucs === false)
+                {
+                input.focus();
+                setFoucs = true;
+                } 
+          }
+        
+        }
+        function clearOtherClasses(element)
+        {
+            element.className="";
+          }
+  
+          function onLoadBody() 
+          {
+             // alert("I am an alert box!");
+              document.getElementById('Comtest').readOnly = true;
+              }
+          
+          function  changeReadonly() 
+          {
+              document.getElementById('Comtest').readOnly = false;
+          }
+      
+   /*==========================================================================*/
+        // Add Event Listener to the button element
     /* 
         When our form’s upload button is clicked, 
         the Event Listener will trigger the "uploadFiles" function, 
         which is responsible for handling the file upload process, 
         including preparing the files for upload and sending them to the server. 
     */
-    // following is an Event listener
+    // The following statment create variable to work with upload form event.
+    
     const uploadButton = document.getElementById("uploadButton"); 
-            uploadButton.addEventListener("click", uploadFiles);
+    uploadButton.addEventListener("click", uploadFiles);
+
     // End of Event Listener of the button element with id attribute id="uploadButton"
 
     function uploadFiles(event) 
@@ -282,7 +685,92 @@
                     } // End else
 
         }
+
+    function renderFileList () {
+      /*=======define variables to work dynamiclly with the form <div> with id "file-list-display"
+               and display the name of selected files ======*/
+      var fileListDisplay = document.getElementById('file-list-display');
+      const fileInput = document.getElementById("fileInput");
+      const imgPreview = document.getElementById("img-preview");
+      
+       // put selected file in Array 
+            // Second Check if any files are selected with some error-handling logic 
+            // to cover the case of no files being selected.
+  
+      fileListDisplay.style.display = 'flex';
+      fileListDisplay.innerHTML = '';
+      for (var i = 0; i < fileInput.files.length; i++) {
+      var fileDisplayEl = document.createElement('p');
+        fileDisplayEl.innerHTML = (i + 1) + ': ' + fileInput.files[i].name;
+        fileListDisplay.appendChild(fileDisplayEl);
+/*===================getImgData()====================*/
+        
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(fileInput.files[i]);
+        fileReader.addEventListener("load", function () {
+          var imgDisplayEl = document.createElement('img');
+          imgPreview.style.display = "flex";
+          imgPreview.innerHTML += '<img src="' + this.result 
+                                + '" style="width: 150px; hight:150px;' 
+                                + ' margin: 20px; border-radius: 5px; border: 1px solid #ccc;"/>';
+          fileListDisplay.appendChild(imgDisplayEl);
+        });
+
+      };
+      
     
+    }  
+    
+    /*============================ Dropdown list function ======================================*/
+    function changeContent(page) {
+	var mainDiv = document.getElementById('main');
+
+	switch (page) {
+		case 'addCom':
+		fetch("/addCom").then(x => x.text()).then(function(data) {
+					
+                    mainDiv.innerHTML = data;				
+				  });
+			break;
+		case 'updCom':
+		fetch("/updCom").then(x => x.text()).then(function(data) {
+				
+                    mainDiv.innerHTML = data;
+				  });
+			break;
+		case 'delCom':
+			fetch("/delCom").then(x => x.text()).then(function(data) {
+				
+                    mainDiv.innerHTML = data;
+				  });
+			break;
+      case 'searchCom':
+			fetch("/searchCom").then(x => x.text()).then(function(data) {
+				
+                    mainDiv.innerHTML = data;
+				  });
+			break;
+      case 'searchDoc':
+			fetch("/searchDoc").then(x => x.text()).then(function(data) {
+				
+                    mainDiv.innerHTML = data;
+				  });
+			break;
+      case 'createDB':
+      fetch("/createDB").then(x => x.text()).then(function(data) {
+				
+        mainDiv.innerHTML = data;
+          });
+      break;
+
+		default:
+			contentDiv.innerHTML = '<h2>Page not found!</h2>';
+	}
+}
+
+   /*==============================================================*/
+    
+
 
 
   </script>

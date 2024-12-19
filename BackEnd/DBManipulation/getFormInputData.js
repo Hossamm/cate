@@ -9,8 +9,11 @@ module.exports = class getFormInputData {
         this.allFiles = []
         this.filenames = []
 
-        this.CombinedBuffer=''   
+        this.CombinedBuffer='';   
         this.uploadedBytes = 0;
+	this.fileNameChange='';
+	this.numberOfFiles=0;
+	this.numberOfCloseLoop=0;
            }
 
  
@@ -25,6 +28,11 @@ module.exports = class getFormInputData {
   //    const output = fs.createWriteStream('/home/hossam/bufferfile'); 
     this.busboyObj.on('file', (name, file, info) => 
         {
+
+	console.log('========================================= : 1' + info.filename + this.numberOfFiles++ )
+	
+
+
         // name includes => The name atrbutte in the HTML input tag like <input id="file" type="file" name="fileToUpload">
         // Info includes => { filename: 'حفظ', encoding: '7bit', mimeType: 'application/octet-stream' }
         this.filenames.push(info.filename)
@@ -32,11 +40,29 @@ module.exports = class getFormInputData {
         // Following Event / data Event Concatenate chunks data or buffers into one   
         file.on('data', (chunk) => { 
          // this.uploadedBytes += chunk.length;
-            this.getFile(chunk)   
+
+
+            this.getFile(chunk,info.filename)
+		
+
+	    
+		
+  
         }).on('close', () => {
-            this.allFiles.push(this.CombinedBuffer) // getFile() are using for Concatenation 
-            this.uploadedBytes += this.CombinedBuffer.length 
-            console.log(`File [${info.filename}] Size is : ${this.CombinedBuffer.length} / total uploaded bytes : ${this.uploadedBytes} done`)
+			
+			this.numberOfCloseLoop++;
+			if (this.numberOfCloseLoop === this.numberOfFiles)
+			{
+			console.log (' ========================================== : We are closing ..................' + this.fileNameChange )
+			this.allFiles.push(this.CombinedBuffer); // getFile() are using for Concatenation 
+			this.uploadedBytes += this.CombinedBuffer.length; 
+			console.log(`File [${this.fileNameChange}] Size is : ${this.CombinedBuffer.length} / total uploaded bytes : ${this.uploadedBytes} done`);
+
+			}
+	
+	
+
+           
             
         });
         
@@ -91,10 +117,19 @@ module.exports = class getFormInputData {
 
 
  // The following method is using to Concatenate chunks data or buffers into one file
- getFile(chunk){
-    if (!this.CombinedBuffer) {this.CombinedBuffer = chunk} 
-    else {this.CombinedBuffer = Buffer.concat([this.CombinedBuffer, chunk]);
-    } 
+ getFile(chunk,filename)
+ 	{
+
+    if (!this.CombinedBuffer) {this.CombinedBuffer = chunk; this.fileNameChange = filename ; console.log (' ================================ : We are starting ....' + this.fileNameChange + filename )} 
+    else if (this.fileNameChange === filename) {this.CombinedBuffer = Buffer.concat([this.CombinedBuffer, chunk]); console.log (' ================================ : File Not change ....')}
+    else {
+	    this.allFiles.push(this.CombinedBuffer); // getFile() are using for Concatenation 
+            this.uploadedBytes += this.CombinedBuffer.length; 
+            console.log(`File [${this.fileNameChange}] Size is : ${this.CombinedBuffer.length} / total uploaded bytes : ${this.uploadedBytes} done`);
+	    this.CombinedBuffer = chunk;
+	    this.fileNameChange = filename;
+		
+	 } 
 }
 
 

@@ -7,7 +7,7 @@ module.exports = class conntoPgDB {
                    password: 'postgres',
                    host: 'localhost',
                    port: '5432',
-                   database: 'nodedb',
+                   database: 'catedb',
                });
        // this.dbStatus = 'notExists' //  'Exists' if dbName exists in PG db, 'notExists' if not      
            }
@@ -47,9 +47,9 @@ async  closeconn() // End DB connection
  // function insertRec
  async insertRec(companyValues, photoValues) 
  {  
-// Insert more than one row in table
-  var companysql = 'INSERT INTO company(comname, notes) VALUES ($1, $2)'
-  var photosql = 'INSERT INTO photo (id, photoName, photoFile) VALUES ($1, $2, $3)'; 
+// Insert more than one row in table   
+  var companysql = 'INSERT INTO company(com_name, com_type, com_purpose, com_address, notes) VALUES ($1, $2, $3, $4, $5)'
+  var photosql = 'INSERT INTO images (company_id, image, name) VALUES ($1, $2, $3)'; 
 
 // Insert new Company recors in Company Table 
 return await this.conn.query(companysql,companyValues)
@@ -60,7 +60,7 @@ return await this.conn.query(companysql,companyValues)
 
             else{
              console.log("Number of records inserted in Company Table: " + result.rowCount)
-              return this.conn.query(`select id from company where comname = '${companyValues[0]}'`)
+              return this.conn.query(`select id from company where com_name = '${companyValues[0]}'`)
             }
         })
     .then((result) =>
@@ -99,7 +99,10 @@ return await this.conn.query(companysql,companyValues)
                 return 'All Company data has been inserted : ';
                 }
         })
-    .catch(function (error) { console.log('Error in adding Company record : ', error) })
+    .catch(function (error) { console.log('Error in adding Company record : ', error) 
+
+        if (error.code === '23505'){return ' اسم الشركه مسجل اعد كتابة اسم الشريكه ';}
+    })
     
  }// End of insertRec function
 
