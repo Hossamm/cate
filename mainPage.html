@@ -94,7 +94,7 @@
   </body>
 
 
-  <script>
+  <script type="text/javascript">
 
     const arrOfInputId =["ComName","ComType","ComPurp","ComAddr","ComNote"]
     var setFoucs = false;
@@ -223,7 +223,7 @@
 
             // Fourth Send the AJAX request using XMLHttpRequest
             const xhr = new XMLHttpRequest();
-            xhr.open("POST",form.action);
+            xhr.open("POST","http://localhost:3000/");
             xhr.upload.onprogress = (event) => {
                 const progress = (event.loaded / event.total) * 100;
                 outputBox.querySelector('.progress').style.width = `${progress}%`;

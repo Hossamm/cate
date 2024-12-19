@@ -1,7 +1,8 @@
 <h2 style="text-align: center;color:black;"> بيانات الشركة </h2>
 
         <div class="container">
-          <form method="POST" name="ComForm" onsubmit="return validateForm()"> <!--action="submitFun()"-->
+          <form method="POST" name="ComForm" onsubmit="return validateForm()"
+          id="uploadForm" enctype="multipart/form-data"> <!--action="submitFun()"-->
               <div class="row">
                 <div class="col-25">
                   <label for="comName">اسم الشركة التجاري</label>
@@ -99,7 +100,7 @@
 
               <div class="button">
                 <div>
-                    <input type="submit" value="أضف الشركة" class="fbottom"> 
+                    <input type="submit" id="uploadButton" value="أضف الشركة" class="fbottom"  onclick= "uploadFiles(event)"> 
                 </div>
               </div>
 

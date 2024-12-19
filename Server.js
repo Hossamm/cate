@@ -1,13 +1,29 @@
 const http = require('http')
 var url = require('url');
 var fs = require('fs');
-	 
 
-	const hostname = 'localhost'
-	const port = 3000
+// Import user packages 
+const conntoPgDB = require('./BackEnd/DBManipulation/conntoPgDB.js');
+const getFormInputData = require('./BackEnd/DBManipulation/getFormInputData.js');
+
+// ========================================
+
+workWithPgDB = new conntoPgDB()  
+// الحمد لله 
+async function insertCompData(companyValues, photoValues) {
+  await workWithPgDB.conntodb();
+  return  await workWithPgDB.insertRec(companyValues, photoValues);
+}
+// الحمد لله  
+
+//==========================================
+
+	const hostname = 'localhost';
+	const port = 3000;
 
 
 	const server = http.createServer((req, res) => {
+
 		req.on('error', err => {
 			console.error(err);
 			res.statusCode = 400;
@@ -19,8 +35,70 @@ var fs = require('fs');
 
 		 // var path = url.parse(req.url).pathname;
 			var path = req.url;
+		const FormInputData = new getFormInputData(req,res)
+		switch (path) { 
+			case '/': 
+			// Start the case 
+			 if (req.method === 'POST') {
+			//==================================================================================================
+			   console.log('POST request');
+			
+				FormInputData.getFormInputs(req, res)
+				.then((data) => 
+					{
+				   var fields = data[0]
+				   var filenames = data[1]
+				   var allFiles = data[2]
+			
+			// write allFiles ================================================
+				   
+				   allFiles.forEach( (element, index) => {
+					fs.writeFile(`./${filenames[index]}`, allFiles[index], (err) => {
+						
+						if (err) {
+									throw new Error('Something went wrong.')
+								 }
+						console.log(`the -  ${filenames[index]} - file has been writen`);
+																		})
+						console.log('element.length : ',element.length)
+						
+												});
+			//End Write File =================================================
+			
+			// Starting of insert Data and response to Client - Company Data and Number of photos uploaded  ========
+			var companyValues = []
+			for (let x in fields) {
+			   companyValues.push( fields[x]);
+			};
+			
+			
+			console.log('Company Fields value : ' + companyValues)
+			var photoValues = []
+			for (let i = 0; i < allFiles.length; i++) {
+			   console.log((allFiles[i].length))
+				photoValues.push([allFiles[i],filenames[i]])   
+			}
+			
+			// console.log('Company photo name and files :' , photoValues )
+								
+							   insertCompData(companyValues, photoValues).
+							   then((processResult) =>{
 
-		switch (path) {  
+									console.log(' res.write :  ', processResult)
+									 res.writeHead(200, {  
+										'Content-Type': 'text/html'  // or 'Content-Type':'application/json'
+									});  
+									res.write(processResult);  
+									res.end();
+							   })
+			// End of insert Data and response to Client - Company Data and Number of photos uploaded  ========
+				})
+				
+			
+					}  
+			// End of the case  
+			break;
+	
 			case '/index.html': 
 			// read file code ..
 			fs.readFile(process.cwd() + path,'utf8',function(error, data) {  
