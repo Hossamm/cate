@@ -1,7 +1,7 @@
 <h2 style="text-align: center;color:black;"> بيانات الشركة </h2>
 
         <div class="container">
-          <form method="POST" name="ComForm" onsubmit="return validateForm()"
+          <form method="POST" name="ComForm"
           id="uploadForm" enctype="multipart/form-data"> <!--action="submitFun()"-->
               <div class="row">
                 <div class="col-25">
@@ -20,8 +20,8 @@
                   <select id="ComType" name="CompnyType" placeholder="ادخل اسم الشركه">
                     <!-- شركات الأشخاص  -->
                     <option value=""> </option>
-                    <option value="التضامن وشركة">شركة التضامن</option>
-                    <option value="التوصية البسيطة">التوصية البسيطة</option>
+                    <option value="شركة التضامن">شركة التضامن</option>
+                    <option value="شركة التوصية البسيطة">شركة التوصية البسيطة</option>
                     <option value="شركة المحاصة">شركة المحاصة</option>
                     <!--  شركات الأموال  -->
                     <option value="شركة المساهمة">شركة المساهمة</option>
@@ -100,7 +100,7 @@
 
               <div class="button">
                 <div>
-                    <input type="submit" id="uploadButton" value="أضف الشركة" class="fbottom"  onclick= "uploadFiles(event)"> 
+                    <input type="submit" id="uploadButton" value="أضف الشركة" class="fbottom" onclick= "uploadFiles(event)"> 
                 </div>
               </div>
 

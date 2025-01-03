@@ -96,7 +96,7 @@ return await this.conn.query(companysql,companyValues)
                 }
             else{
                 console.log('All Company data has been inserted', result);
-                return 'All Company data has been inserted : ';
+                return 'تم تسجيل بيانات الشريكه بنجاح .....';
                 }
         })
     .catch(function (error) { console.log('Error in adding Company record : ', error) 
@@ -105,6 +105,76 @@ return await this.conn.query(companysql,companyValues)
     })
     
  }// End of insertRec function
+
+// Function Get/Select All Company Data ... 
+async getComData(comName) 
+{  
+ var ComFields = [];
+ var ComFiles = [];
+ var ComAllData = [];
+// Insert new Company recors in Company Table 
+
+    return await this.conn.query(`select * from company where com_name = '${comName}'`)
+   .then((result) =>
+       {   
+          // console.log(`Selected row from Company table where Company name is ${comName} : `, result.rowCount)
+
+               if (result instanceof Error) 
+                   {console.log('Company data not Selected Error: ', result);}
+               else{          
+                       // Select files from images table result.rows.values
+                       ComFields = result.rows;
+                    //   console.log(result)
+                     return this.conn.query(`select encode(image, 'base64'), name from images where company_id = '${result.rows[0].id}'`)
+                                           //select encode(image, 'base64'), name from images where company_id
+                               // delete the next line only with keeping the , when you use it in production..
+                               .then((result)=>
+                                {
+                                    if (result instanceof Error) 
+                                        {console.log('Company data not Selected Error: ', result);}
+                                    else{
+                                       // console.log("Number of files is : " + result.rowCount);
+                                         ComFiles = result.rows;
+                                        // console.log(result.rows[0].encode)
+                                        // console.log(result.rows[0])
+                                         ComAllData = [ComFields,ComFiles];
+                                         
+                                         return ComAllData;                                        
+                                        }    
+                                })                 
+                                                    
+       }
+       
+    })
+   
+   .catch(function (error) { console.log('Error in adding Company record : ', error) })
+
+
+   
+}// End of Get/Select All Company Data Function ...
+
+
+async getColFromTable( cloNmae,tableName) 
+{  
+// Insert new Company recors in Company Table 
+
+    return await this.conn.query(`select ${cloNmae} from ${tableName}`)
+    .then((result) =>
+        {   
+           // console.log(`Selected row from Company table where Company name is ${comName} : `, result.rowCount)
+ 
+                if (result instanceof Error) 
+                    {
+                        console.log('Company data not Selected Error: ', result);
+                        return ('Company data not Selected Error: ' + result);
+                    }
+                else{ 
+                    return result;
+                    }
+                })
+}
+
+
 
 }; // End of class
 

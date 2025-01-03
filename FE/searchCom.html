@@ -1,13 +1,17 @@
 
 <div class="container">
 
-    <form name="ComForm" onsubmit="return validateForm()" action="http://localhost:3000/">
+    <form name="SearchForm" id="SearchFormId">
         <div class="row">
           <div class="col-25">
             <label for="comName">اسم الشركة</label>
           </div>
-          <div class="col-75">
-            <input type="search" id="ComName" name="Companyname" placeholder="ادخل اسم الشركه" class=".col-75_2">
+          <div class="col-75" id="SearchComDiv">
+
+          <!--  <input type="search" id="SearchComId" name="Companyname" placeholder="ادخل اسم الشركه" class=".col-75_2"> -->
+                <input type="text" list="comNameList" name="Companyname" 
+                id="SearchComId" placeholder="ادخل اسم الشركه" class=".col-75_2" autocomplete="off">
+                <datalist id="comNameList"></datalist>
           </div>
         </div>
    
@@ -15,11 +19,12 @@
 
         <div class="button">
           <div>
-              <input type="submit" value="بحث" class="fbottom"> 
+              <input type="submit" value="بحث" id = "SearchBtnId" class="fbutton" onclick= "searchComSubmit(event)">   
           </div>
         </div>
 
     </form>
     
-    
   </div>
+
+  

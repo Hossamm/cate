@@ -20,6 +20,13 @@ async function insertCompData(companyValues, photoValues) {
 
 	const hostname = 'localhost';
 	const port = 3000;
+//===========================================
+const updateForm   = require('./Control/updateForm.js');
+const selectFromDB = require('./Control/selectFromDB.js')
+
+    const updateFormObj = new updateForm()
+	const selectFromDBObj = new selectFromDB()
+//===========================================
 
 
 	const server = http.createServer((req, res) => {
@@ -37,7 +44,7 @@ async function insertCompData(companyValues, photoValues) {
 			var path = req.url;
 		const FormInputData = new getFormInputData(req,res)
 		switch (path) { 
-			case '/': 
+			case '/addComToDB': 
 			// Start the case 
 			 if (req.method === 'POST') {
 			//==================================================================================================
@@ -295,25 +302,34 @@ async function insertCompData(companyValues, photoValues) {
 				}  
 				}); 
 				// End read file code
-			break; 
-			case '/searchCom':
-			// read file code ..
-			fs.readFile(process.cwd() +'/FE/searchCom.html','utf8',function(error, data) {  
-				if (error) {  
-					res.writeHead(404); 
-					res.write('Error Message Code'+ res.statusCode +'\n'+ error); 
-					res.end();  
-				} else {
-				// write the res...
-								   
-				   res.writeHead(200, {  
-						'Content-Type': 'text/html'  // or 'Content-Type':'application/json'
-					});  
-					res.write(data);  
-					res.end(); 
-				}  
-				}); 
-				// End read file code
+			break;   
+			case '/searchComSubmit':
+			//
+			if (req.method === 'POST') 
+				{
+					var body = ''
+					req.on('data', function(data) {
+					body += data
+					// console.log('Partial body: ' + body)
+					})
+					req.on('end', function() {
+					console.log('Body: ' + body )
+					// Working with DATABASE
+					sqlRecord = JSON.parse(body);
+					console.log(' This the sqlRecord field : ' , sqlRecord.Companyname)
+
+					updateFormObj.mainfunction(sqlRecord.Companyname)
+						.then((updatedHTMLFile)=>{
+							res.writeHead(200, {  
+								'Content-Type': 'text/html'  // or 'Content-Type':'application/json'
+							});  
+							res.write(updatedHTMLFile);  
+							res.end(); 
+						})
+					})
+				}
+
+				// End case
 			break;      
 			case '/searchDoc':
 			// read file code ..
@@ -333,7 +349,63 @@ async function insertCompData(companyValues, photoValues) {
 				}  
 				}); 
 				// End read file code
-			break;           
+			break;
+			case '/searchCom':
+			// read file code ..
+			fs.readFile(process.cwd() +'/FE/searchCom.html','utf8',function(error, data) {  
+				if (error) {  
+					res.writeHead(404); 
+					res.write('Error Message Code'+ res.statusCode +'\n'+ error); 
+					res.end();  
+				} else {
+				// write the res...
+								   
+				   res.writeHead(200, {  
+						'Content-Type': 'text/html'  // or 'Content-Type':'application/json'
+					});  
+					res.write(data);  
+					res.end(); 
+				}  
+				}); 
+				// End read file code
+			break;
+			case '/getColFromDB':
+				if (req.method === 'POST') 
+					{
+						var body = ''
+						req.on('data', function(data) {
+						body += data
+						// console.log('Partial body: ' + body)
+						})
+						req.on('end', function() {
+						console.log('Body: ' + body )
+						// ==== ==== ==== Working with DATABASE ==== ==== ====
+						 sqlParm = JSON.parse(body);
+						// console.log(' This the sqlRecord field : ' , sqlParm.colName + " / " +sqlParm.tableName)
+						selectFromDBObj.selectOneCol(sqlParm.colName,sqlParm.tableName)
+							.then((selectResult)=>{
+								// console.log(selectResult.rows)
+				// ==== ==== ==== Change selectResult.rows Objects to Array of Object's value  ==== ==== ==== 
+								var	resultToArray =[]
+								for(i=0;i<selectResult.rows.length;i++)
+									{
+								 		resultToArray[i] = selectResult.rows[i].com_name;
+									} 
+								// console.log(resultToArray)
+								ArrayToJson = JSON.stringify(resultToArray)
+								// console.log(ArrayToJson)
+								res.writeHead(200, {  
+									'Content-Type':'application/json'  // or 'Content-Type': 'text/html' 
+								});  
+								res.write(ArrayToJson);  
+								res.end(); 
+							})
+						})
+					}
+
+			
+				// End read file code
+			break;                                  
 			default:  
 				res.writeHead(404);  
 				res.write("opps this doesn't exist - 404");  
