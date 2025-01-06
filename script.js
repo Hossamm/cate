@@ -295,7 +295,100 @@
 			fetch("/searchDoc").then(response => response.text()).then(function(data) {
 				
                     mainDiv.innerHTML = data;
-				  });
+				  })
+          .then(()=>{
+            // console.log('You are in searchCom');
+              fetch("/getColFromDB", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({"colName":"com_name","tableName":"company"})
+                }).then(Response => Response.json()).then((jsonObject)=>{               
+                  // console.log(jsonObject)
+                  var options = '';
+                  var jsonArray = jsonObject;
+                  for (var i = 0; i < jsonArray.length; i++) {
+                    options += '<option value="' + jsonArray[i] + '" />';
+                    // console.log(options)
+                  }
+                  document.getElementById('comNameList').innerHTML = options;
+                  const inputComName = document.getElementById('SearchComId');
+                  inputComName.addEventListener("input", function(event){
+                    if (jsonArray.includes(inputComName.value))
+                    {
+                      console.log(" Company Name has been selected : .....")
+                      fetch("/getColFromDBJoinTables", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body:JSON.stringify({"friColName":"id","secColName":"name",
+                                              "friTableName":"company","secTableName":"images",
+                                              "friWhereClo":"com_name","secWhereClo":"company_id",
+                                              "friWhereValue":`${inputComName.value}`})
+                        })
+                        .then(Response => Response.json()).then((jsonObject)=>{
+                          // document.getElementById('comNameList').innerHTML = options; 
+                          console.log(jsonObject)
+                          var options = '';
+                          var jsonArray = jsonObject;
+                          for (var i = 0; i < jsonArray.length; i++) {
+                            options += '<option>' + jsonArray[i] + '</>';
+                            // console.log(options)
+                          }
+                          console.log(options)
+                          imagesSelect = document.getElementById('imagesSelectId');
+                          imagesSelect.innerHTML = options;
+
+                           })
+                           .then(()=>{
+                            getImagesBTN = document.getElementById('getImagesBTN');
+                            getImagesBTN.addEventListener("click", function(event){
+                            //console.log(imagesSelect.value);
+                            const selectedOptions = [];
+
+                            for (const option of imagesSelect.options) {
+                              if (option.selected) {
+                                selectedOptions.push(option.value);
+                              }
+                            }
+                              // console.log(selectedOptions);
+                             // ArrayToJson = JSON.stringify(selectedOptions);
+                              console.log(selectedOptions);
+
+                              fetch("/getImages", {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({"colName":"encode(image, 'base64')",
+                                                        "tableName":"images",
+                                                        "whereClo":"name",
+                                                        "whereValue":selectedOptions})
+                                }).then(Response => Response.text()).then((jsonObject)=>{ 
+
+                                  //console.log(jsonObject)
+                                  imagesToDisplay = document.getElementById('imagesToDisplay')
+                                  imagesToDisplay.innerHTML = jsonObject;
+
+                                })
+                                
+                            })
+                  
+                           })
+
+
+                    }
+                  
+                  })
+  
+                })
+            })/*.then(()=>{
+
+              document.getElementById('comNameList').innerHTML = options; 
+
+            })*/
 			break;
       case 'createDB':
       fetch("/createDB").then(response => response.text()).then(function(data) {

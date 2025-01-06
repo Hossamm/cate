@@ -1,32 +1,46 @@
 
         <div class="container">
-
-          <form name="ComForm" onsubmit="return validateForm()" action="http://localhost:3000/">
+          <form name="SearchDocForm" id="SearchDocFormId"></form>
               <div class="row">
                 <div class="col-25">
-                  <label for="comName">اسم الشركة</label>
+                  <label for="Companyname">اسم الشركة</label>
                 </div>
                 <div class="col-75">
-                  <input type="search" id="ComName" name="CompanyName" placeholder="ادخل اسم الشركه" class=".col-75_2">
+                  <input type="text" list="comNameList" name="Companyname" 
+                          id="SearchComId" placeholder="ادخل اسم الشركه" class=".col-75_2" autocomplete="off">
+                  <datalist id="comNameList" aria-multiselectable="false"></datalist>
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-25">
-                  <label for="docName">اسم المستند</label>
+                  <label for="imagesSelect">اسم المستند</label>
                 </div>
                 <div class="col-75">
-                  <input type="search" id="docName" name="documentName" placeholder="ادخل اسم المستند" class=".col-75_2">
+                <!-- <input type="search" id="docName" name="documentName" placeholder="ادخل اسم المستند" class=".col-75_2"> -->
+                  <select id="imagesSelectId" name="imagesSelect" multiple>
+                  <!--  <option>Vanilla Shake</option>
+                    <option>Strawberry Shake</option>
+                    <option>Chocolate Shake</option> -->
+                  </select>
                 </div>
               </div>
-         
+
+              <div class="row">
+                <div class="col-25">
+                  <label for="imagesSelect">المستند</label>
+                </div>
+                <div class="col-75">
+                  <div id="imagesToDisplay" ></div>
+                </div>
+              </div>
               <br>
-
               <div class="button">
                 <div>
-                    <input type="submit" value="بحث" class="fbottom"> 
+                    <input type="submit" id="getImagesBTN"  value="بحث" class="fbottom"> 
                 </div>
-              </div>
+              </div> 
+            </a>
 
           </form>
           

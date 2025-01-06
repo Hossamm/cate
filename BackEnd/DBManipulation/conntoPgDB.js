@@ -154,7 +154,7 @@ async getComData(comName)
 }// End of Get/Select All Company Data Function ...
 
 
-async getColFromTable( cloNmae,tableName) 
+async getColFromTable(cloNmae,tableName) 
 {  
 // Insert new Company recors in Company Table 
 
@@ -175,7 +175,65 @@ async getColFromTable( cloNmae,tableName)
 }
 
 
+//   return this.conn.query(`select encode(image, 'base64'), name from images where company_id = '${result.rows[0].id}'`
 
+async getColFromTableWhere(cloNmae,tableName,whereClo,whereValue) 
+{  
+// Insert new Company recors in Company Table 
+    var xxx =`select ${cloNmae} from ${tableName} where ${whereClo} = '${whereValue}'`;
+    console.log(xxx)
+    return await this.conn.query(`select ${cloNmae} from ${tableName} where ${whereClo} = '${whereValue}'`)
+                    
+    .then((result) =>
+        {   
+           // console.log(`Selected row from Company table where Company name is ${comName} : `, result.rowCount)
+ 
+                if (result instanceof Error) 
+                    {
+                        console.log('Images not Selected Error: ', result);
+                        return ('Images not Selected Error: ' + result);
+                    }
+                else{ 
+                    return result;
+                    }
+                })
+}
+
+async getColFromJoinTables(friColName,secColName,
+                            friTableName,secTableName,
+                            friWhereClo,secWhereClo,
+                            friWhereValue) 
+{ 
+
+ return await this.getColFromTableWhere(friColName,friTableName,friWhereClo,friWhereValue)
+ .then((result)=>{
+
+    if (result instanceof Error) 
+        {
+            console.log('Error in Select Company Id : ' , result);
+            return ('Company Idnot Selected Error: ' + result);
+        }
+    else{ 
+    
+    
+        return this.getColFromTableWhere(secColName,secTableName,secWhereClo,result.rows[0].id)
+        .then((result)=>{
+
+            if (result instanceof Error) 
+                {
+                    console.log('Error in Select image Name : ' , result);
+                    return ('image Nam not Selected Error: ' + result);
+                }
+            else{ 
+                // console.log(result)
+                return  result; 
+                }
+        })
+        
+        }
+ })
+ 
+}
 }; // End of class
 
 

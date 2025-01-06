@@ -58,7 +58,7 @@ async createComRec(allComData)
             this.comRec [4]= allComData[0][0].com_address;
             this.comRec [5]= allComData[0][0].notes;
             // The following Function return the HTML code / URI of the files to included in HTML page...
-            this.comRec [6] = await this.CreateURIForFiles(allComData[1]);
+            this.comRec[6] = await this.CreateURIForFiles(allComData[1]);
     
             
             
@@ -89,6 +89,8 @@ async updateHTML(data,arr_var, arr_val)
 
 async CreateURIForFiles(ComFiles)
     {
+    // console.log('This the file Name from URI function : \n\n' , (ComFiles[0].name))
+    // console.log('This the URI file from URI function : \n\n' , (ComFiles[0].encode))
     // This Function return the HTML code / URI of the files to included in HTML page...
          var data = '';
          //var excelicon = await this.toDataUri('./excelicon.jpg')
@@ -204,6 +206,7 @@ async CreateURIForFiles(ComFiles)
             break;
             case 'mp3':
             case 'mp4':
+                
                 this.uri = `<embed src="data:application/
                             svg+xml;base64,${(ComFiles[i].encode)}"style="width: 300px; height: 300px; 
                             margin: 20px; border-radius: 5px; border: 1px solid #ccc;"> 

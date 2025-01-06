@@ -1,7 +1,9 @@
 const http = require('http')
 var url = require('url');
 var fs = require('fs');
-
+// Host Info
+const hostname = 'localhost';
+const port = 3000;
 // Import user packages 
 const conntoPgDB = require('./BackEnd/DBManipulation/conntoPgDB.js');
 const getFormInputData = require('./BackEnd/DBManipulation/getFormInputData.js');
@@ -18,11 +20,11 @@ async function insertCompData(companyValues, photoValues) {
 
 //==========================================
 
-	const hostname = 'localhost';
-	const port = 3000;
+	
 //===========================================
 const updateForm   = require('./Control/updateForm.js');
-const selectFromDB = require('./Control/selectFromDB.js')
+const selectFromDB = require('./Control/selectFromDB.js');
+//const { console } = require('inspector');
 
     const updateFormObj = new updateForm()
 	const selectFromDBObj = new selectFromDB()
@@ -381,18 +383,18 @@ const selectFromDB = require('./Control/selectFromDB.js')
 						console.log('Body: ' + body )
 						// ==== ==== ==== Working with DATABASE ==== ==== ====
 						 sqlParm = JSON.parse(body);
-						// console.log(' This the sqlRecord field : ' , sqlParm.colName + " / " +sqlParm.tableName)
+						 console.log(' This the sqlRecord field : ' , sqlParm.colName + " / " +sqlParm.tableName)
 						selectFromDBObj.selectOneCol(sqlParm.colName,sqlParm.tableName)
 							.then((selectResult)=>{
 								// console.log(selectResult.rows)
 				// ==== ==== ==== Change selectResult.rows Objects to Array of Object's value  ==== ==== ==== 
-								var	resultToArray =[]
+								var	arrayOfSelectedFiles=[]
 								for(i=0;i<selectResult.rows.length;i++)
 									{
-								 		resultToArray[i] = selectResult.rows[i].com_name;
+								 		arrayOfSelectedFiles[i] = selectResult.rows[i].com_name;
 									} 
-								// console.log(resultToArray)
-								ArrayToJson = JSON.stringify(resultToArray)
+								// console.log(arrayOfSelectedFiles)
+								ArrayToJson = JSON.stringify(arrayOfSelectedFiles)
 								// console.log(ArrayToJson)
 								res.writeHead(200, {  
 									'Content-Type':'application/json'  // or 'Content-Type': 'text/html' 
@@ -405,7 +407,137 @@ const selectFromDB = require('./Control/selectFromDB.js')
 
 			
 				// End read file code
-			break;                                  
+			break;
+			case '/getColFromDBWhere':
+				console.log('-------------------You are in misstak -------------------------')
+				if (req.method === 'POST') 
+					{
+						var body = ''
+						req.on('data', function(data) {
+						body += data
+						// console.log('Partial body: ' + body)
+						})
+						req.on('end', function() {
+						console.log('Body: ' + body )
+						// ==== ==== ==== Working with DATABASE ==== ==== ====
+						 sqlParm = JSON.parse(body);
+						// console.log(' This the sqlRecord field : ' , sqlParm.colName + " / " +sqlParm.tableName)
+						selectFromDBObj.selectOneColWhere(sqlParm.colName,sqlParm.tableName,sqlParm.whereClo,sqlParm.whereValue)
+		
+							.then((selectResult)=>{
+								// console.log(selectResult.rows)
+				// ==== ==== ==== Change selectResult.rows Objects to Array of Object's value  ==== ==== ==== 
+								var	arrayOfSelectedFiles=[]
+								for(i=0;i<selectResult.rows.length;i++)
+									{
+								 		arrayOfSelectedFiles[i] = selectResult.rows[i].com_name;
+									} 
+								// console.log(arrayOfSelectedFiles)
+								ArrayToJson = JSON.stringify(arrayOfSelectedFiles)
+								// console.log(ArrayToJson)
+								res.writeHead(200, {  
+									'Content-Type':'application/json'  // or 'Content-Type': 'text/html' 
+								});  
+								res.write(ArrayToJson);  
+								res.end(); 
+							})
+						})
+					}
+				// End The Case
+			break; 
+			case '/getColFromDBJoinTables':
+			// console.log('------- Hello you are in getColFromDBJoinTables ------')
+				if (req.method === 'POST') 
+					{
+						var body = ''
+						req.on('data', function(data) {
+						body += data
+						// console.log('Partial body: ' + body)
+						})
+						req.on('end', function() {
+						console.log('Body: ' + body )
+						// ==== ==== ==== Working with DATABASE ==== ==== ====
+						 sqlParm = JSON.parse(body);
+					// console.log('================================' + sqlParm.friWhereValue)
+					// console.log(' This the sqlRecord field : ' , sqlParm.colName + " / " +sqlParm.tableName)
+					//	selectFromDBObj.selectOneColWhere(sqlParm.colName,sqlParm.tableName,sqlParm.whereClo,sqlParm.whereValue)
+						selectFromDBObj.selectOneColFromJoinTables(sqlParm.friColName,sqlParm.secColName,
+																	sqlParm.friTableName,sqlParm.secTableName,
+																	sqlParm.friWhereClo,sqlParm.secWhereClo,
+																	sqlParm.friWhereValue)
+		
+							.then((selectResult)=>{
+							//	console.log(selectResult)
+				// ==== ==== ==== Change selectResult.rows Objects to Array of Object's value  ==== ==== ==== 
+								var	arrayOfSelectedFiles=[]
+								for(i=0;i<selectResult.rows.length;i++)
+									{
+								 		arrayOfSelectedFiles[i] = selectResult.rows[i].name;
+									} 
+								// console.log(arrayOfSelectedFiles)
+								ArrayToJson = JSON.stringify(arrayOfSelectedFiles)
+								// console.log(ArrayToJson)
+								res.writeHead(200, {  
+									'Content-Type':'application/json'  // or 'Content-Type': 'text/html' 
+								});  
+								res.write(ArrayToJson);  
+								res.end(); 
+							})
+						})
+					}
+
+			
+				// End read file code /getImages
+			break;
+			case '/getImages':
+			// console.log('------- Hello you are in getColFromDBJoinTables ------')
+				if (req.method === 'POST') 
+					{
+						var body = ''
+						req.on('data', function(data) {
+						body += data
+						// console.log('Partial body: ' + body)
+						})
+						req.on('end', function() {
+						console.log('Body: ' + body )
+						// ==== ==== ==== Working with DATABASE ==== ==== ====
+						 sqlParm = JSON.parse(body);
+					     //console.log('================================' + sqlParm.whereValue)
+						// jsonToArray = JSON.stringify(sqlParm.whereValue)
+					// console.log(' This the sqlRecord field : ' , sqlParm.colName + " / " +sqlParm.tableName)
+							
+						selectFromDBObj.selectOneColWhere(sqlParm.colName,sqlParm.tableName,sqlParm.whereClo,sqlParm.whereValue)	
+							.then((selectResult)=>{
+								//console.log(selectResult[0].rows[0])
+								console.log(selectResult)
+				// ==== ==== ==== Change selectResult.rows Objects to Array of Object's value  ==== ==== ==== 
+				this.ComFiles = [];
+				
+				for(var i = 0; i<sqlParm.whereValue.length;i++ ) 
+					{
+				var comOneFile =  {name: sqlParm.whereValue[i],encode:selectResult[i].rows[0].encode};
+				this.ComFiles[i] = comOneFile;
+					}
+				//console.log(ComFiles.length);
+				//console.log(this.ComFiles[0].name)
+				//console.log(this.ComFiles[0].encode)
+				//console.log(this.ComFiles)
+				updateFormObj.CreateURIForFiles(this.ComFiles).then((imagesHtmlTag)=>{
+				//	console.log(imagesHtmlTag)
+					//const imagesHtmlTag = URIFiles
+					res.writeHead(200, {  
+			    'Content-Type':'multipart/form-data' //'Content-Type':'application/json' or 'Content-Type': 'text/html'   
+					});  
+					res.write(imagesHtmlTag);  
+					res.end(); 
+				}) 
+							})
+						})
+					}
+
+			
+				// End read file code 
+			break;                                                 
 			default:  
 				res.writeHead(404);  
 				res.write("opps this doesn't exist - 404");  
