@@ -14,11 +14,11 @@ module.exports = class updateForm {
         
        
 
-async mainfunction(comName)
+async mainfunction(comName,formPath)
 {
         await this.getComDataAndFiles(comName);
         await this.createComRec(this.allComData);
-  await this.updateHTMLFile().then((HTMLfile)=>
+        await this.updateHTMLFile(formPath).then((HTMLfile)=>
             {if(HTMLfile instanceof TypeError)
             {
                 console.log('Error in reading HTML file : ' + HTMLfile)
@@ -69,9 +69,9 @@ async createComRec(allComData)
             
         }
 
-async updateHTMLFile(comRec){
+async updateHTMLFile(formPath){
     
-     return   fs.readFileSync(this.formPath,'utf8')                   
+     return   fs.readFileSync(formPath,'utf8')                   
         }
 
 

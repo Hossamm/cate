@@ -318,9 +318,9 @@ const selectFromDB = require('./Control/selectFromDB.js');
 					console.log('Body: ' + body )
 					// Working with DATABASE
 					sqlRecord = JSON.parse(body);
-					console.log(' This the sqlRecord field : ' , sqlRecord.Companyname)
-
-					updateFormObj.mainfunction(sqlRecord.Companyname)
+					console.log(sqlRecord)
+					console.log(' This the sqlRecord field : ' , sqlRecord.formPath)
+					updateFormObj.mainfunction(sqlRecord.Companyname,sqlRecord.formPath)
 						.then((updatedHTMLFile)=>{
 							res.writeHead(200, {  
 								'Content-Type': 'text/html'  // or 'Content-Type':'application/json'
@@ -537,7 +537,63 @@ const selectFromDB = require('./Control/selectFromDB.js');
 
 			
 				// End read file code 
-			break;                                                 
+			break;  
+			case '/updateComInfo':
+			//
+		/*	if (req.method === 'POST') 
+				{
+				FormInputData.getFormInputs(req, res)
+				.then((data) => 
+					{
+				   var fields = data[0]
+				   var companyValues = []
+			for (let x in fields) {
+			   companyValues.push( fields[x]);
+			};
+			
+			
+			console.log('Company Fields value : ' + companyValues)
+		*/
+
+		if (req.method === 'POST') 
+			{
+				var body = ''
+				req.on('data', function(data) {
+				body += data
+				// console.log('Partial body: ' + body)
+				})
+				req.on('end', function() {
+				console.log('Body: ' + body )
+				// ==== ==== ==== Working with DATABASE ==== ==== ====
+				 sqlParm = JSON.parse(body);
+ 
+			selectFromDBObj.updateTableRec(sqlParm.tableName,
+												sqlParm.columnAndValueString,
+												sqlParm.whereClo,sqlParm.whereValue)
+								.then((updateResult )=>{
+
+										console.log(updateResult)
+										res.writeHead(200, {  
+											'Content-Type': 'text/html'  // or 'Content-Type':'application/json'
+										});  
+										res.write( ' تم تعديل بيانات الشريكة بنجاح' );  
+										res.end();
+
+													})
+
+				
+				
+		// function updateRec(tableName, columnAndValueString, whereClo, whereValue)
+		// columnAndValueString = `first_name = 'MS', last_name = 'Dhoni'`
+		// ${fieldName} = ${newValue}
+			
+				
+				
+				
+				})
+				}
+
+			break;                                               
 			default:  
 				res.writeHead(404);  
 				res.write("opps this doesn't exist - 404");  

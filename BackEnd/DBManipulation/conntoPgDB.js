@@ -234,6 +234,36 @@ async getColFromJoinTables(friColName,secColName,
  })
  
 }
+
+// function updateRec(tableName, columnAndValueString, whereClo, whereValue)
+// columnAndValueString = `first_name = 'MS', last_name = 'Dhoni'`
+// ${fieldName} = ${newValue}
+
+async updateRec(tableName,columnAndValueString,whereClo,whereValue)
+  {
+    console.log(`UPDATE ${tableName} SET ${columnAndValueString} WHERE ${whereClo} = ${whereValue}`)
+      var sql = `UPDATE ${tableName} SET ${columnAndValueString} WHERE ${whereClo} = ${whereValue}` 
+
+ return await this.conn.query(sql)
+                    
+ .then((result) =>
+     {   
+        // console.log(`Selected row from Company table where Company name is ${comName} : `, result.rowCount)
+
+             if (result instanceof Error) 
+                 {
+                     console.log('Error in Updating Table Record ', result);
+                     return ('Error in Updating Table Records: ' + result);
+                 }
+             else{ 
+                 return result;
+                 }
+             })
+  }
+
+
+
+
 }; // End of class
 
 

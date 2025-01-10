@@ -1,3 +1,39 @@
+function getFormElementsByType(elementTag , elementType)
+{
+  allFormInputFeilds = [];
+  allFormInputFeildsBy = []
+ // comDataBeforUpd[0] = document.getElementById('ComType').value;
+  allFormInputFeilds = document.getElementsByTagName(elementTag);
+  // console.log( allFormInputFeilds)
+  for(var i = 0; i < allFormInputFeilds.length; i++){
+    if (allFormInputFeilds[i].type === elementType)
+      
+    {
+      allFormInputFeildsBy[i] = allFormInputFeilds[i];  
+    }
+  }
+
+  return allFormInputFeildsBy;
+
+}
+
+function getFormInputValues()
+{
+  comDataBeforUpd = [];
+  comDataBeforUpd[0] = document.getElementById('ComType').value;
+ // allFormInputFeilds = document.getElementsByTagName("input");
+ allFormInputFeildsByType = getFormElementsByType('input' , 'text')
+//  console.log( allFormInputFeildsByType)
+  for(var i = 0; i <  allFormInputFeildsByType.length; i++){
+    comDataBeforUpd[comDataBeforUpd.length] = allFormInputFeildsByType[i].value
+      //console.log(allFormInputFeilds[i].value)
+  }
+  comDataBeforUpd.push(document.getElementById('ComNote').value)
+  return comDataBeforUpd;
+}
+
+
+
 /*==================== The following function add after 2024-12-27 ===================
    const SearchForm = document.getElementById("SearchFormId");
    const SearchBtn = document.getElementById("SearchBtnId");
@@ -7,22 +43,29 @@
     searchComSubmit();
    }) */
 
-   function searchComSubmit(event){
-          event.preventDefault();
-          var mainDiv = document.getElementById('main');
-          //https://developer.mozilla.org/en-US/docs/Web/API/FormData
-          // FormData.entries()... Also read the introduction
-          const formData = new FormData(SearchFormId);
+   function searchComSubmit(event, formPath){
+    
+        event.preventDefault();
+        var mainDiv = document.getElementById('main');
+        //https://developer.mozilla.org/en-US/docs/Web/API/FormData
+        // FormData.entries()... Also read the introduction
+        const formData = new FormData(SearchFormId);
+        // formData.append('formPath', './FE/disComInfo.html')
+        formData.append('formPath', `${formPath}`)
+          
         //The Object.fromEntries() static method transforms a list of key-value pairs into an object.  
         //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries
         //The Object.entries() static method returns an array of a given object's own enumerable string-keyed property key-value pairs.
         //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
          const plainFormData = Object.fromEntries(formData.entries());
          const formDataJsonString = JSON.stringify(plainFormData);
-        // console.log(formDataJsonString)
-
-
-          if(validateForm(["SearchComId"])) {
+        // To validate the form inputs are not empty
+        //
+      
+     
+  var getInputFormElementsByType = getFormElementsByType('input' , 'text')
+  if(validateForm(getInputFormElementsByType)) 
+    {
           fetch("/searchComSubmit", {
                   method: "POST",
                   body: formDataJsonString,
@@ -30,28 +73,177 @@
                   })
               .then(response => response.text()).then(function(data) {
 					
-                mainDiv.innerHTML = data;				
+                mainDiv.innerHTML = data;
+              
                   })
+// ============== Following is part of update company infoemation ===========================
+                  .then(()=>{
+              if (formPath === './FE/updComInfo.html')
+              {
+               /*   comDataBeforUpd = [];
+                  comDataBeforUpd[0] = document.getElementById('ComType').value;
+                 // allFormInputFeilds = document.getElementsByTagName("input");
+                 allFormInputFeildsByType = getFormElementsByType('input' , 'text')
+                //  console.log( allFormInputFeildsByType)
+                  for(var i = 0; i <  allFormInputFeildsByType.length; i++){
+                    comDataBeforUpd[comDataBeforUpd.length] = allFormInputFeildsByType[i].value
+                      //console.log(allFormInputFeilds[i].value)
+                  }
+                  console.log(comDataBeforUpd) */
+                
+                var  comDataBeforUpd = getFormInputValues();
+                console.log(comDataBeforUpd)
+
+
+                  var  updateComForm = document.getElementById('updateComForm');
+                  var  updateComBtn = document.getElementById('updateBtnId');
+                    const formData = new FormData(updateComForm);
+                   // const plainFormData = Object.fromEntries(formData.entries());
+                   // const formDataJsonString = JSON.stringify(plainFormData);
+                    updateComBtn.addEventListener("click", function(event){
+                      event.preventDefault();
+            var getInputFormElementsByType = getFormElementsByType('input' , 'text')
+            if(validateForm(getInputFormElementsByType)) 
+              {
+                     
+                      var  comDataAfterUpd = getFormInputValues();
+                      var  sqlComTableFields = ['com_type', 'com_name', 'com_purpose', 'com_address', 'notes'];
+                      var  comTableUpdFields ='';
+                      console.log(comDataAfterUpd)
+                      for(var i = 0 ; i< comDataAfterUpd.length; i++)
+                        {
+                          if (comDataAfterUpd[i] != comDataBeforUpd[i]) 
+                            {
+                              if (comTableUpdFields != '') 
+                                  {
+                                    comTableUpdFields = comTableUpdFields + ','
+                                    comTableUpdFields = comTableUpdFields + 
+                                                        `${sqlComTableFields[i]} = '${comDataAfterUpd[i]}'`
+
+                                  }
+                                  else
+                                  {
+                                    
+                                    comTableUpdFields = comTableUpdFields + 
+                                                        `${sqlComTableFields[i]} = '${comDataAfterUpd[i]}'`;
+                                  }
+                            }
+                       }
+                       console.log(comTableUpdFields)
+
+                       if (comTableUpdFields.length===0)
+                       {
+                            mainDiv.innerHTML =`<div style="display: flex; flex-direction: row; 
+                            align-items: center; 
+                            justify-content: center; 
+                            width:100%; margin: 0 auto;
+                            color: green;">
+                            <div>
+                              <h1 id="Message" >  لم يتم ادخال اى تعديلات على بيانات الشريكة  </h1>
+                                                                                      
+                            </div>
+                          </div `
+
+                                  setTimeout(function(){
+                                  changeContent('updCom');
+                                }, 3000);
+                       }
+                       else {
+                       /*
+                        var formData = new FormData()
+                       formData.append('tableName','company');
+                       formData.append('columnAndValueString',`${comTableUpdFields}`);
+                       formData.append('whereClo','com_name');
+                       formData.append('whereValue',`${comDataAfterUpd[1]}`);
+                       const plainFormData = Object.fromEntries(formData.entries());
+                       const formDataJsonString = JSON.stringify(plainFormData);
+                       */
+                      var jsonFormat = `{"tableName":"company", "columnAndValueString":"${comTableUpdFields}",
+                                          "whereClo":"com_name", "whereValue":"'${comDataAfterUpd[1]}'"}` 
+                      fetch("./updateComInfo", 
+                              { method: "POST",body:jsonFormat },
+                              { headers: {'Content-Type': 'application/json'},}  //'multipart/form-dat'    
+                            )
+                        .then(response => response.text()).then(function(data) {
+                          
+                              mainDiv.innerHTML =`<div style="display: flex; flex-direction: row; 
+                                                            align-items: center; 
+                                                            justify-content: center; 
+                                                            width:100%; margin: 0 auto;
+                                                            color: green;">
+                                                            <div>
+                                                              <h1 id="Message" >${data}</h1>
+                                                                                                                      
+                                                            </div>
+                                                          </div  `
+               
+                                        setTimeout(function(){
+                                        changeContent('updCom');
+                                      }, 2000);
+                                        
+                                      // <input name="q" autofocus />
+                            
+                                      document.getElementById("Message").focus();
+                           
+                            
+
+                                })
+                                .catch((err) => {
+                
+                                  console.log('\n This is an Error Messag /updateComInfo \n',err);
+                                });
+                
+                              }
+                              }
+                    })
+                  }
+                  })
+                
+  //=========================== End of upfdate company informatiopn ============================================               
+                 /* 
+                     .then(()=>{
+                      console.log('Hello')
+                      inputArray = document.getElementsByTagName("input");
+                      //console.log(inputArray[0].readonly)
+                      setInputTextEnabled(inputArray)
+                    })
+                    */
                 .catch((err) => {
                 
-                  console.log('\n This is an Error Messag \n',err);
+                  console.log('\n This is an Error Messag searchComSubmit \n',err);
                 });
         }
       }
+
+//========================================================
+
+function setInputTextEnabled(inputArray)
+{
+    
+    for (var index = 0; index < inputArray.length; index++){
+      console.log('Hello form remove attribute')
+        if (inputArray[index].type = 'text'){
+            inputArray[index].removeAttribute("readonly");
+            console.log('Hello form remove attribute / Remove Attribute')
+          }
+      }
+        
+}
     
 
 //========================================================
 
     
-    var setFoucs = false;
+    var setFoucs = false;// What is this ? the variable is used by the validateForm
+
     function validateForm(arrOfInputId) 
     {
        // const arrOfInputId =["ComName","ComType","ComPurp","ComAddr","ComNote"]
-        arrOfInputId.forEach( (element) => {
-          
-          var input = document.getElementById(element);
-          validateForm_01(input)
-        })
+        for(var i =0; i < arrOfInputId.length; i++) 
+          {          
+         // var input = document.getElementById(element);
+          validateForm_01(arrOfInputId[i])
+          }
         if (setFoucs === true)
                 {
                   setFoucs = false;
@@ -130,8 +322,8 @@
     */
     // The following statment create variable to work with upload form event.
     
-    const uploadButton = document.getElementById("uploadButton"); 
-    uploadButton.addEventListener("click", uploadFiles);
+   // const uploadButton = document.getElementById("uploadButton"); 
+   // uploadButton.addEventListener("click", uploadFiles);
 
     // End of Event Listener of the button element with id attribute id="uploadButton"
 
@@ -141,7 +333,7 @@
             // First, we get the files that were selected
             const form = document.querySelector('#uploadForm');
             const fileInput = document.getElementById("fileInput");
-            const outputBox = form.getElementsByClassName('.result')
+          //  const outputBox = form.getElementById('result')
 
             const selectedFiles = fileInput.files; // put selected file in Array 
             // Second Check if any files are selected with some error-handling logic 
@@ -156,10 +348,10 @@
             
 
         // Working with outputBox variabil which represent the result HTML element...
-        outputBox.querySelector('.file-name').textContent = selectedFiles[0].name;
-        outputBox.querySelector('.file-size').textContent = `${(selectedFiles[0].size / 1024).toFixed(2)} KB`;
-        outputBox.querySelector('.upload-result').innerHTML = ` <i class="ph ph-circle-notch"></i> `;
-        outputBox.style.display = 'flex';
+      // outputBox.querySelector('.file-name').textContent = selectedFiles[0].name;
+      //  outputBox.querySelector('.file-size').textContent = `${(selectedFiles[0].size / 1024).toFixed(2)} KB`;
+       // outputBox.querySelector('.upload-result').innerHTML = ` <i class="ph ph-circle-notch"></i> `;
+      //  outputBox.style.display = 'flex';
 
             // Third Create a FormData object to store the form data
             const formData = new FormData(form);
@@ -174,7 +366,7 @@
             xhr.open("POST","./addComToDB");
             xhr.upload.onprogress = (event) => {
                 const progress = (event.loaded / event.total) * 100;
-                outputBox.querySelector('.progress').style.width = `${progress}%`;
+               // outputBox.querySelector('.progress').style.width = `${progress}%`;
             }
 
             xhr.onreadystatechange = function () {
@@ -183,10 +375,10 @@
                 // Handle successful response from the server
                 console.log('Files uploaded successfully!');
               //  alert("Files uploaded successfully!");
-              outputBox.querySelector('.upload-result').innerHTML = `
-              <span>${xhr.responseText}</span>
-              <i class="ph ph-check-circle"></i>
-            `
+            //  outputBox.querySelector('.upload-result').innerHTML = `
+            //  <span>${xhr.responseText}</span>
+            //  <i class="ph ph-check-circle"></i>
+            // `
                 } else {
                 // Handle error response from the server
                 console.error('Failed to upload files.');
@@ -250,13 +442,55 @@
 		fetch("/addCom").then(response => response.text()).then(function(data) {
 					
                     mainDiv.innerHTML = data;				
-				  });
+				  }).then(()=>{
+
+            const uploadButton = document.getElementById("uploadButton"); 
+            uploadButton.addEventListener("click", uploadFiles);
+          })
 			break;
 		case 'updCom':
 		fetch("/updCom").then(response => response.text()).then(function(data) {
 				
                     mainDiv.innerHTML = data;
-				  });
+				  })
+          .then(()=>{
+            // console.log('You are in searchCom');
+              fetch("/getColFromDB", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({"colName":"com_name","tableName":"company"})
+                }).then(Response => Response.json()).then((jsonObject)=>{               
+                  // console.log(jsonObject)
+                  var options = '';
+                  var jsonArray = jsonObject;
+                  for (var i = 0; i < jsonArray.length; i++) {
+                    options += '<option value="' + jsonArray[i] + '" />';
+                    // console.log(options)
+                  }
+                  document.getElementById('comNameList').innerHTML = options; 
+                  
+
+                  getComDataBTN = document.getElementById('SearchBtnId');
+                  getComDataBTN.addEventListener("click", function(event){
+                    formPath = './FE/updComInfo.html'
+                    
+                    searchComSubmit(event, formPath)
+ 
+                  })
+  
+                })
+               
+                .catch((err) => {
+                
+                  console.log('\n This is an Error Messag /updCom getColFromDB \n',err);
+                })
+            })
+            .catch((err) => {
+                
+              console.log('\n This is an Error Messag /updCom \n',err);
+            })
 			break;
 		case 'delCom':
 			fetch("/delCom").then(response => response.text()).then(function(data) {
@@ -286,8 +520,23 @@
                   // console.log(options)
                 }
                 document.getElementById('comNameList').innerHTML = options; 
+                getComDataBTN = document.getElementById('SearchBtnId');
+                getComDataBTN.addEventListener("click", function(event){
+                  formPath = './FE/disComInfo.html'
+                    
+                  searchComSubmit(event, formPath)
+                  
+                })
+                
 
               })
+              .catch((err) => {
+                
+                console.log('\n This is an Error Messag : getColFromDB \n',err);
+              })
+          }).catch((err) => {
+                
+            console.log('\n This is an Error Messag /searchCom :\n',err);
           });
               
 			break;
@@ -328,22 +577,24 @@
                                               "friWhereClo":"com_name","secWhereClo":"company_id",
                                               "friWhereValue":`${inputComName.value}`})
                         })
-                        .then(Response => Response.json()).then((jsonObject)=>{
-                          // document.getElementById('comNameList').innerHTML = options; 
-                          console.log(jsonObject)
-                          var options = '';
-                          var jsonArray = jsonObject;
-                          for (var i = 0; i < jsonArray.length; i++) {
-                            options += '<option>' + jsonArray[i] + '</>';
-                            // console.log(options)
-                          }
-                          console.log(options)
-                          imagesSelect = document.getElementById('imagesSelectId');
-                          imagesSelect.innerHTML = options;
+                        .then(Response => Response.json())
+                          .then((jsonObject)=>{
+                            // document.getElementById('comNameList').innerHTML = options; 
+                            console.log(jsonObject)
+                            var options = '';
+                            var jsonArray = jsonObject;
+                            for (var i = 0; i < jsonArray.length; i++) {
+                              options += '<option>' + jsonArray[i] + '</>';
+                              // console.log(options)
+                            }
+                            console.log(options)
+                            imagesSelect = document.getElementById('imagesSelectId');
+                            imagesSelect.innerHTML = options;
 
-                           })
+                            })
                            .then(()=>{
                             getImagesBTN = document.getElementById('getImagesBTN');
+
                             getImagesBTN.addEventListener("click", function(event){
                             //console.log(imagesSelect.value);
                             const selectedOptions = [];
@@ -366,17 +617,25 @@
                                                         "tableName":"images",
                                                         "whereClo":"name",
                                                         "whereValue":selectedOptions})
-                                }).then(Response => Response.text()).then((jsonObject)=>{ 
-
-                                  //console.log(jsonObject)
-                                  imagesToDisplay = document.getElementById('imagesToDisplay')
-                                  imagesToDisplay.innerHTML = jsonObject;
-
                                 })
-                                
-                            })
+                                .then(Response => Response.text()).then((jsonObject)=>{ 
+                                    //console.log(jsonObject)
+                                    imagesToDisplay = document.getElementById('imagesToDisplay')
+                                    imagesToDisplay.innerHTML = jsonObject;
+
+                                  })
+                                  .catch((err) => {
+                
+                                    console.log('\n This is an Error Messag /getImages :\n',err);
+                                  })
+                                  
+                                    })
                   
                            })
+                           .catch((err) => {
+                
+                            console.log('\n This is an Error Messag /getColFromDBJoinTables : \n',err);
+                          })
 
 
                     }
@@ -384,7 +643,17 @@
                   })
   
                 })
-            })/*.then(()=>{
+                .catch((err) => {
+                
+                  console.log('\n This is an Error Messag /getColFromDB :\n',err);
+                })
+
+            })
+            .catch((err) => {
+                
+              console.log('\n This is an Error Messag /searchDoc : \n',err);
+            })
+             /*.then(()=>{
 
               document.getElementById('comNameList').innerHTML = options; 
 
@@ -394,6 +663,10 @@
       fetch("/createDB").then(response => response.text()).then(function(data) {
 				
         mainDiv.innerHTML = data;
+          })
+          .catch((err) => {
+                
+            console.log('\n This is an Error Messag /createDB \n',err);
           });
       break;
 

@@ -46,6 +46,15 @@ async selectOneColFromJoinTables(friColName,secColName,friTableName,secTableName
                           friWhereClo,secWhereClo,friWhereValue)
 
   }
+
+  // الحمد لله  
+ 
+                       
+async updateTableRec(tableName,columnAndValueString,whereClo,whereValue) {
+await workWithPgDB.conntodb();
+
+return await workWithPgDB.updateRec(tableName,columnAndValueString,whereClo,whereValue)
+}
 //==================================================
 } // Class End
 
