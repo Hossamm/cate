@@ -50,12 +50,20 @@ async selectOneColFromJoinTables(friColName,secColName,friTableName,secTableName
   // الحمد لله  
  
                        
-async updateTableRec(tableName,columnAndValueString,whereClo,whereValue) {
-await workWithPgDB.conntodb();
+async updateTableRec(tableName,columnAndValueString,whereClo,whereValue) 
+{
+  await workWithPgDB.conntodb();
 
-return await workWithPgDB.updateRec(tableName,columnAndValueString,whereClo,whereValue)
+  return await workWithPgDB.updateRec(tableName,columnAndValueString,whereClo,whereValue)
 }
 //==================================================
+
+
+async deleteJoinTablesRec(pKeyTableName,fKeyTableName,pKeyClo,fKeyClo,whereClo,whereValue)
+{
+  await workWithPgDB.conntodb();
+  return await workWithPgDB.deleteJoinRec(pKeyTableName,fKeyTableName,pKeyClo,fKeyClo,whereClo,whereValue)
+}
 } // Class End
 
 

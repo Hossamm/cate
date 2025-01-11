@@ -137,7 +137,7 @@ function getFormInputValues()
                             align-items: center; 
                             justify-content: center; 
                             width:100%; margin: 0 auto;
-                            color: green;">
+                            color: red;">
                             <div>
                               <h1 id="Message" >  لم يتم ادخال اى تعديلات على بيانات الشريكة  </h1>
                                                                                       
@@ -180,13 +180,7 @@ function getFormInputValues()
                                         setTimeout(function(){
                                         changeContent('updCom');
                                       }, 2000);
-                                        
-                                      // <input name="q" autofocus />
-                            
-                                      document.getElementById("Message").focus();
-                           
-                            
-
+                                     
                                 })
                                 .catch((err) => {
                 
@@ -197,6 +191,86 @@ function getFormInputValues()
                               }
                     })
                   }
+                  else if (formPath === './FE/delComInfo.html')
+                    {
+                      alert('Hello you are in Delete Company process :')
+
+                    comNameForDel = document.getElementById('ComName').value;
+                    console.log(comNameForDel)
+
+                  var  deleteComBtn = document.getElementById('deleteBtnId');
+                    
+                   // const plainFormData = Object.fromEntries(formData.entries());
+                   // const formDataJsonString = JSON.stringify(plainFormData);
+                   deleteComBtn.addEventListener("click", function(event){
+                      event.preventDefault();
+
+                    //  alert('Hello you are in click Event of Delete Company process :')
+
+                  if (confirm(" لتاكيد عملية الالغاء اضغط ( OK ) \n هام : لا يمكن استرجاع هذه البيانات بعد الالغاء")) 
+                        {
+                          console.log(' الغاء ');
+                        //==========================
+                        var jsonFormat = `{"pKeyTableName":"company","fKeyTableName":"images",
+                                           "pKeyClo":"id","fKeyClo":"company_id",
+                                            "whereClo":"com_name", "whereValue":"'${comNameForDel}'"}` 
+                        fetch("./deleteComInfo", 
+                                { method: "POST",body:jsonFormat },
+                                { headers: {'Content-Type': 'application/json'},}  //'multipart/form-dat'    
+                              )
+                          .then(response => response.text()).then(function(data) {
+                              console.log(data)
+                          mainDiv.innerHTML =`<div style="display: flex; flex-direction: row; 
+                                                        align-items: center; 
+                                                        justify-content: center; 
+                                                        width:100%; margin: 0 auto;
+                                                        color: blue;">
+                                                        <div>
+                                                          <h1 id="Message" >${data}</h1>
+                                                                                                                  
+                                                        </div>
+                                                      </div  `
+
+                                    setTimeout(function(){
+                                    changeContent('delCom');
+                                  }, 2000);
+                                
+                            })
+                            .catch((err) => {
+
+                              console.log('\n This is an Error Messag /updateComInfo \n',err);
+                            });
+
+                  } else {
+                          console.log('  عدم الغاء ');
+                        //============================
+                            mainDiv.innerHTML =`<div style="display: flex; flex-direction: row; 
+                            align-items: center; 
+                            justify-content: center; 
+                            width:100%; margin: 0 auto;
+                            color: red;">
+                            <div>
+                              <h1 id="Message" >  لم يتم الغاء بيانات الشريكة  </h1>
+                                                                                      
+                            </div>
+                          </div `
+
+                                  setTimeout(function(){
+                                  changeContent('delCom');
+                                }, 3000);
+                      //=============================== 
+                        }
+                  
+
+                     
+                    
+           
+            
+                    })
+
+              
+                          
+                    }
                   })
                 
   //=========================== End of upfdate company informatiopn ============================================               
@@ -373,12 +447,14 @@ function setInputTextEnabled(inputArray)
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
                 // Handle successful response from the server
-                console.log('Files uploaded successfully!');
+                console.log(xhr.responseText); 
               //  alert("Files uploaded successfully!");
             //  outputBox.querySelector('.upload-result').innerHTML = `
             //  <span>${xhr.responseText}</span>
             //  <i class="ph ph-check-circle"></i>
             // `
+            // Hossam-update : You have to rewrite thie output 
+															// and add user message in process Success, Fail and Erorr...
                 } else {
                 // Handle error response from the server
                 console.error('Failed to upload files.');
@@ -492,11 +568,47 @@ function setInputTextEnabled(inputArray)
               console.log('\n This is an Error Messag /updCom \n',err);
             })
 			break;
+
 		case 'delCom':
 			fetch("/delCom").then(response => response.text()).then(function(data) {
 				
                     mainDiv.innerHTML = data;
-				  });
+				  })
+          .then(()=>{
+            // console.log('You are in searchCom');
+              fetch("/getColFromDB", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({"colName":"com_name","tableName":"company"})
+                }).then(Response => Response.json()).then((jsonObject)=>{               
+                  // console.log(jsonObject)
+                  var options = '';
+                  var jsonArray = jsonObject;
+                  for (var i = 0; i < jsonArray.length; i++) {
+                    options += '<option value="' + jsonArray[i] + '" />';
+                    // console.log(options)
+                  }
+                  document.getElementById('comNameList').innerHTML = options; 
+                  getComDataBTN = document.getElementById('SearchBtnId');
+                  getComDataBTN.addEventListener("click", function(event){
+                    formPath = './FE/delComInfo.html'
+                      
+                    searchComSubmit(event, formPath)                 
+              
+                  })
+            
+                })
+                .catch((err) => {
+                  
+                  console.log('\n This is an Error Messag : getColFromDB \n',err);
+                })
+            }).catch((err) => {
+                  
+              console.log('\n This is an Error Messag /searchCom :\n',err);
+            });
+              
 			break;
       case 'searchCom':
 			fetch("/searchCom").then(response => response.text()).then(function(data) {

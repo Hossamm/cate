@@ -94,7 +94,8 @@ const selectFromDB = require('./Control/selectFromDB.js');
 							   then((processResult) =>{
 
 									console.log(' res.write :  ', processResult)
-									 res.writeHead(200, {  
+									 res.writeHead(200, {  // Hossam-update : You have to rewrite thie response 
+															// and add anothe return code and if condtion
 										'Content-Type': 'text/html'  // or 'Content-Type':'application/json'
 									});  
 									res.write(processResult);  
@@ -578,22 +579,43 @@ const selectFromDB = require('./Control/selectFromDB.js');
 										});  
 										res.write( ' تم تعديل بيانات الشريكة بنجاح' );  
 										res.end();
-
-													})
-
-				
-				
-		// function updateRec(tableName, columnAndValueString, whereClo, whereValue)
-		// columnAndValueString = `first_name = 'MS', last_name = 'Dhoni'`
-		// ${fieldName} = ${newValue}
-			
-				
-				
-				
+													})			
 				})
 				}
+			break;
 
-			break;                                               
+			case '/deleteComInfo':
+
+		if (req.method === 'POST') 
+			{
+				var body = ''
+				req.on('data', function(data) {
+				body += data
+				// console.log('Partial body: ' + body)
+				})
+				req.on('end', function() {
+				console.log('Body: ' + body )
+				// ==== ==== ==== Working with DATABASE ==== ==== ====
+				 sqlParm = JSON.parse(body);
+ 
+				selectFromDBObj.deleteJoinTablesRec(sqlParm.pKeyTableName,sqlParm.fKeyTableName,
+													sqlParm.pKeyClo,sqlParm.fKeyClo,sqlParm.whereClo,sqlParm.whereValue)
+								
+								.then((updateResult )=>{
+
+										console.log(updateResult)
+										res.writeHead(200, {  
+											'Content-Type': 'text/html'  // or 'Content-Type':'application/json'
+										});  
+										res.write( updateResult );  
+										res.end();
+
+													})
+			
+				})
+				}
+				
+			break;                                              
 			default:  
 				res.writeHead(404);  
 				res.write("opps this doesn't exist - 404");  

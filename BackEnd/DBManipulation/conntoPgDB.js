@@ -24,7 +24,7 @@ module.exports = class conntoPgDB {
             console.log('Connected to PostgreSQL nodedb DB');
         })
         .catch((err) => {
-            console.error('Error connecting to nodedb DB', err); 
+            console.error('Error connecting to nodedb DB : \n', err); 
         })
                    
     }
@@ -38,7 +38,7 @@ async  closeconn() // End DB connection
                     console.log('Connection to nodedb DB closed');
                 })
                 .catch((err) => {
-                    console.error('Error closing nodedb DB connection', err);
+                    console.error('Error closing nodedb DB connection : \n', err);
                 });
 
 
@@ -147,7 +147,7 @@ async getComData(comName)
        
     })
    
-   .catch(function (error) { console.log('Error in adding Company record : ', error) })
+   .catch(function (error) { console.log('\n This is an Error Messag /getComData of connectPgDB Class \n ', error) })
 
 
    
@@ -172,6 +172,10 @@ async getColFromTable(cloNmae,tableName)
                     return result;
                     }
                 })
+                .catch((err) => {
+
+                    console.log('\n This is an Error Messag /getColFromTable of connectPgDB Class \n',err);
+                  })
 }
 
 
@@ -197,6 +201,10 @@ async getColFromTableWhere(cloNmae,tableName,whereClo,whereValue)
                     return result;
                     }
                 })
+                .catch((err) => {
+
+                    console.log('\n This is an Error Messag /getColFromTableWhere of connectPgDB Class \n',err);
+                  });
 }
 
 async getColFromJoinTables(friColName,secColName,
@@ -229,9 +237,17 @@ async getColFromJoinTables(friColName,secColName,
                 return  result; 
                 }
         })
+        .catch((err) => {
+
+            console.log('\n This is an Error Messag /getColFromTableWhere of connectPgDB Class \n',err);
+          });
         
         }
  })
+ .catch((err) => {
+
+    console.log('\n This is an Error Messag /getColFromJoinTables of connectPgDB Clas \n',err);
+  });
  
 }
 
@@ -259,9 +275,56 @@ async updateRec(tableName,columnAndValueString,whereClo,whereValue)
                  return result;
                  }
              })
+             .catch((err) => {
+
+                console.log('\n This is an Error Messag /updateRec of connectPgDB Clas \n',err);
+              });
   }
 
+  async deleteJoinRec(pKeyTableName,fKeyTableName,pKeyClo,fKeyClo,whereClo,whereValue)
+  {
+  
+    console.log(`DELETE FROM ${fKeyTableName} WHERE ${fKeyClo} IN 
+                                            (select ${pKeyClo} from ${pKeyTableName} where ${whereClo} = ${whereValue})`)
+    console.log(`DELETE FROM ${pKeyTableName}  WHERE ${whereClo} = ${whereValue}`)
 
+    var sqlFoeImg = `DELETE FROM ${fKeyTableName} WHERE ${fKeyClo} IN 
+                                            (select ${pKeyClo} from ${pKeyTableName} where ${whereClo} = ${whereValue})`
+    var sqlForCom = `DELETE FROM ${pKeyTableName}  WHERE ${whereClo} = ${whereValue}`
+    
+    return await this.conn.query(sqlFoeImg)
+                    
+    .then((result) =>
+        {   
+           // console.log(`Selected row from Company table where Company name is ${comName} : `, result.rowCount)
+   
+                if (result instanceof Error) 
+                    {
+                        console.log(' Error in Deleting Image Table Record ', result);
+                        return ('Error in Deleting Image Table Record: ' + result);
+                    }
+                else{ 
+                      return this.conn.query(sqlForCom)
+                      .then(()=>
+                            {
+                                if (result instanceof Error) 
+                                    {
+                                        console.log(' Error in Deleting Company Table Record ', result);
+                                        return ('Error in Deleting Company Table Record: ' + result);
+                                    }
+                                else{
+                                        return (' تم الغاء بيانات الشريكة بنجاح ....')
+                                    }
+                            })
+                    }
+                })
+                .catch((err) => {
+   
+                   console.log('\n This is an Error Messag /updateRec of connectPgDB Clas \n',err);
+                 });
+
+
+}
 
 
 }; // End of class
