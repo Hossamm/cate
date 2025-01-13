@@ -71,21 +71,12 @@
                               اضافة الملفات          
                             </label>
                             <input id="fileInput" type="file" multiple name="file" 
-                                        onchange = "renderFileList ();" 
+                                        onchange = "renderFileList();" 
                                         style="display: none;"
                                         accept=".jpg, .jpeg, .png">
 
                         </div>
-                      </div> 
-                        <div id="result" style="display: none;">
-                            <i class="ph ph-file"></i>
-                            <div class="file-details">
-                                <span class="file-name"></span>
-                                <span class="file-size"></span>
-                            </div>
-                            <div class="upload-result"></div>
-                        </div>
-                        
+                      </div>       
                     </div>
               </div>
 
@@ -103,6 +94,9 @@
                     <input type="submit" id="uploadButton" value="أضف الشركة" class="fbottom"> 
                 </div>
               </div>
+              <div id="result" style="display: none;">                   
+                <div class="upload-result" style="color: green; font-size: medium; text-align: right;"></div>
+            </div>
 
           </form>
           

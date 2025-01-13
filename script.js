@@ -405,10 +405,10 @@ function setInputTextEnabled(inputArray)
         {   alert("Hello");
             event.preventDefault();
             // First, we get the files that were selected
-            const form = document.querySelector('#uploadForm');
+            const form = document.getElementById('uploadForm');
             const fileInput = document.getElementById("fileInput");
-          //  const outputBox = form.getElementById('result')
-
+            const outputBox = document.getElementById('result');
+            
             const selectedFiles = fileInput.files; // put selected file in Array 
             // Second Check if any files are selected with some error-handling logic 
             // to cover the case of no files being selected.
@@ -422,10 +422,7 @@ function setInputTextEnabled(inputArray)
             
 
         // Working with outputBox variabil which represent the result HTML element...
-      // outputBox.querySelector('.file-name').textContent = selectedFiles[0].name;
-      //  outputBox.querySelector('.file-size').textContent = `${(selectedFiles[0].size / 1024).toFixed(2)} KB`;
-       // outputBox.querySelector('.upload-result').innerHTML = ` <i class="ph ph-circle-notch"></i> `;
-      //  outputBox.style.display = 'flex';
+         
 
             // Third Create a FormData object to store the form data
             const formData = new FormData(form);
@@ -438,32 +435,35 @@ function setInputTextEnabled(inputArray)
             // Fourth Send the AJAX request using XMLHttpRequest
             const xhr = new XMLHttpRequest();
             xhr.open("POST","./addComToDB");
-            xhr.upload.onprogress = (event) => {
+
+          /*  xhr.upload.onprogress = (event) => {
                 const progress = (event.loaded / event.total) * 100;
                // outputBox.querySelector('.progress').style.width = `${progress}%`;
-            }
+            }*/
 
             xhr.onreadystatechange = function () {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
+      //outputBox.querySelector('.file-name').textContent = selectedFiles[0].name;
+      //outputBox.querySelector('.file-size').textContent = `${(selectedFiles[0].size / 1024).toFixed(2)} KB`;
+       form.reset();
+       document.getElementById('file-list-display').innerHTML='';
+       document.getElementById("img-preview").innerHTML='';
+       outputBox.querySelector('.upload-result').value = xhr.responseText
+        //  `<span>${xhr.responseText}</span>`
+      outputBox.style.display = 'flex';
                 // Handle successful response from the server
                 console.log(xhr.responseText); 
               //  alert("Files uploaded successfully!");
-            //  outputBox.querySelector('.upload-result').innerHTML = `
-            //  <span>${xhr.responseText}</span>
-            //  <i class="ph ph-check-circle"></i>
-            // `
+       outputBox.querySelector('.upload-result').innerHTML = `<span>${xhr.responseText}</span>`
+            
             // Hossam-update : You have to rewrite thie output 
 															// and add user message in process Success, Fail and Erorr...
                 } else {
                 // Handle error response from the server
                 console.error('Failed to upload files.');
               //  alert("Error occurred during file upload. Please try again.");
-              outputBox.querySelector('.upload-result').innerHTML = `
-              <span>${xhr.responseText}</span>
-              <i class="ph ph-x-circle"></i>
-            `
-
+            //  outputBox.querySelector('.upload-result').innerHTML = `<span>${xhr.responseText}</span>`
                 }
             }
             };
