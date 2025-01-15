@@ -457,8 +457,6 @@ function setInputTextEnabled(inputArray)
               //  alert("Files uploaded successfully!");
        outputBox.querySelector('.upload-result').innerHTML = `<span>${xhr.responseText}</span>`
             
-            // Hossam-update : You have to rewrite thie output 
-															// and add user message in process Success, Fail and Erorr...
                 } else {
                 // Handle error response from the server
                 console.error('Failed to upload files.');
@@ -673,12 +671,15 @@ function setInputTextEnabled(inputArray)
                     options += '<option value="' + jsonArray[i] + '" />';
                     // console.log(options)
                   }
+                  SearchDocForm = document.getElementById('SearchDocFormId')
                   document.getElementById('comNameList').innerHTML = options;
                   const inputComName = document.getElementById('SearchComId');
                   inputComName.addEventListener("input", function(event){
                     if (jsonArray.includes(inputComName.value))
                     {
+                      
                       console.log(" Company Name has been selected : .....")
+                      imagesToDisplay.innerHTML = "";
                       fetch("/getColFromDBJoinTables", {
                         method: 'POST',
                         headers: {
@@ -692,14 +693,14 @@ function setInputTextEnabled(inputArray)
                         .then(Response => Response.json())
                           .then((jsonObject)=>{
                             // document.getElementById('comNameList').innerHTML = options; 
-                            console.log(jsonObject)
+                            console.log('This is All the Documnet of the Company Entered...\n' + jsonObject)
                             var options = '';
                             var jsonArray = jsonObject;
                             for (var i = 0; i < jsonArray.length; i++) {
                               options += '<option>' + jsonArray[i] + '</>';
                               // console.log(options)
                             }
-                            console.log(options)
+                            console.log('This  is All Options to display for user to select ... : \n' + options)
                             imagesSelect = document.getElementById('imagesSelectId');
                             imagesSelect.innerHTML = options;
 
@@ -716,19 +717,23 @@ function setInputTextEnabled(inputArray)
                                 selectedOptions.push(option.value);
                               }
                             }
+                            if ( selectedOptions.length>0) {
                               // console.log(selectedOptions);
-                             // ArrayToJson = JSON.stringify(selectedOptions);
-                              console.log(selectedOptions);
+                              ArrayToJson = JSON.stringify(selectedOptions);
+                              console.log(' This is the selected Options : \n' + ArrayToJson);
 
-                              fetch("/getImages", {
+                              var jsonFormat = `{"selectColName":"encode(image, 'base64')",
+                              "pKeyTableName":"company","fKeyTableName":"images",
+                              "pKeyClo":"id","fKeyClo":"company_id",
+                               "friWhereClo":"com_name", "friWhereValue":"${inputComName.value}",
+                               "secWhereClo":"name", "secWhereValue":${ArrayToJson}}` ;
+
+                              fetch("/getImagesWithNameAndId", {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'
                                 },
-                                body: JSON.stringify({"colName":"encode(image, 'base64')",
-                                                        "tableName":"images",
-                                                        "whereClo":"name",
-                                                        "whereValue":selectedOptions})
+                                body: jsonFormat
                                 })
                                 .then(Response => Response.text()).then((jsonObject)=>{ 
                                     //console.log(jsonObject)
@@ -740,7 +745,7 @@ function setInputTextEnabled(inputArray)
                 
                                     console.log('\n This is an Error Messag /getImages :\n',err);
                                   })
-                                  
+                                } else {alert(" يجب تحديد المستندا قبل الضغط على زر العرض....")}
                                     })
                   
                            })

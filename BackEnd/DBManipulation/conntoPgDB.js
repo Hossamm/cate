@@ -189,14 +189,20 @@ async getColFromTableWhere(cloNmae,tableName,whereClo,whereValue)
     return await this.conn.query(`select ${cloNmae} from ${tableName} where ${whereClo} = '${whereValue}'`)
                     
     .then((result) =>
-        {   
-           // console.log(`Selected row from Company table where Company name is ${comName} : `, result.rowCount)
- 
+        {  
+            
+            console.log(`selected ${cloNmae} from ${tableName} table where ${whereClo} is ${whereValue} :` , result.rowCount);
+
                 if (result instanceof Error) 
                     {
                         console.log('Images not Selected Error: ', result);
                         return ('Images not Selected Error: ' + result);
                     }
+                else if(result.rowCount < 1)
+                {
+                    console.log('Not Image selected - Number of Image = ', result);
+                        return ('Not Image selected - Number of Image = ' + result);
+                }
                 else{ 
                     return result;
                     }
@@ -219,7 +225,7 @@ async getColFromJoinTables(friColName,secColName,
     if (result instanceof Error) 
         {
             console.log('Error in Select Company Id : ' , result);
-            return ('Company Idnot Selected Error: ' + result);
+            return ('Company Id not Selected Error: ' + result);
         }
     else{ 
     
@@ -326,6 +332,47 @@ async updateRec(tableName,columnAndValueString,whereClo,whereValue)
 
 }
 
+async selectJoinTablesRecWithAndOr(selectColName, pKeyTableName, fKeyTableName, pKeyClo, fKeyClo, 
+                            friWhereClo, friWhereValue, secWhereClo, secWhereValue)
+{
+
+  /*  select image FROM images 
+    WHERE (company_id IN (select id from company where com_name = 'حاتم') and name = 'Khebrat.jpg')
+
+    (pKeyTableName, fKeyTableName, pKeyClo, fKeyClo, 
+        friWhereClo, friWhereValue, secWhereClo, secWhereValue)*/
+    
+  console.log(`SELECT ${selectColName} FROM ${fKeyTableName} WHERE (
+                            ${fKeyClo} IN (select ${pKeyClo} from ${pKeyTableName} where ${friWhereClo} = ${friWhereValue})
+                            AND ${secWhereClo} = ${secWhereValue} )`)
+
+  var sql= `SELECT encode(image, 'base64') FROM ${fKeyTableName} 
+                        WHERE (
+                                ${fKeyClo} IN 
+                                (select ${pKeyClo} from ${pKeyTableName} where ${friWhereClo} = '${friWhereValue}')
+                                           AND ${secWhereClo} = '${secWhereValue}' )`
+  
+  return await this.conn.query(sql)               
+  .then((result) =>
+      {   
+          console.log(`Selected row from Company table where Company name is ${friWhereValue} : `, result.rowCount)
+ 
+              if (result instanceof Error) 
+                  {
+                      console.log(' Error in Deleting Image Table Record ', result);
+                      return ('Error in Deleting Image Table Record: ' + result);
+                  }
+              else{ 
+                    return result;
+                  }
+              })
+              .catch((err) => {
+ 
+                 console.log('\n This is an Error Messag /updateRec of connectPgDB Clas \n',err);
+               });
+
+
+}
 
 }; // End of class
 

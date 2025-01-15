@@ -23,16 +23,31 @@ this.selectedImages = [];
   {  
     for( var i =0; i < Object.keys(whereValue).length;i++)
       {
-        this.selectedImages[i] = await workWithPgDB.getColFromTableWhere(cloNmae,tableName,whereClo,whereValue[i]); 
-        // console.log(selectedImages[i]) 
+         await workWithPgDB.getColFromTableWhere(cloNmae,tableName,whereClo,whereValue[i])
+        .then((selectedImages)=>{
+          this.selectedImages[i] = selectedImages;
+          if( i === (Object.keys(whereValue).length -1 ) )
+                {  
+                // console.log('This is a selected files :' + this.selectedImages)
+                     return this.selectedImages;
+                }
+        })
+          
       }
+      console.log('This is a selected files :' + this.selectedImages)
   return this.selectedImages;
   }
     else 
     {
       console.log("================Uncorrect path 2 ================")
-      this.selectedImages[0] = await workWithPgDB.getColFromTableWhere(cloNmae,tableName,whereClo,whereValue[0]);
-      return this.selectedImages;
+     return await workWithPgDB.getColFromTableWhere(cloNmae,tableName,whereClo,whereValue[0])
+      .then((selectedImages)=>{
+        this.selectedImages[0] = selectedImages;
+       // console.log('This is a selected file : ' , this.selectedImages[0].rows[0])
+        return this.selectedImages;
+      })
+       
+      
     }
   
 }
@@ -64,6 +79,47 @@ async deleteJoinTablesRec(pKeyTableName,fKeyTableName,pKeyClo,fKeyClo,whereClo,w
   await workWithPgDB.conntodb();
   return await workWithPgDB.deleteJoinRec(pKeyTableName,fKeyTableName,pKeyClo,fKeyClo,whereClo,whereValue)
 }
+
+async selectJoinTablesRecWithAndOr(selectColName,pKeyTableName, fKeyTableName, pKeyClo, fKeyClo, 
+                                    friWhereClo, friWhereValue, secWhereClo, secWhereValue)
+{
+  await workWithPgDB.conntodb();
+var objectLength = Object.keys(secWhereValue).length
+this.selectedImages = [];
+  if (objectLength > 1)
+  {  
+    console.log("================Uncorrect path 1 ================" + Object.keys(secWhereValue).length)
+    for( var i =0; i < Object.keys(secWhereValue).length;i++)
+      {
+        await workWithPgDB.selectJoinTablesRecWithAndOr(selectColName. pKeyTableName, fKeyTableName, pKeyClo, fKeyClo, 
+                                            friWhereClo, friWhereValue, secWhereClo, secWhereValue[i])
+        .then((selectedImages)=>{
+          this.selectedImages[i] = selectedImages;
+        })
+          
+      }
+      //console.log('This is a selected files :' + this.selectedImages)
+      return this.selectedImages;
+  }
+    else 
+    {
+      console.log("================Uncorrect path 2 ================")
+     return await workWithPgDB.selectJoinTablesRecWithAndOr(selectColName, pKeyTableName, fKeyTableName, pKeyClo, fKeyClo, 
+                                                      friWhereClo, friWhereValue, secWhereClo, secWhereValue)
+      .then((selectedImages)=>{
+        this.selectedImages[0] = selectedImages;
+       // console.log('This is a selected file : ' , this.selectedImages[0].rows[0])
+        return this.selectedImages;
+      })
+       
+      
+    }
+  
+}
+// الحمد لله 
+
+
+
 } // Class End
 
 

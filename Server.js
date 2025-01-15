@@ -507,10 +507,10 @@ const selectFromDB = require('./Control/selectFromDB.js');
 						// jsonToArray = JSON.stringify(sqlParm.whereValue)
 					// console.log(' This the sqlRecord field : ' , sqlParm.colName + " / " +sqlParm.tableName)
 							
-						selectFromDBObj.selectOneColWhere(sqlParm.colName,sqlParm.tableName,sqlParm.whereClo,sqlParm.whereValue)	
+						selectFromDBObj.selectOneColWhere(sqlParm.colName,sqlParm.tableName,sqlParm.whereClo,sqlParm.whereValue)
 							.then((selectResult)=>{
 								//console.log(selectResult[0].rows[0])
-								console.log(selectResult)
+							//	console.log(' This is the result of electOneColWhere Function : ' , selectResult)
 				// ==== ==== ==== Change selectResult.rows Objects to Array of Object's value  ==== ==== ==== 
 				this.ComFiles = [];
 				
@@ -538,7 +538,62 @@ const selectFromDB = require('./Control/selectFromDB.js');
 
 			
 				// End read file code 
-			break;  
+			break; 
+			
+			case '/getImagesWithNameAndId':
+			// console.log('------- Hello you are in getColFromDBJoinTables ------')
+				if (req.method === 'POST') 
+					{
+						var body = ''
+						req.on('data', function(data) {
+						body += data
+						// console.log('Partial body: ' + body)
+						})
+						req.on('end', function() {
+						console.log('Body: ' + body )
+						// ==== ==== ==== Working with DATABASE ==== ==== ====
+						 sqlParm = JSON.parse(body);
+					     //console.log('================================' + sqlParm.whereValue)
+						// jsonToArray = JSON.stringify(sqlParm.whereValue)
+					// console.log(' This the sqlRecord field : ' , sqlParm.colName + " / " +sqlParm.tableName)
+
+					selectFromDBObj.selectJoinTablesRecWithAndOr(sqlParm.selectColName,
+											sqlParm.pKeyTableName,sqlParm.fKeyTableName,
+											sqlParm.pKeyClo,sqlParm.fKeyClo,
+											sqlParm.friWhereClo,sqlParm.friWhereValue,
+											sqlParm.secWhereClo, sqlParm.secWhereValue)
+							
+					.then((selectResult)=>{
+								//console.log(selectResult[0].rows[0])
+							//	console.log(' This is the result of electOneColWhere Function : ' , selectResult)
+				// ==== ==== ==== Change selectResult.rows Objects to Array of Object's value  ==== ==== ==== 
+				this.ComFiles = [];
+				
+				for(var i = 0; i<sqlParm.secWhereValue.length;i++ ) 
+					{
+				var comOneFile =  {name: sqlParm.secWhereValue[i],encode:selectResult[i].rows[0].encode};
+				this.ComFiles[i] = comOneFile;
+					}
+				//console.log(ComFiles.length);
+				//console.log(this.ComFiles[0].name)
+				//console.log(this.ComFiles[0].encode)
+				//console.log(this.ComFiles)
+				updateFormObj.CreateURIForFiles(this.ComFiles).then((imagesHtmlTag)=>{
+				//	console.log(imagesHtmlTag)
+					//const imagesHtmlTag = URIFiles
+					res.writeHead(200, {  
+			    'Content-Type':'multipart/form-data' //'Content-Type':'application/json' or 'Content-Type': 'text/html'   
+					});  
+					res.write(imagesHtmlTag);  
+					res.end(); 
+				}) 
+							})
+						})
+					}
+
+			
+				// End read file code 
+			break;
 			case '/updateComInfo':
 			//
 		/*	if (req.method === 'POST') 
