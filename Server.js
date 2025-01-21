@@ -2,8 +2,8 @@ const http = require('http')
 var url = require('url');
 var fs = require('fs');
 // Host Info
-const hostname = 'localhost';
-const port = 3000;
+const hostname = '0.0.0.0';
+const port = process.env.PORT || 3200;
 // Import user packages 
 const conntoPgDB = require('./BackEnd/DBManipulation/conntoPgDB.js');
 const getFormInputData = require('./BackEnd/DBManipulation/getFormInputData.js');
