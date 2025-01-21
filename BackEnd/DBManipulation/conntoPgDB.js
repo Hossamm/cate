@@ -198,12 +198,14 @@ async getColFromTableWhere(cloNmae,tableName,whereClo,whereValue)
                         console.log('Images not Selected Error: ', result);
                         return ('Images not Selected Error: ' + result);
                     }
-                else if(result.rowCount < 1)
+                else if(result.rowCount === 0)
                 {
-                    console.log('Not Image selected - Number of Image = ', result);
-                        return ('Not Image selected - Number of Image = ' + result);
+                    console.log('=============== No Record Selected ================')
+                    return result;
                 }
                 else{ 
+
+                    console.log('=========================Image name selected from conntoPgDB ==================')
                     return result;
                     }
                 })
@@ -238,7 +240,13 @@ async getColFromJoinTables(friColName,secColName,
                     console.log('Error in Select image Name : ' , result);
                     return ('image Nam not Selected Error: ' + result);
                 }
-            else{ 
+            else if (result.rowCount === 0)
+                {
+                    console.log('=============== No Record Selected ================')
+                    return result;
+                }
+            else
+            { 
                 // console.log(result)
                 return  result; 
                 }
@@ -373,6 +381,52 @@ async selectJoinTablesRecWithAndOr(selectColName, pKeyTableName, fKeyTableName, 
 
 
 }
+
+async deleteJoinTablesRecWithAndOr(deleteColName, pKeyTableName, fKeyTableName, pKeyClo, fKeyClo, 
+    friWhereClo, friWhereValue, secWhereClo, secWhereValue)
+{
+
+/*  select image FROM images 
+WHERE (company_id IN (select id from company where com_name = 'حاتم') and name = 'Khebrat.jpg')
+
+(pKeyTableName, fKeyTableName, pKeyClo, fKeyClo, 
+friWhereClo, friWhereValue, secWhereClo, secWhereValue)*/
+
+console.log(`DELETE FROM ${fKeyTableName} WHERE (
+    ${fKeyClo} IN (select ${pKeyClo} from ${pKeyTableName} where ${friWhereClo} = ${friWhereValue})
+    AND ${secWhereClo} = ${secWhereValue} )`)
+
+var sql= `DELETE FROM ${fKeyTableName} 
+WHERE (
+        ${fKeyClo} IN 
+        (select ${pKeyClo} from ${pKeyTableName} where ${friWhereClo} = '${friWhereValue}')
+                   AND ${secWhereClo} = '${secWhereValue}' )`
+
+return await this.conn.query(sql)               
+.then((result) =>
+{   
+console.log(`Selected row from Company table where Company name is ${friWhereValue} : `, result.rowCount)
+
+if (result instanceof Error) 
+{
+console.log(' Error in Deleting Image Table Record ', result);
+return ('Error in Deleting Image Table Record: ' + result);
+}
+else{ 
+console.log('================== This is Delete Result Record ========================\n' , result)
+return result;
+}
+})
+.catch((err) => {
+
+console.log('\n This is an Error Messag /updateRec of connectPgDB Clas \n',err);
+});
+
+
+}
+
+
+
 
 }; // End of class
 

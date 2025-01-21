@@ -178,8 +178,9 @@ padding: 12px 12px 12px 0;
 display: inline-block;
 }
 
-input[type=submit] {
-background-color: #04AA6D;
+input[type=submit], .xxx {
+/*background-color: #04AA6D;*/
+background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e); 
 color: white;
 padding: 12px 20px;
 border: none;
@@ -189,8 +190,9 @@ float: right;
 }
 
 input[type=submit]:hover {
-background-color: #45a049;
+background: #45a049;
 }
+.xxx:hover{background: #45a049;}
 
 .container {
 width: 70%;
@@ -287,7 +289,7 @@ min-width: 80px;
 }
 
 
-.upload-form label {
+.upload-form label{
     display: flex;
     flex-flow: column;
     justify-content: center;

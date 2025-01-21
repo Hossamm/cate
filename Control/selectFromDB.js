@@ -118,6 +118,42 @@ this.selectedImages = [];
 }
 // الحمد لله 
 
+async deleteJoinTablesRecWithAndOr(deleteColName,pKeyTableName, fKeyTableName, pKeyClo, fKeyClo, 
+  friWhereClo, friWhereValue, secWhereClo, secWhereValue)
+{
+await workWithPgDB.conntodb();
+var objectLength = Object.keys(secWhereValue).length
+this.selectedImages = [];
+if (objectLength > 1)
+{  
+console.log("================Uncorrect path 1 ================" + Object.keys(secWhereValue).length)
+for( var i =0; i < Object.keys(secWhereValue).length;i++)
+{
+await workWithPgDB.deleteJoinTablesRecWithAndOr(deleteColName, pKeyTableName, fKeyTableName, pKeyClo, fKeyClo, 
+          friWhereClo, friWhereValue, secWhereClo, secWhereValue[i])
+.then((selectedImages)=>{
+this.selectedImages[i] = selectedImages;
+})
+
+}
+//console.log('This is a selected files :' + this.selectedImages)
+return this.selectedImages;
+}
+else 
+{
+console.log("================Uncorrect path 2 ================")
+return await workWithPgDB.deleteJoinTablesRecWithAndOr(deleteColName, pKeyTableName, fKeyTableName, pKeyClo, fKeyClo, 
+                    friWhereClo, friWhereValue, secWhereClo, secWhereValue)
+.then((selectedImages)=>{
+this.selectedImages[0] = selectedImages;
+// console.log('This is a selected file : ' , this.selectedImages[0].rows[0])
+return this.selectedImages;
+})
+
+
+}
+
+}
 
 
 } // Class End

@@ -387,21 +387,34 @@ const selectFromDB = require('./Control/selectFromDB.js');
 						 console.log(' This the sqlRecord field : ' , sqlParm.colName + " / " +sqlParm.tableName)
 						selectFromDBObj.selectOneCol(sqlParm.colName,sqlParm.tableName)
 							.then((selectResult)=>{
-								// console.log(selectResult.rows)
-				// ==== ==== ==== Change selectResult.rows Objects to Array of Object's value  ==== ==== ==== 
-								var	arrayOfSelectedFiles=[]
-								for(i=0;i<selectResult.rows.length;i++)
+								if (selectResult.rowCount === 0)	
+									
 									{
-								 		arrayOfSelectedFiles[i] = selectResult.rows[i].com_name;
-									} 
-								// console.log(arrayOfSelectedFiles)
-								ArrayToJson = JSON.stringify(arrayOfSelectedFiles)
-								// console.log(ArrayToJson)
-								res.writeHead(200, {  
-									'Content-Type':'application/json'  // or 'Content-Type': 'text/html' 
-								});  
-								res.write(ArrayToJson);  
-								res.end(); 
+										selectResult = JSON.stringify(selectResult)
+										res.writeHead(200, {  
+										'Content-Type':'application/json'  // or 'Content-Type': 'text/html' 
+															});  
+										res.write(selectResult);  
+										res.end(); 
+									}
+									else
+									{
+										// console.log(selectResult.rows)
+						// ==== ==== ==== Change selectResult.rows Objects to Array of Object's value  ==== ==== ==== 
+										var	arrayOfSelectedFiles=[]
+										for(i=0;i<selectResult.rows.length;i++)
+											{
+												arrayOfSelectedFiles[i] = selectResult.rows[i].com_name;
+											} 
+										// console.log(arrayOfSelectedFiles)
+										ArrayToJson = JSON.stringify(arrayOfSelectedFiles)
+										// console.log(ArrayToJson)
+										res.writeHead(200, {  
+											'Content-Type':'application/json'  // or 'Content-Type': 'text/html' 
+										});  
+										res.write(ArrayToJson);  
+										res.end(); 
+									}
 							})
 						})
 					}
@@ -410,7 +423,6 @@ const selectFromDB = require('./Control/selectFromDB.js');
 				// End read file code
 			break;
 			case '/getColFromDBWhere':
-				console.log('-------------------You are in misstak -------------------------')
 				if (req.method === 'POST') 
 					{
 						var body = ''
@@ -426,21 +438,34 @@ const selectFromDB = require('./Control/selectFromDB.js');
 						selectFromDBObj.selectOneColWhere(sqlParm.colName,sqlParm.tableName,sqlParm.whereClo,sqlParm.whereValue)
 		
 							.then((selectResult)=>{
-								// console.log(selectResult.rows)
-				// ==== ==== ==== Change selectResult.rows Objects to Array of Object's value  ==== ==== ==== 
-								var	arrayOfSelectedFiles=[]
-								for(i=0;i<selectResult.rows.length;i++)
+								if (selectResult.rowCount === 0)	
+									
 									{
-								 		arrayOfSelectedFiles[i] = selectResult.rows[i].com_name;
-									} 
-								// console.log(arrayOfSelectedFiles)
-								ArrayToJson = JSON.stringify(arrayOfSelectedFiles)
-								// console.log(ArrayToJson)
-								res.writeHead(200, {  
-									'Content-Type':'application/json'  // or 'Content-Type': 'text/html' 
-								});  
-								res.write(ArrayToJson);  
-								res.end(); 
+										selectResult = JSON.stringify(selectResult)
+										res.writeHead(200, {  
+										'Content-Type':'application/json'  // or 'Content-Type': 'text/html' 
+															});  
+										res.write(selectResult);  
+										res.end(); 
+									}
+									else
+									{
+										// console.log(selectResult.rows)
+						// ==== ==== ==== Change selectResult.rows Objects to Array of Object's value  ==== ==== ==== 
+										var	arrayOfSelectedFiles=[]
+										for(i=0;i<selectResult.rows.length;i++)
+											{
+												arrayOfSelectedFiles[i] = selectResult.rows[i].com_name;
+											} 
+										// console.log(arrayOfSelectedFiles)
+										ArrayToJson = JSON.stringify(arrayOfSelectedFiles)
+										// console.log(ArrayToJson)
+										res.writeHead(200, {  
+											'Content-Type':'application/json'  // or 'Content-Type': 'text/html' 
+										});  
+										res.write(ArrayToJson);  
+										res.end(); 
+									}
 							})
 						})
 					}
@@ -470,19 +495,32 @@ const selectFromDB = require('./Control/selectFromDB.js');
 							.then((selectResult)=>{
 							//	console.log(selectResult)
 				// ==== ==== ==== Change selectResult.rows Objects to Array of Object's value  ==== ==== ==== 
-								var	arrayOfSelectedFiles=[]
-								for(i=0;i<selectResult.rows.length;i++)
-									{
-								 		arrayOfSelectedFiles[i] = selectResult.rows[i].name;
-									} 
-								// console.log(arrayOfSelectedFiles)
-								ArrayToJson = JSON.stringify(arrayOfSelectedFiles)
-								// console.log(ArrayToJson)
-								res.writeHead(200, {  
+								if (selectResult.rowCount === 0)	
+									
+								{
+									selectResult = JSON.stringify(selectResult)
+									res.writeHead(200, {  
 									'Content-Type':'application/json'  // or 'Content-Type': 'text/html' 
-								});  
-								res.write(ArrayToJson);  
-								res.end(); 
+														});  
+									res.write(selectResult);  
+									res.end(); 
+								}
+								else
+								{
+									var	arrayOfSelectedFiles=[]
+									for(i=0;i<selectResult.rows.length;i++)
+										{
+											arrayOfSelectedFiles[i] = selectResult.rows[i].name;
+										} 
+									// console.log(arrayOfSelectedFiles)
+									ArrayToJson = JSON.stringify(arrayOfSelectedFiles)
+									// console.log(ArrayToJson)
+									res.writeHead(200, {  
+										'Content-Type':'application/json'  // or 'Content-Type': 'text/html' 
+									});  
+									res.write(ArrayToJson);  
+									res.end(); 
+								}
 							})
 						})
 					}
@@ -507,32 +545,45 @@ const selectFromDB = require('./Control/selectFromDB.js');
 						// jsonToArray = JSON.stringify(sqlParm.whereValue)
 					// console.log(' This the sqlRecord field : ' , sqlParm.colName + " / " +sqlParm.tableName)
 							
-						selectFromDBObj.selectOneColWhere(sqlParm.colName,sqlParm.tableName,sqlParm.whereClo,sqlParm.whereValue)
-							.then((selectResult)=>{
+				selectFromDBObj.selectOneColWhere(sqlParm.colName,sqlParm.tableName,sqlParm.whereClo,sqlParm.whereValue)
+				.then((selectResult)=>{
 								//console.log(selectResult[0].rows[0])
 							//	console.log(' This is the result of electOneColWhere Function : ' , selectResult)
 				// ==== ==== ==== Change selectResult.rows Objects to Array of Object's value  ==== ==== ==== 
-				this.ComFiles = [];
-				
-				for(var i = 0; i<sqlParm.whereValue.length;i++ ) 
+				if (selectResult.rowCount === 0)	
+									
 					{
-				var comOneFile =  {name: sqlParm.whereValue[i],encode:selectResult[i].rows[0].encode};
-				this.ComFiles[i] = comOneFile;
+						selectResult = JSON.stringify(selectResult)
+						res.writeHead(200, {  
+						'Content-Type':'application/json'  // or 'Content-Type': 'text/html' 
+											});  
+						res.write(selectResult);  
+						res.end(); 
 					}
-				//console.log(ComFiles.length);
-				//console.log(this.ComFiles[0].name)
-				//console.log(this.ComFiles[0].encode)
-				//console.log(this.ComFiles)
-				updateFormObj.CreateURIForFiles(this.ComFiles).then((imagesHtmlTag)=>{
-				//	console.log(imagesHtmlTag)
-					//const imagesHtmlTag = URIFiles
-					res.writeHead(200, {  
-			    'Content-Type':'multipart/form-data' //'Content-Type':'application/json' or 'Content-Type': 'text/html'   
-					});  
-					res.write(imagesHtmlTag);  
-					res.end(); 
-				}) 
-							})
+					else
+					{
+						this.ComFiles = [];
+						
+						for(var i = 0; i<sqlParm.whereValue.length;i++ ) 
+							{
+						var comOneFile =  {name: sqlParm.whereValue[i],encode:selectResult[i].rows[0].encode};
+						this.ComFiles[i] = comOneFile;
+							}
+						//console.log(ComFiles.length);
+						//console.log(this.ComFiles[0].name)
+						//console.log(this.ComFiles[0].encode)
+						//console.log(this.ComFiles)
+						updateFormObj.CreateURIForFiles(this.ComFiles).then((imagesHtmlTag)=>{
+						//	console.log(imagesHtmlTag)
+							//const imagesHtmlTag = URIFiles
+							res.writeHead(200, {  
+						'Content-Type':'multipart/form-data' //'Content-Type':'application/json' or 'Content-Type': 'text/html'   
+							});  
+							res.write(imagesHtmlTag);  
+							res.end(); 
+						}) 
+					}		
+			})
 						})
 					}
 
@@ -567,26 +618,88 @@ const selectFromDB = require('./Control/selectFromDB.js');
 								//console.log(selectResult[0].rows[0])
 							//	console.log(' This is the result of electOneColWhere Function : ' , selectResult)
 				// ==== ==== ==== Change selectResult.rows Objects to Array of Object's value  ==== ==== ==== 
-				this.ComFiles = [];
-				
-				for(var i = 0; i<sqlParm.secWhereValue.length;i++ ) 
+				if (selectResult.rowCount === 0)	
+									
 					{
-				var comOneFile =  {name: sqlParm.secWhereValue[i],encode:selectResult[i].rows[0].encode};
-				this.ComFiles[i] = comOneFile;
+						selectResult = JSON.stringify(selectResult)
+						res.writeHead(200, {  
+						'Content-Type':'application/json'  // or 'Content-Type': 'text/html' 
+											});  
+						res.write(selectResult);  
+						res.end(); 
 					}
+					else
+					{
+						this.ComFiles = [];
+						
+						for(var i = 0; i<sqlParm.secWhereValue.length;i++ ) 
+							{
+						var comOneFile =  {name: sqlParm.secWhereValue[i],encode:selectResult[i].rows[0].encode};
+						this.ComFiles[i] = comOneFile;
+							}
+						//console.log(ComFiles.length);
+						//console.log(this.ComFiles[0].name)
+						//console.log(this.ComFiles[0].encode)
+						//console.log(this.ComFiles)
+						updateFormObj.CreateURIForFiles(this.ComFiles).then((imagesHtmlTag)=>{
+						//	console.log(imagesHtmlTag)
+							//const imagesHtmlTag = URIFiles
+							res.writeHead(200, {  
+						'Content-Type':'multipart/form-data' //'Content-Type':'application/json' or 'Content-Type': 'text/html'   
+							});  
+							res.write(imagesHtmlTag);  
+							res.end(); 
+						}) 
+					}
+					})
+						})
+					}
+
+			
+				// End read file code 
+			break;
+			
+			case '/deleteImagesWithNameAndId':
+			// console.log('------- Hello you are in getColFromDBJoinTables ------')
+				if (req.method === 'POST') 
+					{
+						var body = ''
+						req.on('data', function(data) {
+						body += data
+						// console.log('Partial body: ' + body)
+						})
+						req.on('end', function() {
+						console.log('Body: ' + body )
+						// ==== ==== ==== Working with DATABASE ==== ==== ====
+						 sqlParm = JSON.parse(body);
+					     //console.log('================================' + sqlParm.whereValue)
+						// jsonToArray = JSON.stringify(sqlParm.whereValue)
+					// console.log(' This the sqlRecord field : ' , sqlParm.colName + " / " +sqlParm.tableName)
+
+					selectFromDBObj.deleteJoinTablesRecWithAndOr(sqlParm.deleteColName,
+											sqlParm.pKeyTableName,sqlParm.fKeyTableName,
+											sqlParm.pKeyClo,sqlParm.fKeyClo,
+											sqlParm.friWhereClo,sqlParm.friWhereValue,
+											sqlParm.secWhereClo, sqlParm.secWhereValue)
+							
+					.then((selectResult)=>{
+								//console.log(selectResult[0].rows[0])
+							//	console.log(' This is the result of electOneColWhere Function : ' , selectResult)
+				// ==== ==== ==== Change selectResult.rows Objects to Array of Object's value  ==== ==== ==== 
+			
 				//console.log(ComFiles.length);
 				//console.log(this.ComFiles[0].name)
 				//console.log(this.ComFiles[0].encode)
 				//console.log(this.ComFiles)
-				updateFormObj.CreateURIForFiles(this.ComFiles).then((imagesHtmlTag)=>{
+			
 				//	console.log(imagesHtmlTag)
 					//const imagesHtmlTag = URIFiles
 					res.writeHead(200, {  
 			    'Content-Type':'multipart/form-data' //'Content-Type':'application/json' or 'Content-Type': 'text/html'   
 					});  
-					res.write(imagesHtmlTag);  
+					res.write(" The Images have been Deleted ....");  
 					res.end(); 
-				}) 
+				 
 							})
 						})
 					}
@@ -594,6 +707,7 @@ const selectFromDB = require('./Control/selectFromDB.js');
 			
 				// End read file code 
 			break;
+
 			case '/updateComInfo':
 			//
 		/*	if (req.method === 'POST') 
