@@ -4,6 +4,8 @@ var fs = require('fs');
 // Host Info
 const hostname = '0.0.0.0';
 const port = process.env.PORT || 3200;
+//const hostname = 'localhost';
+//const port = 3000;
 // Import user packages 
 const conntoPgDB = require('./BackEnd/DBManipulation/conntoPgDB.js');
 const getFormInputData = require('./BackEnd/DBManipulation/getFormInputData.js');
@@ -62,13 +64,14 @@ const selectFromDB = require('./Control/selectFromDB.js');
 			// write allFiles ================================================
 				   
 				   allFiles.forEach( (element, index) => {
-					fs.writeFile(`./${filenames[index]}`, allFiles[index], (err) => {
+				/*	Comment the writeb file step
+				fs.writeFile(`./${filenames[index]}`, allFiles[index], (err) => {
 						
 						if (err) {
 									throw new Error('Something went wrong.')
 								 }
 						console.log(`the -  ${filenames[index]} - file has been writen`);
-																		})
+																		})  */
 						console.log('element.length : ',element.length)
 						
 												});

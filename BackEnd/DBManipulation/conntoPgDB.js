@@ -3,8 +3,8 @@ const { Client } = require('pg');
 module.exports = class conntoPgDB {
     constructor(dbName) {
         this.conn = new Client({
-                   user: 'catedb_user',
-                   password: '14aJZnqCZrSaC5NxUuBVuT9TG9FiKNdW',
+                   user: 'postgres',
+                   password: 'postgres',
                    host: 'localhost',
                    port: '5432',
                    database: 'catedb',
