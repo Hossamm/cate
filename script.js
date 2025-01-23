@@ -57,15 +57,30 @@
                       }
                       document.getElementById('comNameList').innerHTML = options; 
                       
-    
+                      
+                document.getElementById('SearchComId').addEventListener("input", function(event){
+                        var comNameError = document.getElementById('comNameError')
+                        comNameError.innerText = '';
+                      })
+                      
                       getComDataBTN = document.getElementById('SearchBtnId');
                       getComDataBTN.addEventListener("click", function(event){
+                        event.preventDefault()
+                        var inputComName = document.getElementById('SearchComId')
+                      if (jsonArray.includes(inputComName.value)){
+                        
                         formPath = './FE/updComInfo.html'
                         
                         searchComSubmit(event, formPath)
+                      }
+                      else {
+                          var comNameError = document.getElementById('comNameError')
+                              comNameError.innerText = ' اختر الاسم الصحيح من القائمة';
+                           }
      
                       })
-      
+                    
+                    
                     })
                    
                     .catch((err) => {
@@ -101,11 +116,27 @@
                         // console.log(options)
                       }
                       document.getElementById('comNameList').innerHTML = options; 
+
+                      document.getElementById('SearchComId').addEventListener("input", function(event){
+                        var comNameError = document.getElementById('comNameError')
+                        comNameError.innerText = '';
+                      })
+                      
                       getComDataBTN = document.getElementById('SearchBtnId');
                       getComDataBTN.addEventListener("click", function(event){
+                        event.preventDefault()
+                        var inputComName = document.getElementById('SearchComId')
+                      if (jsonArray.includes(inputComName.value)){
+                        
                         formPath = './FE/delComInfo.html'
                           
-                        searchComSubmit(event, formPath)                 
+                        searchComSubmit(event, formPath) 
+                      }
+                      else {
+
+                        var comNameError = document.getElementById('comNameError')
+                        comNameError.innerText = ' اختر الاسم الصحيح من القائمة';
+                      }                
                   
                       })
                 
@@ -141,12 +172,27 @@
                       options += '<option value="' + jsonArray[i] + '" />';
                       // console.log(options)
                     }
-                    document.getElementById('comNameList').innerHTML = options; 
+                    document.getElementById('comNameList').innerHTML = options;
+                    
+                    document.getElementById('SearchComId').addEventListener("input", function(event){
+                      var comNameError = document.getElementById('comNameError')
+                      comNameError.innerText = '';
+                    })
+                    
                     getComDataBTN = document.getElementById('SearchBtnId');
                     getComDataBTN.addEventListener("click", function(event){
+                      event.preventDefault()
+                      var inputComName = document.getElementById('SearchComId')
+                    if (jsonArray.includes(inputComName.value)){
+
                       formPath = './FE/disComInfo.html'
                         
                       searchComSubmit(event, formPath)
+                    }
+                    else { 
+                      var comNameError = document.getElementById('comNameError')
+                              comNameError.innerText = 'اختر الاسم الصحيح من القائمة';
+                         }
                       
                     })
                     
@@ -186,9 +232,11 @@
                       SearchDocForm = document.getElementById('SearchDocFormId')
                       document.getElementById('comNameList').innerHTML = options;
                       const inputComName = document.getElementById('SearchComId');
+
                       inputComName.addEventListener("input", function(event){
+                        
                         if (jsonArray.includes(inputComName.value))
-                        {
+                          {
                           
                           console.log(" Company Name has been selected : .....")
                           imagesToDisplay.innerHTML = "";
@@ -314,7 +362,7 @@
                                   })
                                 } else {alert(" يجب تحديد المستندا قبل الضغط على زر الالغـاء....")}
                                     })
-              //============================End Delete selected images ========================        
+                            //============================End Delete selected images ========================        
                                })
                                .catch((err) => {
                     
@@ -323,6 +371,15 @@
 
                         }
                       
+                      else {
+
+                       imagesSelect = document.getElementById('imagesSelectId');
+                        imagesSelect.innerHTML = '<option value="' + '' + '" />';
+
+                        imagesSelect.innerHTML = '<option disabled style = "color : red;" >' 
+                                                            + '  ادخل الاسم الصحيح  ' + '</>';
+                      }  
+                        
                       })
       
                     })
