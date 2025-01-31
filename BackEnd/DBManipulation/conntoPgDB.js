@@ -3,12 +3,12 @@ const { Client } = require('pg');
 module.exports = class conntoPgDB {
     constructor(dbName) {
         this.conn = new Client({
-                    // user: 'postgres',
-                     user: 'catedb_user',
-                  // password: 'postgres',
-                     password: '14aJZnqCZrSaC5NxUuBVuT9TG9FiKNdW',
-                  // host: 'localhost',   
-                    host: 'dpg-cu80sjd2ng1s73cv0eug-a',
+                     user: 'postgres',
+                    // user: 'catedb_user',
+                     password: 'postgres',
+                  //   password: '14aJZnqCZrSaC5NxUuBVuT9TG9FiKNdW',
+                     host: 'localhost',   
+                  //  host: 'dpg-cu80sjd2ng1s73cv0eug-a',
                      port: '5432',
                      database: 'catedb',
                });
@@ -108,6 +108,70 @@ return await this.conn.query(companysql,companyValues)
     })
     
  }// End of insertRec function
+
+ /*
+ async insertRec(companyValues, photoValues) 
+ {  
+// Insert more than one row in table   
+  var companysql = 'INSERT INTO company(com_name, com_type, com_purpose, com_address, notes) VALUES ($1, $2, $3, $4, $5)'
+  var photosql = 'INSERT INTO images (company_id, image, name) VALUES ($1, $2, $3)';
+ */
+
+ async insertRecInForeignTable(companyValues, photoValues) 
+  {
+    console.log(companyValues)
+    var photosql = 'INSERT INTO images (company_id, image, name) VALUES ($1, $2, $3) RETURNING *';
+
+    return this.conn.query(`select id from company where com_name = '${companyValues[0]}'`)
+    .then((result) =>
+            {   
+                console.log(`Selected row from Companty table where Company name is ${companyValues[0]}: `, result.rowCount)
+    
+                    if (result instanceof Error) 
+                        {console.log('Company data not inserted Error: ', result);}
+                    else{
+                            // Add the new Company id to the photos records
+                            for (let i = 0; i < photoValues.length; i++) 
+                                {
+                                    photoValues[i].unshift(result.rows[0].id)          
+                                } 
+                                  //   console.log(photoValues)
+                            // Insert photos records in photo table using Arry.reduce mothod...
+                            var imageRecData = [];
+                          return photoValues.reduce(
+                            (p, element,index) => 
+                                p.then(() => this.conn.query(photosql,element)
+                                    // delete the next line only with keeping the , when you use it in production..
+                                    .then((result)=>{
+                                       // console.log(result.rows)
+                                        
+                                        imageRecData[index] = result.rows[0]; 
+                                       // imageRecData.splice(-1)
+                                        return imageRecData;
+                                    
+                                                    }
+                                            )), Promise.resolve(null)
+                                                    )     
+                        }
+            })
+        .then((result)=>
+            {
+            
+                if (result instanceof Error) 
+                    {
+                    console.log('Company photo not inserted Error: ', result);
+                    return 'Company photo not inserted Error: ';
+                    }
+                else{
+                  //  console.log('All Company data has been inserted', result);
+                    return result;
+                    }
+            })
+             .catch((err) => {
+
+                console.log('\n This is an Error Messag from insertRecInForeignTable function in connectPgDB Class \n',err);
+              });
+  } // End insertRecInForeignTable
 
 // Function Get/Select All Company Data ... 
 async getComData(comName) 

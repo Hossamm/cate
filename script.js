@@ -362,7 +362,51 @@
                                   })
                                 } else {alert(" يجب تحديد المستندا قبل الضغط على زر الالغـاء....")}
                                     })
-                            //============================End Delete selected images ========================        
+                            //============================End Delete selected images ======================== 
+
+                            //============================ Start adding new images ======================== 
+                            insImagesBTN = document.getElementById('insImagesBTN');
+    
+                            insImagesBTN.addEventListener("click", function(event){
+                            // console.log('Hi You are in click event')
+                              const docFileInput = document.getElementById("docFileInput");
+
+                              docFileInput.addEventListener("change", function(event){
+                               // console.log('Hi You are in change input event')
+                              
+                                 docFileInput.files 
+                                  if ( docFileInput.files .length === 0) // check if there is files selected 
+                                    {
+                                    alert("Please select at least one file to upload.");
+                                    return;
+                                    } 
+                                    else
+                                    {
+                                      const formData = new FormData();
+                                      formData.append('comName', `${inputComName.value}`);
+
+                                      for (var i = 0; i < docFileInput.files.length; i++) 
+                                          {
+                                              const file = docFileInput.files[i]; 
+                                           // append the file directly to a FormData
+                                              formData.append('fieldName', file, file.name);
+
+                                          }
+                                     // console.log(formData);
+                                           fetch("/insertImages", {
+                                            method: "POST",
+                                            body: formData,
+                                          }).then(Response => Response.text()).then((jsonObject)=>{ 
+                                            //console.log(jsonObject)
+                                            imagesToDisplay = document.getElementById('imagesToDisplay')
+                                            imagesToDisplay.innerHTML = jsonObject;})
+
+                                    }
+                                    })
+// xxxxxx
+                            })
+
+                            //============================ End adding new images ======================== 
                                })
                                .catch((err) => {
                     
@@ -519,11 +563,15 @@ function getFormInputValues()
                     const formData = new FormData(updateComForm);
                    // const plainFormData = Object.fromEntries(formData.entries());
                    // const formDataJsonString = JSON.stringify(plainFormData);
-                    updateComBtn.addEventListener("click", function(event){
-                      event.preventDefault();
-            var getInputFormElementsByType = getFormElementsByType('input' , 'text')
-            if(validateForm(getInputFormElementsByType)) 
-              {
+                   updateComForm.addEventListener("submit", function(event){
+                    event.preventDefault();
+                    //
+                    var getInputFormElementsByType = getFormElementsByType('input' , 'text')
+
+                    validateForm(getInputFormElementsByType)
+                    .then((validationResult)=>{
+                      if (validationResult === true)
+                      {
                      
                       var  comDataAfterUpd = getFormInputValues();
                       var  sqlComTableFields = ['com_type', 'com_name', 'com_purpose', 'com_address', 'notes'];
@@ -607,8 +655,9 @@ function getFormInputValues()
                                 });
                 
                               }
-                              }
-                    })
+                              } // End of if statmrnt of the return value of validation result
+                              })// End of then of the return value of validation function 
+                    })// End of in submit of update form
                   }
                   else if (formPath === './FE/delComInfo.html')
                     {

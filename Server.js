@@ -2,10 +2,10 @@ const http = require('http')
 var url = require('url');
 var fs = require('fs');
 // Host Info
-const hostname = '0.0.0.0';
-const port = process.env.PORT || 3200;
-// const hostname = 'localhost';
-// const port = 3000;
+//const hostname = '0.0.0.0';
+//const port = process.env.PORT || 3200;
+ const hostname = 'localhost';
+ const port = 3000;
 // Import user packages 
 const conntoPgDB = require('./BackEnd/DBManipulation/conntoPgDB.js');
 const getFormInputData = require('./BackEnd/DBManipulation/getFormInputData.js');
@@ -31,7 +31,6 @@ const selectFromDB = require('./Control/selectFromDB.js');
     const updateFormObj = new updateForm()
 	const selectFromDBObj = new selectFromDB()
 //===========================================
-
 
 	const server = http.createServer((req, res) => {
 
@@ -105,6 +104,55 @@ const selectFromDB = require('./Control/selectFromDB.js');
 									res.end();
 							   })
 			// End of insert Data and response to Client - Company Data and Number of photos uploaded  ========
+				})
+				
+			
+					}  
+			// End of the case  
+			break;
+
+			case '/insertImages': 
+			// Start the case 
+			 if (req.method === 'POST') {
+			//==================================================================================================
+			   console.log('POST');
+			
+				FormInputData.getFormInputs(req, res)
+				.then((data) => 
+					{
+						var fields = data[0]
+						var filenames = data[1]
+						var allFiles = data[2]				
+		// Starting of insert Data and response to Client - Company Data and Number of photos uploaded  ========
+					var companyValues = []
+					for (let x in fields) {
+						companyValues.push( fields[x]);
+					};
+					//console.log(' Company Name : ' + companyValues)
+
+					var photoValues = []
+					for (let i = 0; i < allFiles.length; i++) {
+						console.log((allFiles[i].length))
+						photoValues.push([allFiles[i],filenames[i]])   
+					}
+									
+				selectFromDBObj.insertImages(companyValues, photoValues)
+			
+							   .then((imagesData) =>{
+
+							//console.log(' res.write :  ', imagesData)
+						
+							updateFormObj.CreateURIForFiles(imagesData).then((imagesHtmlTag)=>{
+								//	console.log(imagesHtmlTag)
+									//const imagesHtmlTag = URIFiles
+									res.writeHead(200, {  
+								'Content-Type':'multipart/form-data' //'Content-Type':'application/json' or 'Content-Type': 'text/html'   
+									});  
+									res.write(imagesHtmlTag);  
+									res.end(); 
+								})
+							   })
+			// End of insert Images and response to Client - Company Name and Number of photos uploaded  ========
 				})
 				
 			

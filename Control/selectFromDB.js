@@ -1,17 +1,27 @@
 const conntoPgDB = require('../BackEnd/DBManipulation/conntoPgDB.js');
 
+//===========================================
+
+
+
+    
+
 // ========================================
 module.exports = class updateForm {
 
     constructor() { 
         this.workWithPgDB = new conntoPgDB();
            } 
-        
+  
+           
+
+
 // الحمد لله 
 async selectOneCol(cloNmae,tableName) {
   await workWithPgDB.conntodb();
   return  await workWithPgDB.getColFromTable(cloNmae,tableName)
 }
+
 // الحمد لله  
  
 async selectOneColWhere(cloNmae,tableName,whereClo,whereValue) {
@@ -153,6 +163,26 @@ return this.selectedImages;
 
 }
 
+}
+
+//     insertRecInForeignTable(dbQueryVariabls[0], dbQueryVariabls[1], dbQueryVariabls[2], dbQueryVariabls[3], photoValues)// Array of Image file and its file name
+async  insertImages(comName, photoValues) {
+
+  await workWithPgDB.conntodb();
+
+           var imagesData = []
+   
+            await workWithPgDB.insertRecInForeignTable(comName, photoValues)
+                        .then((insertImagesResult)=>
+                              { 
+                                for(var i = 0; i <photoValues.length;i++)
+                                  {
+                          imagesData[i] = { encode:Buffer.from(insertImagesResult[i].image).toString('base64'), 
+                                              name:insertImagesResult[i].name};
+                                  }
+                                })
+                  
+            return imagesData;
 }
 
 
