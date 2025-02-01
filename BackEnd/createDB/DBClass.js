@@ -5,7 +5,7 @@ module.exports = class conntosql {
     constructor(dbName) {
         this.conn = new Client({
                     // user: 'postgres',
-                        user: 'catedb_user',
+                    //    user: 'catedb_user',
                     // password: 'postgres',
                        password: '14aJZnqCZrSaC5NxUuBVuT9TG9FiKNdW',
                     // host: 'localhost',   
