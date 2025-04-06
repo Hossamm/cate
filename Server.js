@@ -208,8 +208,7 @@ const selectFromDB = require('./Control/selectFromDB.js');
 			} else {
 			// write the res...
 							   
-			   res.writeHead(200, {
-					'Content-Type': 'image/jpg',   
+			   res.writeHead(200, {   
 					'Content-Type': 'image/png', 'Content-Length': '', 
 					'Access-Control-Allow-Origin': '*' // or 'Content-Type':'application/json'
 				});  
