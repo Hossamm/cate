@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS images (
     company_id       integer     NOT NULL REFERENCES company (id),
     image        BYTEA       NOT NULL,
     name         VARCHAR(64) NOT NULL
+--  name         VARCHAR(64) UNIQUE NOT NULL
 );
 
-
+-- ALTER TABLE images ADD constraint UniqueImageName UNIQUE (name);

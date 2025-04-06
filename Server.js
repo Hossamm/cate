@@ -2,10 +2,10 @@ const http = require('http')
 var url = require('url');
 var fs = require('fs');
 // Host Info
-const hostname = '0.0.0.0';
-const port = process.env.PORT || 3200;
-// const hostname = 'localhost';
-// const port = 3000;
+//const hostname = '0.0.0.0';
+//const port = process.env.PORT || 3200;
+ const hostname = 'localhost';
+ const port = 3000;
 // Import user packages 
 const conntoPgDB = require('./BackEnd/DBManipulation/conntoPgDB.js');
 const getFormInputData = require('./BackEnd/DBManipulation/getFormInputData.js');
@@ -200,8 +200,7 @@ const selectFromDB = require('./Control/selectFromDB.js');
 		    break; 
 			case '/logo.png': 
 			// read file code ..
-		
-			fs.readFile(process.cwd() + path,function(error, data) {  
+			fs.readFile('.'+path,function(error, data) {  
 			if (error) {  
 				res.writeHead(404); 
 				res.write('Error Message Code'+ res.statusCode +'\n'+ error); 
@@ -835,7 +834,61 @@ const selectFromDB = require('./Control/selectFromDB.js');
 				})
 				}
 				
-			break;                                              
+			break; 
+			case '/sheet.html': 
+			console.log(' /sheet.html page has been loaded....') 
+			fs.readFile('./repSheet' + path,function(error, data) { 
+			//var html = fs.readFile(__dirname + '/index.htm', 'utf-8');
+				if (error) {  
+					res.writeHead(404);  
+					res.write(error);  
+					res.end();  
+				} else {  
+					res.writeHead(200, {  
+						'Content-Type': 'text/html', 
+					});  
+					res.write(data);  
+					res.end();  
+				}  
+			});  
+			break;
+			case '/getRepData':  
+						var path = '/';
+			
+				var path = './repSheet/sheetData.json'; //__dirname + "/testJsonFile.json"
+				console.log(__dirname + path)
+				fs.readFile(path, function(error, data) {  
+					if (error) {
+						res.writeHead(404);  
+						res.write(error);  
+						res.end();                                            
+					} else {                     
+						res.writeHead(200, {  
+							'Content-Type': 'application/json'  
+						});  
+						res.write(data);  
+						res.end();  
+					}  
+				}); 
+				break;
+				case '/sheet2.html': 
+			console.log(' /sheet.html page has been loaded....') 
+			fs.readFile('./repGrid' + path,function(error, data) {
+			//var html = fs.readFile(__dirname + '/index.htm', 'utf-8');
+				if (error) {  
+					res.writeHead(404);  
+					res.write(error);  
+					res.end();  
+				} else {  
+					res.writeHead(200, {  
+						'Content-Type': 'text/html', 
+					});  
+					res.write(data);  
+					res.end();  
+				}  
+			});  
+			break;
+			                                                                                          
 			default:  
 				res.writeHead(404);  
 				res.write("opps this doesn't exist - 404");  

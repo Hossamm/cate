@@ -208,14 +208,14 @@
               });
                   
           break;
-          case 'searchDoc':
+           case 'searchDoc':
+          
           fetch("/searchDoc").then(response => response.text()).then(function(data) {
             
                         mainDiv.innerHTML = data;
               })
               .then(()=>{
-                // console.log('You are in searchCom');
-                  fetch("/getColFromDB", {
+                   fetch("/getColFromDB", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -234,10 +234,10 @@
                       const inputComName = document.getElementById('SearchComId');
 
                       inputComName.addEventListener("input", function(event){
+                        event.stopImmediatePropagation(); // Hossam
                         
                         if (jsonArray.includes(inputComName.value))
                           {
-                          
                           console.log(" Company Name has been selected : .....")
                           imagesToDisplay.innerHTML = "";
                           fetch("/getColFromDBJoinTables", {
@@ -368,12 +368,12 @@
                             insImagesBTN = document.getElementById('insImagesBTN');
     
                             insImagesBTN.addEventListener("click", function(event){
+                              event.stopImmediatePropagation(); // Hossam
                             // console.log('Hi You are in click event')
                               const docFileInput = document.getElementById("docFileInput");
-
                               docFileInput.addEventListener("change", function(event){
-                               // console.log('Hi You are in change input event')
-                              
+                                event.stopImmediatePropagation(); // Hossam
+                                
                                  docFileInput.files 
                                   if ( docFileInput.files .length === 0) // check if there is files selected 
                                     {
@@ -383,11 +383,11 @@
                                     else
                                     {
                                       const formData = new FormData();
-                                      formData.append('comName', `${inputComName.value}`);
+                                      formData.append('comName', `${inputComName.value}`); // Hossam Get Company Name
 
                                       for (var i = 0; i < docFileInput.files.length; i++) 
                                           {
-                                              const file = docFileInput.files[i]; 
+                                            const file = docFileInput.files[i]; 
                                            // append the file directly to a FormData
                                               formData.append('fieldName', file, file.name);
 
@@ -403,7 +403,6 @@
 
                                     }
                                     })
-// xxxxxx
                             })
 
                             //============================ End adding new images ======================== 
@@ -452,8 +451,7 @@
                     
                 console.log('\n This is an Error Messag /createDB \n',err);
               });
-          break;
-    
+          break;    
         default:
           contentDiv.innerHTML = '<h2>Page not found!</h2>';
       }
@@ -859,7 +857,9 @@ function setInputTextEnabled(inputArray)
             event.preventDefault();
             // Remove any space from Company Name
             var companyName = document.getElementById('ComName');
-            companyName.value = companyName.value.trim();
+            let valueWithOneSpace = companyName.value.replace(/\s\s+/g, ' ');
+            companyName.value = valueWithOneSpace.trim();
+            //companyName.value = companyName.value.trim();
             // ===== End of Remove space from company name =======
             // First, we get the files that were selected
             const form = document.getElementById('uploadForm');
@@ -966,5 +966,21 @@ function setInputTextEnabled(inputArray)
       
     
     }  
+
+
+    function renderDataInTheTable(xxxxxxxxxxxx) {
+
+      console.log('+++++++++===++++++++++++++++++++++==========++++++++++++++++++++++++++========+++++++')
+      const mytable = document.getElementById("html-data-table");
+      todos.forEach(todo => {
+          let newRow = document.createElement("tr");
+          Object.values(todo).forEach((value) => {
+              let cell = document.createElement("td");
+              cell.innerText = value;
+              newRow.appendChild(cell);
+          })
+          mytable.appendChild(newRow);
+      });
+      }
     
 
