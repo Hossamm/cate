@@ -3,14 +3,14 @@ const { Client } = require('pg');
 module.exports = class conntoPgDB {
     constructor(dbName) {
         this.conn = new Client({
-                     user: 'postgres',
-                    // user: 'catedb_user',
-                     password: 'postgres',
-                  //   password: '14aJZnqCZrSaC5NxUuBVuT9TG9FiKNdW',
-                     host: 'localhost',   
-                  //   host: 'dpg-cu80sjd2ng1s73cv0eug-a',
+                    // user: 'postgres',
+                     user: 'catedb_ixu8_user',
+                    // password: 'postgres',
+                     password: 'imp2XHwagVBS4jrNT1boWK9lvrMybBa1',
+                    // host: 'localhost',   
+                     host: 'dpg-cvp86egdl3ps73fu58ag-a',
                      port: '5432',
-                     database: 'catedb',
+                     database: 'catedb_ixu8',
                });
        // this.dbStatus = 'notExists' //  'Exists' if dbName exists in PG db, 'notExists' if not      
            }
