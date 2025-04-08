@@ -209,7 +209,8 @@ const selectFromDB = require('./Control/selectFromDB.js');
 			// write the res...
 							   
 			   res.writeHead(200, {   
-					'Content-Type': 'image/png' //, 'Content-Length': '',
+					'Content-Type': 'image/png' 
+					// 'Content-Length': '' => This is the root cause of the logo problem 
 				});  
 				res.write(data);  
 				res.end(); 
@@ -229,8 +230,8 @@ const selectFromDB = require('./Control/selectFromDB.js');
 			// write the res...
 							   
 			   res.writeHead(200, {  
-					'Content-Type': 'image/svg+xml', 'Content-Length': '', 
-				//	'Access-Control-Allow-Origin': '*' // or 'Content-Type':'application/json'
+					'Content-Type': 'image/svg+xml'
+					// 'Content-Length': '' => This is the root cause of the logo problem 
 				});  
 			
 				res.write(data);  
