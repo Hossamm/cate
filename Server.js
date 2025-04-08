@@ -209,10 +209,7 @@ const selectFromDB = require('./Control/selectFromDB.js');
 			// write the res...
 							   
 			   res.writeHead(200, {   
-					'Content-Type': 'image/png', 'Content-Length': '',
- 				//	'Access-Control-Allow-Origin': '*',
-				//	'Access-Control-Allow-Credentials': true,
-				//	'Access-Control-Allow-Headers': 'Authorization'
+					'Content-Type': 'image/png' //, 'Content-Length': '',
 				});  
 				res.write(data);  
 				res.end(); 
