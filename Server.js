@@ -2,10 +2,10 @@ const http = require('http')
 var url = require('url');
 var fs = require('fs');
 // Host Info
-const hostname = '0.0.0.0';
-const port = process.env.PORT || 3200;
-// const hostname = 'localhost';
-// const port = 3000;
+//const hostname = '0.0.0.0';
+//const port = process.env.PORT || 3200;
+ const hostname = 'localhost';
+ const port = 3000;
 // Import user packages 
 const conntoPgDB = require('./BackEnd/DBManipulation/conntoPgDB.js');
 const getFormInputData = require('./BackEnd/DBManipulation/getFormInputData.js');
@@ -210,9 +210,9 @@ const selectFromDB = require('./Control/selectFromDB.js');
 							   
 			   res.writeHead(200, {   
 					'Content-Type': 'image/png', 'Content-Length': '',
- 					'Access-Control-Allow-Origin': '*',
-					'Access-Control-Allow-Credentials': true,
-					'Access-Control-Allow-Headers': 'Authorization'
+ 				//	'Access-Control-Allow-Origin': '*',
+				//	'Access-Control-Allow-Credentials': true,
+				//	'Access-Control-Allow-Headers': 'Authorization'
 				});  
 				res.write(data);  
 				res.end(); 
@@ -233,7 +233,7 @@ const selectFromDB = require('./Control/selectFromDB.js');
 							   
 			   res.writeHead(200, {  
 					'Content-Type': 'image/svg+xml', 'Content-Length': '', 
-					'Access-Control-Allow-Origin': '*' // or 'Content-Type':'application/json'
+				//	'Access-Control-Allow-Origin': '*' // or 'Content-Type':'application/json'
 				});  
 			
 				res.write(data);  
