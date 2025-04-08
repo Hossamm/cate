@@ -212,7 +212,7 @@ const selectFromDB = require('./Control/selectFromDB.js');
 					'Content-Type': 'image/png', 'Content-Length': '',
  					'Access-Control-Allow-Origin': '*',
 					'Access-Control-Allow-Credentials': true,
-					'Access-Control-Allow-Headers': 'Authorization'
+					'Access-Control-Allow-Headers': 'Content-Type , Authorization'
 				});  
 				res.write(data);  
 				res.end(); 
