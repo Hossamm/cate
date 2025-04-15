@@ -212,11 +212,11 @@ async CreateURIForFiles(ComFiles)
                             margin: 20px; border-radius: 5px; border: 1px solid #ccc;"> 
                             <p> هذا ملف ${ext} مدعوم من التطبيق. </p>`  
             break; 
-            default: 
-                this.uri = `<embed src="data:application/
-                            svg+xml;base64,${(ComFiles[i].encode)}"style="width: 300px; height: 300px; 
+            default:  
+                this.uri = `<img src="data:image/
+                            ${ext};base64,${(ComFiles[i].encode)}"style="width: 300px; height: 300px; 
                             margin: 20px; border-radius: 5px; border: 1px solid #ccc;"> 
-                            <p> هذا ملف ${ext}.... </p>`  
+                            <p> هذا ملف غير مدعوم من التطبيق ${ext}.... </p>`  
             break;  
         }
         data = data + this.uri;
