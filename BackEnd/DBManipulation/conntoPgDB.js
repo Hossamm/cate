@@ -10,7 +10,7 @@ module.exports = class conntoPgDB {
                     //  host: 'localhost',   
                       host: 'ep-super-dawn-a2p9razw-pooler.eu-central-1.aws.neon.tech',
                        port: '5432',
-                     database: 'neondb'         
+                     database: 'catedb'         
                });
        // this.dbStatus = 'notExists' //  'Exists' if dbName exists in PG db, 'notExists' if not      
            }

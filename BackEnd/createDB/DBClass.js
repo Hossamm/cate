@@ -11,7 +11,7 @@ module.exports = class conntosql {
                     //  host: 'localhost',   
                       host: 'ep-super-dawn-a2p9razw-pooler.eu-central-1.aws.neon.tech',
                        port: '5432',
-                     database: 'neondb',
+                     database: 'catedb',
                     //   database: dbName,
                });
            
