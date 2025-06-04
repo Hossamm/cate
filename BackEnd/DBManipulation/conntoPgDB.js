@@ -3,14 +3,14 @@ const { Client } = require('pg');
 module.exports = class conntoPgDB {
     constructor(dbName) {
         this.conn = new Client({
-                    // user: 'postgres',
-                     user: 'catedb_ixu8_user',
-                    // password: 'postgres',
-                     password: 'imp2XHwagVBS4jrNT1boWK9lvrMybBa1',
-                    // host: 'localhost',   
-                     host: 'dpg-cvp86egdl3ps73fu58ag-a',
-                     port: '5432',
-                     database: 'catedb_ixu8',
+    		    //  user: 'postgres',
+                       user: 'neondb_owner',
+                    //   password: 'postgres',
+                       password: 'npg_ONPEmhHTw3L2',
+                    //  host: 'localhost',   
+                      host: 'ep-super-dawn-a2p9razw-pooler.eu-central-1.aws.neon.tech',
+                       port: '5432',
+                     database: 'neondb'         
                });
        // this.dbStatus = 'notExists' //  'Exists' if dbName exists in PG db, 'notExists' if not      
            }

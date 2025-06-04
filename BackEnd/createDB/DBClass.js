@@ -5,13 +5,13 @@ module.exports = class conntosql {
     constructor(dbName) {
         this.conn = new Client({
                     //  user: 'postgres',
-                       user: 'catedb_ixu8_user',
+                       user: 'neondb_owner',
                     //   password: 'postgres',
-                       password: 'imp2XHwagVBS4jrNT1boWK9lvrMybBa1',
+                       password: 'npg_ONPEmhHTw3L2',
                     //  host: 'localhost',   
-                      host: 'dpg-cvp86egdl3ps73fu58ag-a',
+                      host: 'ep-super-dawn-a2p9razw-pooler.eu-central-1.aws.neon.tech',
                        port: '5432',
-                     database: 'catedb_ixu8',
+                     database: 'neondb',
                     //   database: dbName,
                });
            
