@@ -180,6 +180,7 @@ const selectFromDB = require('./Control/selectFromDB.js');
 			// End read file code  
 			break;
 			case '/mainPage.html': 
+			if (req.method === 'POST') {
 			// read file code ..
 			fs.readFile(process.cwd() + path,'utf8',function(error, data) {  
 			if (error) {  
@@ -197,7 +198,11 @@ const selectFromDB = require('./Control/selectFromDB.js');
 			}  
 			}); 
 			// End read file code  
-		    break; 
+			
+					}  
+			// End of the case
+		    break;
+
 			case '/logo.png': 
 			// read file code ..
 			fs.readFile('.'+path,function(error, data) {  
