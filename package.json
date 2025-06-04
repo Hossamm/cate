@@ -1,7 +1,7 @@
 
 {
   "engines": {
-   "node": "23.11.1"
+   "node": "22.x"
   },
   "name": "cate-arch",
   "version": "1.0.0",
