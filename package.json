@@ -1,8 +1,12 @@
+
 {
+  "engines": {
+   "node": "23.11.1"
+  },
   "name": "cate-arch",
   "version": "1.0.0",
   "description": "The archive system of CATE office",
-  "main": "Server.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
