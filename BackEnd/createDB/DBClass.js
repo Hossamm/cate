@@ -13,6 +13,7 @@ module.exports = class conntosql {
                        port: '5432',
                      database: 'neondb',
                     //   database: dbName,
+		// comment by Hossam
                });
            
            }
