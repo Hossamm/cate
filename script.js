@@ -6,9 +6,9 @@
       switch (page) {
         case 'addCom':
         fetch("/addCom").then(response => response.text()).then(function(data) {
-              console.log(data)
+              console.log('This is the addCom form :' + data)
                         mainDiv.innerHTML = data;				
-              //}).then(()=>{
+              }).then(()=>{
     
                 
                 //validateForm(getInputFormElementsByType)
