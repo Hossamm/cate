@@ -1,0 +1,75 @@
+
+<h2 style="text-align: center;color:black;">  مستندات الشريكة  [ عــرض - اضافة - الغــاء ] </h2>
+
+       <div class="container">
+          <form name="SearchDocForm" id="SearchDocFormId"></form>
+              <div class="row">
+                <div class="col-25">
+                  <label for="Companyname">اسم الشركة</label>
+                </div>
+                <div class="col-75">
+                  <input type="text" list="comNameList" name="Companyname" 
+                          id="SearchComId" placeholder="ادخل اسم الشركه" class=".col-75_2" autocomplete="off">
+                  <datalist id="comNameList" aria-multiselectable="false"></datalist>
+                 
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-25">
+                  <label for="imagesSelect"> اسم مستند </label>
+                </div>
+                <div class="col-75">
+                  <input type="text" list="imagesSelectId" name="Companyname" 
+                  id="imagesSelectNameId" placeholder="ادخل اسم الشركه" class=".col-75_2" autocomplete="off">
+                  <datalist id="imagesSelectId" aria-multiselectable="false"></datalist>
+                <!-- <input type="search" id="docName" name="documentName" placeholder="ادخل اسم المستند" class=".col-75_2"> -->
+                <!--<select id="imagesSelectId" name="imagesSelect" multiple>
+                    <option>Vanilla Shake</option>
+                    <option>Strawberry Shake</option>
+                    <option>Chocolate Shake</option> 
+                  </select> -->
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-25">
+                  <label for="imagesSelect">المستند</label>
+                </div>
+                <div class="col-75">
+                  <div id="imagesToDisplay" ></div>
+                </div>
+              </div>
+              <br>
+              <div class="buttons" style="width: 100%; height: 50px; justify-content: space-around;
+                                   display: flex; padding: 0;"  >
+                <div>
+                    <input type="submit" id="getImagesBTN"  value="عــرض" class="fbottom"> 
+                </div>
+
+                <div>
+                    <label for="docFileInput" class="xxx"  id="insImagesBTN"
+                            style=" font-size: 12px; font-weight: bold;
+                            font-family: 'Helvetica', Arial, Lucida Grande, sans-serif; line-height: 1.4;"
+                    >
+                            اضــافـة          
+                    </label>
+
+                    <input id="docFileInput" type="file" multiple name="file"  
+                            style="display: none;"
+                            accept=".jpg, .jpeg, .png, .pdf, .jpeg, .PNG, .JPG, .svg, .xlsx, .xls, .doc, .docx, .mp3, .mp4"
+                    >
+                </div>
+
+                <div>
+                  <input type="submit" id="delImagesBTN"  value=" الغــاء"
+                                       class="fbottom"> 
+                </div>
+
+              </div> 
+            </a>
+
+          </form>
+          
+          
+        </div>

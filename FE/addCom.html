@@ -1,0 +1,115 @@
+<h2 style="text-align: center;color:black;"> بيانات الشركة </h2>
+
+        <div class="container">
+          <form method="POST" name="ComForm"
+          id="uploadForm" enctype="multipart/form-data"> <!--action="submitFun()"-->
+              <div class="row">
+                <div class="col-25">
+                  <label for="comName">اسم الشركة التجاري</label>
+                </div>
+                <div class="col-75">
+                  <input type="text" id="ComName" name="Companyname" placeholder="ادخل اسم الشركه">
+                </div>
+              </div>
+         
+              <div class="row">
+                <div class="col-25">
+                  <label for="ComType">نوع الشركة</label>
+                </div>
+                <div class="col-75">
+                  <select id="ComType" name="CompnyType">
+                    <!-- شركات الأشخاص  -->
+                    <option value="" disabled selected> اختر نوع الشركه </option>
+                    <option value="شركة التضامن">شركة التضامن</option>
+                    <option value="شركة التوصية البسيطة">شركة التوصية البسيطة</option>
+                    <option value="شركة المحاصة">شركة المحاصة</option>
+                    <!--  شركات الأموال  -->
+                    <option value="شركة المساهمة">شركة المساهمة</option>
+                    <!--الشركات ذات الطبيعة المزدوجة-->>
+                    <option value="الشركات ذات المسئولية المحددة">الشركات ذات المسئولية المحددة</option>
+                    <option value="شركات التوصية بالأسهم">شركات التوصية بالأسهم</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-25">
+                  <label for="ComPurp">الغرض من إنشاء الشركة</label>
+                </div>
+                <div class="col-75">
+                  <input type="text" id="ComPurp" name="CompanyPurpose" placeholder="ادخل الغرض من انشاء الشركة">
+                </div>
+              </div>
+        
+              <div class="row">
+                <div class="col-25">
+                  <label for="ComAddr">العنوان</label>
+                </div>
+                <div class="col-75">
+                  <input type="text" id="ComAddr" name="ComAddress" placeholder="ادخل عنوان للمقر الرئيسي للشركة">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-25">
+                  <label for="ComCabi">راس المال</label>
+                </div>
+                <div class="col-75">
+                  <input type="text" id="ComCabi" name="ComCabital" placeholder="ادخل راس مال الشركة">
+                </div>
+              </div>
+        
+              <div class="row">
+                <div class="col-25">
+                  <label for="ComNote">بيانات اخرى</label>
+                </div>
+                <div class="col-75">
+                  <textarea id="ComNote" name="ComNotes" placeholder="ادخل أي بيانات اخرى عن الشركه" style="height:100px"></textarea>
+                </div>
+              </div>
+          
+              <div style="margin-top: 10px;">
+
+                <div class="col-25">
+
+                </div>
+
+                    <div class="upload-form">
+                      <div>
+                        <div>
+                            <label for="fileInput">
+                              اضافة الملفات          
+                            </label>
+                            <input id="fileInput" type="file" multiple name="file" 
+                                        onchange = "renderFileList();" 
+                                        style="display: none;"
+                                        accept=".jpg, .jpeg, .png, .pdf, .jpeg, .PNG, .JPG, .svg, .xlsx, .xls, .doc, .docx, .mp3, .mp4">
+
+                        </div>
+                      </div>       
+                    </div>
+              </div>
+
+              <div id="file-list-display" style="flex-direction: column;">
+              </div>
+
+              <img src="#" alt="صور المستندات التى تم تحميلها" id="img-preview" 
+              style="display: none;">
+
+
+              <br>
+
+              <div class="button">
+                <div>
+                    <input type="submit" id="uploadButton" value="أضف الشركة" class="fbottom"> 
+                </div>
+              </div>
+              <div id="result" style="display: none;">                   
+                <div class="upload-result" style="color: green; font-size: medium; text-align: right;"></div>
+            </div>
+
+          </form>
+          
+          
+        </div>
+
+    

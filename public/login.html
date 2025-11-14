@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> CATE Login Page </title>
+<!--	<link rel="stylesheet" href="./style.css"> -->
+<!--	<link rel="stylesheet" type="text/css" href="slide navbar style.css"> -->
+
+	<style>
+		body{
+		margin: 0;
+		padding: 0;
+		display: flex;  /* Displays an element as a block-level flex container */
+		justify-content: center;
+		align-items: center;
+		min-height: 100vh;
+		font-family: 'Jost', sans-serif;
+		background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e); 
+		}
+		
+		.main{
+		width: 40%;
+		height: 500px;
+		background: #f2f2f2;
+		overflow: hidden;
+	/*	background: url("https://doc-08-2c-docs.googleusercontent.com/docs/securesc/68c90smiglihng9534mvqmq1946dmis5/fo0picsp1nhiucmc0l25s29respgpr4j/1631524275000/03522360960922298374/03522360960922298374/1Sx0jhdpEpnNIydS4rnN4kHSJtU1EyWka?e=view&authuser=0&nonce=gcrocepgbb17m&user=03522360960922298374&hash=tfhgbs86ka6divo3llbvp93mg4csvb38") no-repeat center/ cover;
+	*/	border-radius: 10px;
+		box-shadow: 5px 20px 50px #000;
+		}
+
+				
+		label {
+		color: #fff;
+		font-size: 2.3em;
+		justify-content: center;
+		display: flex;  /* Displays an element as a block-level flex container */
+		margin: 60px;
+		font-weight: bold;
+		 cursor: pointer; 
+		 transition: .5s ease-in-out; 
+		}
+
+		a {
+		color: #573b8a;
+		font-size: 1.3em;
+		justify-content: center;
+		display: flex;  /* Displays an element as a block-level flex container */
+		margin: 10px;
+		font-weight: bold;
+		 cursor: pointer; 
+		 transition: .5s ease-in-out; 
+		}
+
+		input{
+		width: 60%;
+		height: 20px;
+		background: #e0dede;
+		justify-content: center;
+		display: flex;  /* Displays an element as a block-level flex container */
+		margin: 20px auto;
+		padding: 10px;
+		border: none;
+		outline: none;
+		border-radius: 5px;
+		}
+
+		.button{
+		width: 40%;
+		height: 60px;
+		margin: 10px auto;
+		justify-content: center;
+		display: flex;		/* Displays an element as a block element */
+		color: #fff;
+		background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+		font-size: 1.1em;
+		font-weight: bold;
+		transition: .2s ease-in;
+		cursor: pointer;
+		}
+
+		.button:hover{
+		background: #573b8a;
+		}
+
+		.login{
+		height: 460px;
+		background: #eeeeee;
+		border-radius: 60% / 10%;
+		}
+
+		.login label, a{
+		
+		color: #573b8a;
+		
+		}
+
+		@media screen and (max-width: 600px) {
+			.user, .passwd, .button {
+			width: 80%;
+			margin-top: 0;
+		}
+		.main{
+		width: 70%;
+			}
+
+		}
+
+		</style>
+
+
+</head>
+<body>
+	<div class="main">  	
+		
+			<div class="login">
+				<form method="POST" id="iduserloginForm" >
+					<label for="login" aria-hidden="true">Login</label>
+					<input class="user" id="idloginUserName" type="text" name="userName" placeholder="ادخل اسم المستخدم" required="">
+					<input class="passwd" id="idloginUserPasswd" type="password" name="pswd" placeholder="ادخل كلمة المرور" required="">
+					<label for="iduserName" id="checkUserandPassword" aria-hidden="true" 
+						 style="font-size:1em;justify-content: center;margin: 10px; font-weight:normal; display: none; "
+						 >فضلا تاكد من اسم المستخدم و كلمت المرور</label>
+					<input class="button" type="submit" value="دخول"></input>
+					<a href="/newUser">مستخدم جديد</a>
+				</form>
+			</div>
+	</div>
+	<script src="../loginScript.js"></script>
+</body>
+</html>
+

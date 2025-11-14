@@ -1,0 +1,95 @@
+<h2 style="text-align: center;color:black;">  تعديل بيانات الشركة </h2>
+
+        <div class="container">
+          <form method="POST" name="ComForm"
+          id="updateComForm" enctype="multipart/form-data"> <!--action="submitFun()"-->
+              <div class="row">
+                <div class="col-25">
+                  <label for="comName">اسم الشركة التجاري</label>
+                </div>
+                <div class="col-75">
+                  <input type="text" id="ComName" name="Companyname" value = "com_value" readonly>
+                </div>
+              </div>
+         
+              <div class="row">
+                <div class="col-25">
+                  <label for="ComType">نوع الشركة</label>
+                </div> 
+                  <div class="col-75">
+                    <select id="ComType" name="CompnyType">
+                      <!-- شركات الأشخاص  -->
+                      <option value="type_value" selected disabled> type_value </option>
+                      <option value="شركة التضامن">شركة التضامن</option>
+                      <option value="شركة التوصية البسيطة">شركة التوصية البسيطة</option>
+                      <option value="شركة المحاصة">شركة المحاصة</option>
+                      <!--  شركات الأموال  -->
+                      <option value="شركة المساهمة">شركة المساهمة</option>
+                      <!--الشركات ذات الطبيعة المزدوجة-->>
+                      <option value="الشركات ذات المسئولية المحددة">الشركات ذات المسئولية المحددة</option>
+                      <option value="شركات التوصية بالأسهم">شركات التوصية بالأسهم</option>
+                    </select>
+                  </div>
+              </div>
+              <div class="row">
+                <div class="col-25">
+                  <label for="ComPurp">الغرض من إنشاء الشركة</label>
+                </div>
+                <div class="col-75">
+                  <input type="text" id="ComPurp" name="CompanyPurpose" value = "prp_value"
+                  placeholder="ادخل الغرض من انشاء الشركة">
+                </div>
+              </div>
+        
+              <div class="row">
+                <div class="col-25">
+                  <label for="ComAddr">العنوان</label>
+                </div>
+                <div class="col-75">
+                  <input type="text" id="ComAddr" name="ComAddress" value = "addrs_value" 
+                                                  placeholder="ادخل عنوان للمقر الرئيسي للشركة">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-25">
+                  <label for="ComAddr">راس المال</label>
+                </div>
+                <div class="col-75">
+                  <input type="text" id="ComCabi" name="ComCapital" value = "capital_value" 
+                                                  placeholder="ادخل رأسمال لشركة">
+                </div>
+              </div>
+        
+              <div class="row">
+                <div class="col-25">
+                  <label for="ComNote">بيانات اخرى</label>
+                </div>
+                <div class="col-75">
+                  <textarea id="ComNote" name="ComNotes" style="height:100px">other_value</textarea>
+                </div>
+              </div>
+          
+              <div class="row">
+                <div class="col-25">
+                  <label for="subject"> </label>
+                </div>
+                <div class="col-75">
+                <!-- 1-  <img src="data:/;base64,xxxx" alt="Embedded Image"> -->  
+                <!--  <embed type="application/pdf"src="data:application/pdf;base64,comRec" style="width: 500px; height: 500px; margin: 20px; border-radius: 5px; border: 1px solid #ccc;"> -->
+                 
+                </div>
+              </div>
+              <br>
+              <div class="button">
+
+                <input type="submit" id = "updateBtnId" value="حفظ البيانات"> 
+              
+                
+
+          </form>
+          
+          
+        </div>
+
+    

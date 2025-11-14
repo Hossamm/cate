@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">  
+    <!-- Everything inside of these tags <html></html> are considered part of the <html> “element” -->
+
+<head>   
+        <!-- Metadata goes here -->
+        <!-- Like Page Titile, CSS tags and Anythings that are required to render the page 
+                                            but you don’t necessarily want the user to see -->
+        
+    
+    <title> تقارير  </title>
+    <!-- Note:- Google displays Page Title in search engine results --> 
+            
+
+    <meta charset="utf-8">
+
+ <!-- <link rel='stylesheet' href='./styles.css'/> --> 
+    
+    <style>
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            td,
+            th {
+                border: 1px solid #000000;
+                text-align: right;
+                padding: 8px;
+            }
+    </style>
+
+    
+</head>
+
+
+
+<!-- <body onload="myFunction()"></body> -->
+<body onload="sheet()">
+    <h1 style="text-align: center;">تقرير تعديلات بيانات الشركات</h1>
+
+    <div id="data-table">
+        <table id="html-data-table">
+            <tr>
+                <th>مسلسل</th>
+                <th>اسم الشريكة</th>
+                <th>اسم المستخدم</th>
+                <th>تاريخ وقت التعديل</th>
+                <th>البيان المعدل</th>
+                <th>البيان بعد التعديل</th>
+                <th>البيان قبل التعديل</th>
+            </tr>
+        </table>    
+    </div>
+   
+<!--  <script type="text/javascript" src="./sheet.js"></script> -->
+
+<script type="text/javascript" charset="utf-8">
+   function sheet()
+{
+   // alert("Page is loaded");
+    fetch('/server/getComUpdData')
+    .then(function (response) {
+        return response.json();
+    }).then(function (apiJsonData) {
+       // alert("Page is loaded");
+        console.log(apiJsonData);
+        renderDataInTheTable(apiJsonData);
+    })
+}
+
+
+function renderDataInTheTable(todos) {
+const mytable = document.getElementById("html-data-table");
+todos.forEach(todo => {
+    let newRow = document.createElement("tr");
+    Object.values(todo).forEach((value) => {
+        let cell = document.createElement("td");
+        cell.innerText = value;
+        newRow.appendChild(cell);
+    })
+    mytable.appendChild(newRow);
+});
+}
+
+</script>
+
+ </body>
+
+</html>

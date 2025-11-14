@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">  
+    <!-- Everything inside of these tags <html></html> are considered part of the <html> “element” -->
+
+<head>   
+        <!-- Metadata goes here -->
+        <!-- Like Page Titile, CSS tags and Anythings that are required to render the page 
+                                            but you don’t necessarily want the user to see -->
+        
+    <!-- Note:- Google displays Page Title in search engine results --> 
+    <title> تقارير  </title>
+    
+
+
+<!------- Include the community edition of AG Grid and the CSS required to render the Grid properly.------->
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
+    <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-balham.css">
+<!---------------------------------End the include of AG Grid & the CSS required  ------------------------->    
+
+    <meta charset="utf-8">
+
+ <!-- <link rel='stylesheet' href='./styles.css'/> --> 
+    
+    <style>
+    /* 4- AG Grid requires setting a width and height for the div. So, add the following statement*/ 
+   
+            #data-table {
+                    height: 500px;
+                    width: 100%;
+                }
+    
+
+
+        /* Comment the CSS attributes of the table as we don't need them.
+
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            td,
+            th {
+                border: 1px solid #000000;
+                text-align: left;
+                padding: 8px;
+            }
+        End comment */
+    </style>
+
+    
+</head>
+
+
+
+<!-- <body onload="myFunction()"></body> -->
+<body onload="sheet()">
+
+            <h1 style="text-align: center;">تقرير تعديلات بيانات الشركات</h1>
+
+<!-- 1- Our data-table div no longer needs to have any table element. So, we will comment the table element -->
+<!-- 2- Add the class to use an AG Grid theme. In this example we are using the theme called "ag-theme-balham". -->
+<!-- 3- Note :- AG Grid will create the HTML for the Data Grid when we set it up .   -->
+            <div id="data-table" class="ag-theme-balham">
+
+                <!--         
+                    <table id="html-data-table">
+                            <tr>
+                                <th>userId</th>
+                                <th>id</th>
+                                <th>title</th>
+                                <th>completed</th>
+                            </tr>
+                        </table> 
+                -->
+                                
+            </div>
+   
+<!--  <script type="text/javascript" src="./sheet.js"></script> -->
+
+<script type="text/javascript" charset="utf-8">
+
+
+function sheet()
+{
+ //company_name, date, field_name, new_value, old_value
+    const columnDefs = [
+        { field: 'id', flex: 1}, // use a number filter
+        { field: 'company_name', flex: 1}, // use a number filter
+        { field: 'user_name',flex: 1 },
+        { field: 'date',flex: 1 },
+        { field: 'field_name', flex: 1},
+        { field: 'new_value', flex: 1},
+        { field: 'old_value', flex: 1}
+        
+    ];
+
+    // Grid Options: Contains all of the Data Grid configurations
+    const gridOptions = {
+        // Column Definitions: Defines the columns to be displayed Statically.
+        columnDefs: columnDefs,
+        // Row Data: The data to be displayed. 
+            // 1- It may be a Static Data like : https://www.ag-grid.com/javascript-data-grid/getting-started/
+            // OR Dynamica Data like the following. Refer to https://blog.ag-grid.com/dynamically-setting-ag-grid-columns-from-json/ 
+        onGridReady: (event) =>{renderDataInTheTable(event.api)},
+
+        // To add sorting, filtering, resizable for all columns (defaultColDef)
+        //      - Note: if you need to add these features to a specific column use the following format Ex.
+        //              Ex. { field: 'userId', filter: true }, 
+        defaultColDef: {
+            sortable: true,
+            filter: 'agTextColumnFilter', // The default filter we defined for all the columns is the text filter
+            resizable: true
+                },
+        
+        // Adding automatic pagination to the grid. The AG Grid will automatically paginate the data for us. 
+        pagination: true,
+
+
+        // For more Grid Configuration use: https://www.ag-grid.com/javascript-data-grid/getting-started/
+
+
+    };
+
+    // Your Javascript code to create the Data Grid
+        // 1- Define the HTML container (div) element that will be used as a container of our Grid. 
+            const eGridDiv = document.getElementById('data-table');
+        // 2- Create a Grid object using two parameter 
+        //      a - Defined container (eGridDiv)
+        //      b - Grid Options that contains all of the Data Grid configurations.
+            agGrid.createGrid(eGridDiv, gridOptions); 
+            // Or use =>  new agGrid.Grid(eGridDiv, gridOptions);
+}
+
+    function renderDataInTheTable(api) {
+        fetch('/server/getComUpdData')
+            .then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                // Set gridOptions rowData Dynamically
+                api.setGridOption('rowData', data);
+          
+            })
+    }
+
+
+  
+
+</script>
+
+
+
+
+ </body>
+
+</html>

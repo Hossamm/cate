@@ -1,0 +1,26 @@
+
+<h2 style="text-align: center;color:black;"> الـغـــاء بيانات الشريكة </h2>
+<div class="container">
+
+  <form name="SearchForm" id="SearchFormId">
+      <div class="row">
+        <div class="col-25">
+          <label for="Companyname">اسم الشركة</label>
+        </div>
+        <div class="col-75" id="SearchComDiv">
+
+        <!--  <input type="search" id="SearchComId" name="Companyname" placeholder="ادخل اسم الشركه" class=".col-75_2"> -->
+              <input type="text" list="comNameList" name="Companyname" 
+              id="SearchComId" placeholder="ادخل اسم الشركه" class=".col-75_2" autocomplete="off">
+              <datalist id="comNameList"></datalist>
+              <label id="comNameError" style="color: red;"></label>
+        </div>
+      </div>
+ 
+      <br>
+
+      <div class="button">
+        <div>
+            <input type="submit" value="بحث" id = "SearchBtnId" class="fbutton">   
+        </div>
+      </div>

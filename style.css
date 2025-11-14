@@ -1,0 +1,405 @@
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+/*-----------------------------*/
+
+  
+  .navbar {
+    overflow: hidden;
+    background-color: #333;
+  }
+  
+  .dropdown .dropbtn {
+    font-size: 20px; 
+    font-weight: bold; 
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+  }
+
+  .navbar a {
+    float: right;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  .dropdown {
+    float: right;
+    overflow: hidden; 
+  }
+  
+
+  
+  .navbar a:hover, .dropdown:hover .dropbtn {
+    text-decoration: underline;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 80px;
+    border-radius: 5px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: right;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #ddd;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+
+
+
+/*--------------- Hossam ---------------*/
+.mainPhoto{
+  background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+  width: 100%;
+}
+/*================================*/
+body {
+height: 100px;
+font-size: 18px;
+font-family: Baskerville;
+/* Following is the font-family
+font-family: Baskerville, 
+"Baskerville Old Face", 
+"Hoefler Text", Garamond, 
+"Times New Roman", serif;
+*/
+color: black;
+}
+
+
+
+.header {
+position: fixed;
+display: flex;
+justify-content: space-between;
+width: 100%;
+padding: 10px;
+background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e); 
+}
+
+
+.menu {
+margin-top: 90px;
+}
+
+.menu > li {
+display: inline;
+margin-right: 20px;
+
+}
+.menu > li:last-of-type {   /* The last element of type li in menu container */
+margin-right: 20px;
+
+}
+
+
+a:link,
+a:visited {
+
+text-decoration: none;
+}
+a:hover {
+text-decoration: underline;
+}
+
+
+
+/* CSS property for content section */
+
+
+
+/* Style for footer section */
+.footer {
+background-color: white;
+padding: 15px;
+text-align: center;
+}
+
+
+/*===========================Data Entry============================*/
+* {
+box-sizing:border-box;
+
+}
+
+.button 
+{
+display: flex;
+
+justify-content:space-between
+
+}
+
+.fbutton{
+background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e); 
+}
+
+body{
+
+background: white
+}
+
+input[type=text], select, textarea,input[type=search] {
+width: 100%;
+padding: 12px;
+border: 1px solid #ccc;
+border-radius: 4px;
+resize: vertical;
+}
+
+label {
+padding: 12px 12px 12px 0;
+display: inline-block;
+}
+
+input[type=submit], .xxx {
+/*background-color: #04AA6D;*/
+background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e); 
+color: white;
+padding: 12px 20px;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+float: right;
+}
+
+input[type=submit]:hover {
+background: #45a049;
+}
+.xxx:hover{background: #45a049;}
+
+.container {
+width: 70%;
+margin: 0 auto;
+border-radius: 5px;
+background-color: #f2f2f2;
+padding: 20px;
+}
+
+.col-25 {
+float: right;
+width: 20%;
+margin-top: 6px;
+}
+
+.col-75,.col-75_2 {
+float: right;
+width: 78%;
+margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row::after {
+content: "";
+display: table;
+clear: both;
+
+
+}
+.row{overflow:auto;}
+
+/* Change placeholder color for validation input element*/
+.green::placeholder{
+color:green;
+}
+.red::placeholder{
+color:red;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+
+.container {
+    width: 95%;
+}
+
+.col-25, .col-75, input[type=submit] {
+width: 100%;
+margin-top: 0;
+}
+
+.button 
+{
+display:contents;   
+justify-content:center;
+
+}
+
+
+.photo{
+width: 100;
+}
+
+.menu {
+display: grid;  
+margin-top: 0px;
+}
+
+.dropdown .dropbtn {
+    font-weight:initial; 
+    padding: 0px 0px;
+  }
+.dropdown-content {
+
+min-width: 80px;
+
+}
+
+
+}
+/*==================================================================*/
+/*==================================================================*/
+
+.upload-form {
+    display: flex;
+    width: 50%;
+    padding: 0px;
+    flex-flow: column;
+   /* margin: 10px auto 10px auto;*/
+    background-color: #fff;
+    box-shadow: black;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+
+.upload-form label{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px dashed #e3e5ea;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: Baskerville;
+    color: #000000;
+    padding: 0.5rem 0.75rem;
+    margin: 0.5rem 0;
+    border-radius: 0.25rem;
+    cursor: pointer;
+
+}
+
+
+
+.upload-form label:hover {
+    background-color: #f7f8f9;
+    border: 1px dashed  #413d5f;
+    
+}
+
+.upload-form input[type="file"] {
+    appearance: none;
+    visibility: hidden;
+    height: 0;
+    width: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.upload-form .result {
+    display: flex;
+    background: #ecf6ff;
+    border-radius: 0.25rem;
+    gap: 0.5rem;
+    padding: 0.5rem
+}
+
+.upload-form .result * {
+    font-size: 0.5rem;
+}
+
+.upload-form .result .ph-file {
+    font-size: 1.5rem;
+}
+
+.upload-form .result {
+    display: block;
+}
+
+.upload-form .result .file-details {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.25rem;
+    flex: 1
+}
+
+.upload-form .result .file-details span.file-name {
+    color: #000000;
+    font-weight: 600;
+}
+
+.upload-form .result .file-details span.file-size {
+    color: #a0aeba;
+}
+
+.upload-form .result .progress-bar {
+    width: 100%;
+    height: 0.25rem;
+    background-color: #e3e5ea;
+    border-radius: 0.25rem;
+    overflow: hidden;
+}
+
+.upload-form .result .progress-bar .progress {
+    height: 100%;
+    background-color: #0c7ce5;
+}
+
+.upload-form .result .upload-result {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.upload-form .result .upload-result .ph-circle-notch {
+    -webkit-animation: rotate 2s linear infinite;
+    -moz-animation: rotate 2s linear infinite;
+    -ms-animation: rotate 2s linear infinite;
+    -o-animation: rotate 2s linear infinite;
+    animation: rotate 2s linear infinite;
+    font-size: 1rem;
+}
+
+.upload-form .result .upload-result .ph-check-circle {
+    color: #23c925;
+    font-size: 1rem;
+}
+
+.upload-form .result .upload-result .ph-x-circle {
+    color: #c94647;
+    font-size: 1rem;
+}
+
+
+/*=========================================================*/
+

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang='en' dir="rtl">
+  <head>
+    <meta charset='UTF-8'/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CATE</title>
+    <link href='./style.css' rel='stylesheet'/>
+  </head>
+
+  <body> 
+
+    <div class='header'>
+      
+      <div class='menu'>
+
+            <div class="dropdown">
+              <button class="dropbtn">الشركات
+                <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-content">
+                <a href="#" onclick = "changeContent('addCom')" >اضافة</a>
+                <a href="#" onclick = "changeContent('updCom')" >تعديل</a>
+                <a href="#" onclick = "changeContent('delCom')" >الغاء</a>
+                <a href="#" onclick = "changeContent('تحت الانشاء')">..........؟</a>
+              </div>
+            </div> 
+            <div class="dropdown">
+              <button class="dropbtn">البحث 
+                <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-content">
+                <a href="#" onclick = "changeContent('searchCom')" >عن شركة</a>
+                <a href="#" onclick = "changeContent('searchDoc')" >عن مستند</a>
+                <a href="#" onclick = "changeContent('تحت الانشاء')" >..........؟</a>
+              </div>
+            </div> 	
+            <div class="dropdown">
+              <button class="dropbtn">التقارير
+                <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-content">
+                <a href="/server/sheet2.html" target="_blank">تقرير تعديلات بيانات الشريكة</a>
+                <a href="/server/comupdaterep.html" target="_blank">تقرير تعديلات بيانات الشريكة</a>
+                <a href="#" onclick = "changeContent('تحت الانشاء')" >..........؟</a> 
+              </div>
+            </div> 
+            <div class="dropdown">
+              <button class="dropbtn">اخرى
+                <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-content">
+                <a href="#" onclick = "changeContent('تحت الانشاء')" >..........؟</a>
+                <a href="#" onclick = "changeContent('تحت الانشاء')" >..........؟</a>
+                <a href="#" onclick = "changeContent('createDB')" >Create Database</a>
+              </div>
+            </div> 
+
+      </div> <!--  End menu <div class='menu'>  -->
+
+      <div class='logo'>
+            <div style="width: 10%; float: left;" ></div>
+            <img src='./logo.png' class="photo" 
+                            style="width: 130px;height: 130px; float: left;"/>
+	    </div>
+
+    </div> <!--End header <div class='header'> -->
+
+    <div style="height: 175px;">
+        <!-- The <div> has been added to insert spaces -->>
+    </div>
+
+    <!-- Content section of website layout -->
+    <main id="main">
+        <div class="container" 
+             >
+
+            <div id="content" style=" width:100%; margin: 0 auto;" ></div>
+            
+                <img src='./logo.png' 
+                style="width:100%; margin: 0 auto;"/>
+            </div>
+
+        </div>
+    </main> <!-- End Content section of website layout -->
+
+<br><br><br>
+     <!-- footer Section -->
+     <div class="footer"  style=" width: 100%; height: 50px; justify-content: space-around;
+                                   display: flex; list-style: none; padding: 0;">
+        
+        <a href="https://palm-sw.com" target="_blank">Contact Us</a>
+        </div>
+
+
+
+  <script src="script.js"></script>
+  
+  </body>
+  
+</html>
